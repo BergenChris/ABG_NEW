@@ -7,8 +7,43 @@
 <meta name="description" content="Join the official closing party of the Antwerp Brilliant Games 2026 at Woodpop. Great music, drinks, and celebration with athletes and friends.">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link href="../../css/style.css" rel="stylesheet">
 <link href="../../css/party.css" rel="stylesheet"> 
+<style>
+  body {
+    font-family: 'Inter', sans-serif;
+    color: #334155;
+    background-color: #f8fafc;
+  }
+  .party-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+    margin-bottom: 40px;
+  }
+  .party-card h1 {
+    font-weight: 700;
+    color: #0f172a;
+    margin-top: 0;
+    margin-bottom: 15px;
+  }
+  .details-box {
+    background: #f8fafc;
+    border: 1px solid #f1f5f9;
+    border-radius: 8px;
+    padding: 20px 25px;
+    margin: 20px 0;
+  }
+  .details-box ul {
+    margin: 0;
+    padding-left: 20px;
+    line-height: 2;
+    color: #475569;
+  }
+</style>
 </head>
 <body>
 
@@ -25,7 +60,7 @@
 
     <!-- 2. Sporten in het midden -->
     <ul class="nav navbar-nav" style="float: none; margin: 0; display: flex;">
-       <li><a href="../../index.html">Home</a></li>
+      <li><a href="../../index.html">Home</a></li>
       <li><a href="../badminton.html">Badminton</a></li>
       <li><a href="../tennis.html">Tennis</a></li>
       <li><a href="../volleybal.html">Volleyball</a></li>
@@ -58,28 +93,37 @@
 <div style="margin-top: 90px;"></div>
 
 <!-- Party content -->
-<div class="container content-block">
+<div class="container content-block" style="padding: 40px 0;">
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
-      <h1>ABG Closing Party</h1>
-      <p class="lead"><strong>Celebrate, dance, and connect at the official Antwerp Brilliant Games party!</strong></p>
       
-      <p>After a thrilling weekend full of competitive sports, teamwork, and sweat, it is time to let loose and celebrate together. The official closing party of the Antwerp Brilliant Games takes place on <strong>Saturday, November 7, 2026</strong>.</p>
-      
-      <h3>Location: Woodpop</h3>
-      <p>We are thrilled to host our legendary closing party at <strong>Woodpop</strong>, one of Antwerp's most vibrant and popular queer-friendly party spots located right in the heart of the city.</p>
-      <p>Expect fantastic tunes, great drinks, a wonderful inclusive atmosphere, and an unforgettable night surrounded by athletes, friends, and supporters from all over.</p>
+      <div class="party-card">
+        <h1>ABG Closing Party</h1>
+        <p class="lead" style="color: #64748b; font-size: 17px; margin-bottom: 25px;">Celebrate, dance, and connect at the official Antwerp Brilliant Games party!</p>
+        
+        <p style="margin-bottom: 20px;">After a thrilling weekend full of competitive sports, teamwork, and sweat, it is time to let loose and celebrate together. The official closing party of the Antwerp Brilliant Games takes place on <strong>Saturday, November 7, 2026</strong>.</p>
+        
+        <hr style="border-top: 1px solid #e2e8f0; margin: 25px 0;">
 
-      <h3>Practical Details</h3>
-      <ul>
-        <li><strong>Date:</strong> Saturday, November 7, 2026</li>
-        <li><strong>Time:</strong> Starting from 10:00 PM onwards</li>
-        <li><strong>Access:</strong> Included for tournament participants or available via ticket info at the venue.</li>
-      </ul>
+        <h3 style="font-size: 20px; font-weight: 600; color: #0f172a; margin-bottom: 12px;">Location: Woodpop</h3>
+        <p style="margin-bottom: 15px;">We are thrilled to host our legendary closing party at <strong>Woodpop</strong>, one of Antwerp's most vibrant and popular queer-friendly party spots located right in the heart of the city.</p>
+        <p style="margin-bottom: 20px;">Expect fantastic tunes, great drinks, a wonderful inclusive atmosphere, and an unforgettable night surrounded by athletes, friends, and supporters from all over.</p>
 
-      <div style="margin-top: 30px;">
-        <a href="https://www.woodpop.be" target="_blank" rel="noopener" class="btn btn-primary btn-lg">Visit Woodpop Website</a>
+        <!-- Practical details container -->
+        <div class="details-box">
+          <h4 style="font-size: 16px; font-weight: 600; color: #0f172a; margin-top: 0; margin-bottom: 10px;">Practical Details</h4>
+          <ul>
+            <li><strong>Date:</strong> Saturday, November 7, 2026</li>
+            <li><strong>Time:</strong> Starting from 10:00 PM onwards</li>
+            <li><strong>Access:</strong> Included for tournament participants or available via ticket info at the venue.</li>
+          </ul>
+        </div>
+
+        <div style="margin-top: 30px;">
+          <a href="https://www.woodpop.be" target="_blank" rel="noopener" class="btn btn-primary btn-lg" style="font-weight: 500; border-radius: 6px;">Visit Woodpop Website</a>
+        </div>
       </div>
+
     </div>
   </div>
 </div>

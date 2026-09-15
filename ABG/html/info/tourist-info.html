@@ -7,8 +7,59 @@
 <meta name="description" content="Plan your trip to Antwerp Brilliant Games 2026. Find essential visitor info, travel tips, local highlights, and accommodation details.">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link href="../../css/style.css" rel="stylesheet">
 <link href="../../css/tourist-info.css" rel="stylesheet"> 
+<style>
+  body {
+    font-family: 'Inter', sans-serif;
+    color: #334155;
+    background-color: #f8fafc;
+  }
+  .info-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+    margin-bottom: 40px;
+  }
+  .info-card h1 {
+    font-weight: 700;
+    color: #0f172a;
+    margin-top: 0;
+    margin-bottom: 25px;
+  }
+  .info-card h2 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #0f172a;
+    margin-top: 0;
+    margin-bottom: 15px;
+  }
+  .steps-box {
+    background: #f8fafc;
+    border: 1px solid #f1f5f9;
+    border-radius: 8px;
+    padding: 20px 25px;
+    margin: 20px 0;
+  }
+  .steps-box ol {
+    margin: 0;
+    padding-left: 20px;
+    line-height: 2;
+    color: #475569;
+    font-weight: 500;
+  }
+  .highlights-list {
+    padding-left: 20px;
+    line-height: 2;
+    color: #475569;
+  }
+  .highlights-list li {
+    margin-bottom: 10px;
+  }
+</style>
 </head>
 <body>
 
@@ -25,7 +76,7 @@
 
     <!-- 2. Sporten in het midden -->
     <ul class="nav navbar-nav" style="float: none; margin: 0; display: flex;">
-        <li><a href="../../index.html">Home</a></li>
+      <li><a href="../../index.html">Home</a></li>
       <li><a href="../badminton.html">Badminton</a></li>
       <li><a href="../tennis.html">Tennis</a></li>
       <li><a href="../volleybal.html">Volleyball</a></li>
@@ -58,42 +109,50 @@
 <div style="margin-top: 90px;"></div>
 
 <!-- Tourist Info content -->
-<div class="container content-block">
+<div class="container content-block" style="padding: 40px 0;">
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
-      <h1>Visitor info</h1>
       
-      <!-- Hotel section -->
-      <div class="hotel-section" style="margin-bottom: 40px;">
-        <h2>Stay at the Radisson Hotel at a reduced rate!</h2>
-        <p>This year, the <strong>Radisson Hotel</strong> is again the preferred partner of the Antwerp Brilliant Games.</p>
-        <p>This excellent hotel is located near Antwerpen-Berchem Station. From there, you can easily get public transportation to the sports venues. It also offers plenty of parking space, and it is within walking distance of one of the best queer bars in Antwerp, Den Draak!</p>
-        <p>Could this hotel sound any better you may ask? Of course it can! We have a lovely reduced offer for participants of the Antwerp Brilliant Games.</p>
-        <p>To claim a double room for 126 EUR, or a single room for 122,6 EUR:</p>
-        <ol class="steps-list">
-          <li>Go to: <a href="http://radissonhotels.com" target="_blank" rel="noopener">radissonhotels.com</a></li>
-          <li>Select: radisson-antwerp-berchem</li>
-          <li>Use the code ABGA2026</li>
-        </ol>
-        <a href="https://www.radissonhotels.com/en-us/hotels/radisson-antwerp-berchem" target="_blank" rel="noopener">
-          <img src="https://antwerpbrilliantgames.be/images/homepage/tourist/radisson.jpg" alt="Radisson hotel" style="max-width:400px; margin-top: 15px;" class="img-responsive">
-        </a>
-      </div>
-
-      <hr>
-
-      <!-- What to do section -->
-      <div class="what-to-do-section">
-        <h2>What to do in Antwerp?</h2>
-        <p>Your stay for the Antwerp Brilliant Games is the perfect opportunity to discover the proud and vibrant city of Antwerp, where rich history meets modern innovation. The city offers fine museums, beautiful architecture, a bustling fashion scene, and a wide variety of culinary delights.</p>
-        <p>The website <a href="https://visit.antwerpen.be/" target="_blank" rel="noopener">Visit Antwerpen</a> contains a lot of useful information to plan your activities.</p>
-        <p>Do you find it challenging to decide what to do? The following highlights are definitely worth exploring:</p>
+      <div class="info-card">
+        <h1>Visitor info</h1>
         
-        <ul>
-          <li><strong>Stroll through the city:</strong> Discover the gorgeous architecture and walking routes (Central Station, Meir, Groenplaats, Cathedral, Grote Markt, Het Steen).</li>
-          <li><strong>Vlaeykensgang:</strong> A unique hidden medieval passage dating back to 1591.</li>
-          <li><strong>MAS Museum (Museum aan de Stroom):</strong> The eye-catcher at 't Eilandje with a free 360° rooftop panorama.</li>
-        </ul>
+        <!-- Hotel section -->
+        <div class="hotel-section" style="margin-bottom: 35px;">
+          <h2>Stay at the Radisson Hotel at a reduced rate!</h2>
+          <p style="margin-bottom: 12px;">This year, the <strong>Radisson Hotel</strong> is again the preferred partner of the Antwerp Brilliant Games.</p>
+          <p style="margin-bottom: 12px;">This excellent hotel is located near Antwerpen-Berchem Station. From there, you can easily get public transportation to the sports venues. It also offers plenty of parking space, and it is within walking distance of one of the best queer bars in Antwerp, Den Draak!</p>
+          <p style="margin-bottom: 12px;">Could this hotel sound any better you may ask? Of course it can! We have a lovely reduced offer for participants of the Antwerp Brilliant Games.</p>
+          <p style="margin-bottom: 15px;">To claim a double room for 126 EUR, or a single room for 122,6 EUR:</p>
+          
+          <div class="steps-box">
+            <ol class="steps-list">
+              <li>Go to: <a href="http://radissonhotels.com" target="_blank" rel="noopener">radissonhotels.com</a></li>
+              <li>Select: radisson-antwerp-berchem</li>
+              <li>Use the code ABGA2026</li>
+            </ol>
+          </div>
+
+          <a href="https://www.radissonhotels.com/en-us/hotels/radisson-antwerp-berchem" target="_blank" rel="noopener">
+            <img src="https://antwerpbrilliantgames.be/images/homepage/tourist/radisson.jpg" alt="Radisson hotel" style="max-width:100%; border-radius: 8px; border: 1px solid #e2e8f0; margin-top: 15px;" class="img-responsive">
+          </a>
+        </div>
+
+        <hr style="border-top: 1px solid #e2e8f0; margin: 35px 0;">
+
+        <!-- What to do section -->
+        <div class="what-to-do-section">
+          <h2>What to do in Antwerp?</h2>
+          <p style="margin-bottom: 12px;">Your stay for the Antwerp Brilliant Games is the perfect opportunity to discover the proud and vibrant city of Antwerp, where rich history meets modern innovation. The city offers fine museums, beautiful architecture, a bustling fashion scene, and a wide variety of culinary delights.</p>
+          <p style="margin-bottom: 12px;">The website <a href="https://visit.antwerpen.be/" target="_blank" rel="noopener">Visit Antwerpen</a> contains a lot of useful information to plan your activities.</p>
+          <p style="margin-bottom: 15px;">Do you find it challenging to decide what to do? The following highlights are definitely worth exploring:</p>
+          
+          <ul class="highlights-list">
+            <li><strong>Stroll through the city:</strong> Discover the gorgeous architecture and walking routes (Central Station, Meir, Groenplaats, Cathedral, Grote Markt, Het Steen).</li>
+            <li><strong>Vlaeykensgang:</strong> A unique hidden medieval passage dating back to 1591.</li>
+            <li><strong>MAS Museum (Museum aan de Stroom):</strong> The eye-catcher at 't Eilandje with a free 360° rooftop panorama.</li>
+          </ul>
+        </div>
+
       </div>
 
     </div>
