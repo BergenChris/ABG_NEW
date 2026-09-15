@@ -1,0 +1,495 @@
+/* --- MODERNE HOME STYLING & NAVBAR --- */
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f8fafc;
+  color: #334155;
+  padding-top: 70px; /* Ruimte voor de vaste navbar */
+}
+
+/* Navbar Basis */
+.navbar-default {
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  border: none;
+}
+
+.navbar-brand img {
+  max-height: 40px;
+  border-radius: 6px;
+}
+
+/* Standaard Navigatiekleur (Donkerblauw) */
+.navbar-nav > li > a,
+.navbar-default .navbar-nav > li > a {
+  color: #0C155C !important;
+  font-weight: 600;
+  background-color: transparent !important;
+  transition: color 0.2s ease;
+}
+
+/* Hover en Actief/Geselecteerd (Lichtblauw) */
+.navbar-nav > li > a:hover,
+.navbar-nav > li.active > a,
+.navbar-nav > li.active > a:hover,
+.navbar-nav > li.active > a:focus,
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li.active > a {
+  color: #38bdf8 !important;
+  background-color: transparent !important;
+}
+
+/* Dropdown menu links binnen de navbar */
+.navbar-nav .dropdown-menu > li > a {
+  color: #0C155C !important;
+  background-color: #ffffff !important;
+}
+
+.navbar-nav .dropdown-menu > li > a:hover,
+.navbar-nav .dropdown-menu > li.active > a {
+  color: #38bdf8 !important;
+  background-color: #f1f5f9 !important;
+}
+
+/* DESKTOP STRUCTUUR (Schermen groter dan 768px) */
+@media (min-width: 768px) {
+  .navbar-container-flex {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between !important;
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+  }
+
+  .navbar-header-custom {
+    display: flex !important;
+    align-items: center;
+    float: none !important;
+  }
+
+  .navbar-collapse,
+  .navbar-collapse.collapse,
+  .navbar-collapse.in {
+    display: flex !important;
+    visibility: visible !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    flex-grow: 1 !important;
+    width: auto !important;
+    height: auto !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+
+  .navbar-menu-center {
+    display: flex !important;
+    margin: 0 auto !important;
+    float: none !important;
+  }
+
+  .navbar-menu-right {
+    display: flex !important;
+    margin: 0 !important;
+    float: none !important;
+  }
+
+  .navbar-toggle {
+    display: none !important;
+  }
+}
+
+/* ABSOLUUT KADERLOZE HAMBURGER KNOP (Alleen strakke blauwe lijnen) */
+.navbar-default .navbar-toggle,
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus,
+.navbar-default .navbar-toggle:active {
+  border: none !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  outline: none !important;
+  box-shadow: none !important;
+  padding: 8px 4px !important;
+  margin-top: 14px !important;
+  margin-right: 10px !important;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #0C155C !important;
+  height: 2.5px !important;
+  border-radius: 2px !important;
+  width: 25px !important;
+  display: block;
+  margin: 5px 0;
+}
+
+/* MOBIELE OPTIMALISATIE (Schermen kleiner dan 768px) */
+@media (max-width: 767px) {
+  body {
+    padding-top: 65px;
+  }
+
+  .navbar-container-flex {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 15px;
+    padding-right: 15px;
+    position: relative;
+  }
+
+  .navbar-header-custom {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .navbar-brand-custom {
+    padding: 8px 0;
+    height: auto;
+  }
+
+  /* Volledig verbergen indien niet 'in' */
+  .navbar-collapse.collapse:not(.in) {
+    display: none !important;
+  }
+
+  /* Vaste stabiele positie, blijft exact op zijn plek staan */
+  .navbar-collapse,
+  .navbar-collapse.in {
+    display: block !important;
+    background-color: #ffffff !important;
+    position: absolute !important;
+    top: 100% !important;
+    right: 15px !important;
+    left: auto !important;
+    width: 260px !important;
+    max-width: 85vw !important;
+    margin-top: 5px !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    z-index: 99999 !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 12px !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+    padding: 8px 12px !important;
+    max-height: 75vh;
+    overflow-y: auto;
+    float: none !important;
+    transition: none !important;
+  }
+
+  .navbar-nav,
+  .navbar-menu-center,
+  .navbar-menu-right {
+    display: block !important;
+    float: none !important;
+    margin: 0 !important;
+    text-align: left;
+    background-color: #ffffff !important;
+  }
+
+  .navbar-nav > li {
+    background-color: #ffffff !important;
+  }
+
+  .navbar-nav > li > a {
+    padding: 10px 10px !important;
+    font-size: 14px;
+    border-bottom: 1px solid #f1f5f9;
+    background-color: #ffffff !important;
+    color: #0C155C !important;
+    white-space: normal !important;
+    line-height: 1.3 !important;
+  }
+
+  .navbar-nav > li:last-child > a {
+    border-bottom: none;
+  }
+
+  .navbar-nav .dropdown-menu {
+    position: static !important;
+    float: none !important;
+    width: auto;
+    margin-top: 0;
+    background-color: #ffffff !important;
+    border: none;
+    box-shadow: none;
+    padding-left: 12px;
+    display: block !important;
+  }
+
+  .navbar-nav .dropdown-menu > li > a {
+    background-color: #ffffff !important;
+    color: #0C155C !important;
+    border-bottom: 1px solid #f8fafc;
+    font-size: 13px;
+    padding: 8px 10px !important;
+    white-space: normal !important;
+  }
+
+  .hero-title {
+    padding: 40px 15px 30px;
+    border-radius: 0 0 20px 20px;
+  }
+
+  .hero-title h1 {
+    font-size: 24px;
+  }
+
+  .hero-logo-container img {
+    max-width: 180px;
+  }
+
+  .modern-card {
+    padding: 20px;
+    border-radius: 12px;
+  }
+
+  .social-icons-custom li:nth-child(2) {
+    max-width: 100px; /* Bepaalt waar hij afbreekt; pas eventueel aan naar 90px of 110px */
+    text-align: center;
+  }
+  
+  .social-icons-custom li:nth-child(2) a span {
+    white-space: normal !important;
+    display: block;
+    line-height: 1.2;
+  }
+}
+
+/* Hero Section */
+.hero-title {
+  background: linear-gradient(135deg, #0C155C 0%, #1e293b 100%);
+  color: #ffffff;
+  padding: 60px 15px 40px;
+  margin-bottom: 40px;
+  border-radius: 0 0 30px 30px;
+  text-align: center;
+}
+
+.hero-title h1 {
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+.hero-title h2 {
+  color: #94a3b8;
+  font-weight: 300;
+  font-size: 20px;
+  margin-top: 5px;
+}
+
+.hero-logo-container {
+  margin-top: 25px;
+}
+
+.hero-logo-container img {
+  max-width: 180px;
+  filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.3));
+}
+
+/* Moderne Cards */
+.modern-card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+  padding: 40px;
+  margin-bottom: 30px;
+}
+
+.modern-card-gradient {
+  background: linear-gradient(to bottom, #ffffff, #f8fafc);
+}
+
+.card-text-large {
+  font-size: 16px;
+}
+
+.card-divider {
+  margin: 30px 0;
+  border-color: #f1f5f9;
+}
+
+.section-title {
+  color: #0C155C;
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.hotel-title {
+  color: #0C155C;
+  font-weight: 700;
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+
+/* Lijsten & Pictogrammen */
+.overview-list {
+  list-style: none;
+  padding: 0;
+  line-height: 2.2;
+}
+
+.overview-list li i {
+  color: #0C155C;
+  margin-right: 10px;
+}
+
+.steps-list {
+  line-height: 2;
+  font-weight: 500;
+}
+
+.instagram-link {
+  color: #e1306c;
+  font-weight: 600;
+}
+
+.banner-img {
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  margin-top: 25px;
+}
+
+.hotel-img {
+  max-width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.hotel-img-container {
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* Knoppen */
+.btn-modern {
+  border-radius: 50px;
+  padding: 10px 24px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-modern:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.btn-accept {
+  background-color: #0f172a;
+  border: none;
+}
+
+/* Footer & Socials Fix */
+footer {
+  background: #0f172a;
+  color: #94a3b8;
+  padding: 40px 0 20px;
+  margin-top: 50px;
+  position: relative;
+  z-index: 10; /* Zorgt dat de footer netjes boven eventuele achtergrondlagen ligt */
+}
+
+.footer-social-section {
+  background: transparent;
+}
+
+.footer-social-title {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.social-icons-custom {
+  list-style: none;
+  padding: 0;
+  display: inline-flex;
+  gap: 30px;
+  align-items: center;
+  position: relative;
+  z-index: 11; /* Zorgt dat de lijst bovenop klikbaar is */
+}
+
+.social-icons-custom li {
+  position: relative;
+  z-index: 12;
+}
+
+.social-icons-custom li a {
+  color: #cbd5e1;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  z-index: 13; /* Dwingt de link volledig naar voren zodat hij altijd reageert op klikken */
+  cursor: pointer;
+}
+
+.social-icons-custom li img {
+  height: 32px;
+  width: auto;
+  pointer-events: none; /* Zorgt ervoor dat de muisklik door de afbeelding heen direct op de link valt */
+}
+
+.social-icons-custom li .active-logo {
+  border-radius: 4px;
+}
+
+.social-icons-custom li span {
+  font-size: 12px;
+  pointer-events: none; /* Zorgt dat de klik ook hier correct op de link terechtkomt */
+}
+
+.footer-bottom-container {
+  margin-top: 30px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 20px;
+}
+
+.cookie-icon-container {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.cookie-icon-container img {
+  opacity: 0.8;
+  transition: opacity 0.2s;
+  height: 26px;
+}
+
+/* Cookie Bar */
+.cookie-bar {
+  background: #ffffff;
+  border-top: 1px solid #e2e8f0;
+  box-shadow: -4px 20px rgba(0,0,0,0.08);
+  padding: 20px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.cookie-bar-container {
+  max-width: 800px;
+}
+
+.cookie-bar-title {
+  color: #0f172a;
+  font-size: 15px;
+}
+
+.cookie-bar-text {
+  margin: 8px 0 15px;
+  color: #475569;
+  font-size: 13px;
+}

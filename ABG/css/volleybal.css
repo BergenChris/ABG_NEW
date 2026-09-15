@@ -1,0 +1,17 @@
+/* --- VOLLEYBALL PAGE STYLES --- */
+.content-block h1 {
+  font-weight: 700;
+  color: #0C155C;
+}
+
+.content-block .lead {
+  font-weight: 500;
+}
+
+/* Eventuele unieke stijlen specifiek voor de volleybal-pagina */
+.volleybal-highlight {
+  background-color: #f5f8fa;
+  padding: 15px;
+  border-left: 4px solid #0C155C;
+  margin: 15px 0;
+}

@@ -1,0 +1,17 @@
+/* --- TENNIS PAGE STYLES --- */
+.content-block h1 {
+  font-weight: 700;
+  color: #0C155C;
+}
+
+.content-block .lead {
+  font-weight: 500;
+}
+
+/* Eventuele unieke stijlen specifiek voor de tennis-pagina */
+.tennis-highlight {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-left: 4px solid #4da6ff;
+  margin: 15px 0;
+}
