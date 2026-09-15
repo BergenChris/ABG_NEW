@@ -7,56 +7,66 @@
 <meta name="description" content="Manage your cookie preferences for the Antwerp Brilliant Games website.">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 <link href="../css/style.css" rel="stylesheet">
 <link href="../css/cookies.css" rel="stylesheet">
 </head>
 <body>
 
 <!-- Navbar -->
-<!-- Navbar -->
 <nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container" style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+  <div class="container">
     
-    <!-- 1. Logo Links -->
-    <div class="navbar-header" style="float: none;">
-      <a class="navbar-brand" href="index.html" style="padding: 5px 15px; height: auto;">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#cookieNavbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="../index.html" style="padding: 5px 15px; height: auto;">
         <img src="https://antwerpbrilliantgames.be/images/logo/ABG%202026%20website%20Logo%20-%20white%20background.jpg" alt="Antwerp Brilliant Games" style="max-height: 50px;">
-      </a> 
+      </a>
     </div>
 
-    <!-- 2. Sporten in het midden (Home, Badminton, Tennis, Volleyball) -->
-    <ul class="nav navbar-nav" style="float: none; margin: 0; display: flex;">
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="cookieNavbar">
+      
+      <!-- Sporten in het midden -->
+      <ul class="nav navbar-nav">
         <li><a href="../index.html">Home</a></li>
         <li><a href="badminton.html">Badminton</a></li>
         <li><a href="tennis.html">Tennis</a></li>
         <li><a href="volleybal.html">Volleyball</a></li>
-    </ul>
+      </ul>
 
-    <!-- 3. Rest Rechts (Info & Registration dropdowns) -->
-    <ul class="nav navbar-nav navbar-right" style="float: none; margin: 0; display: flex;">
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Info <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="./info/tourist-info.html">Visitor info</a></li>
-          <li><a href="./info/party.html">Party</a></li>
-          <li><a href="./info/contact.html">Contact</a></li>
-        </ul>
-      </li>
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Registration <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="login.html">Login</a></li>
-          <li><a href="create-registration-account.html">Create Registration Account</a></li>
-          <li><a href="terms-and-conditions.html">Terms-and-Conditions</a></li>
-        </ul>
-      </li>
-    </ul>
+      <!-- Rest Rechts -->
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Info <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="./info/tourist-info.html">Visitor info</a></li>
+            <li><a href="./info/party.html">Party</a></li>
+            <li><a href="./info/contact.html">Contact</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Registration <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="login.html">Login</a></li>
+            <li><a href="create-registration-account.html">Create Registration Account</a></li>
+            <li><a href="terms-and-conditions.html">Terms-and-Conditions</a></li>
+          </ul>
+        </li>
+      </ul>
 
-  </div>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container -->
 </nav>
 
 <!-- Main Content -->
-<div class="container content-block" style="padding: 40px 0;">
+<div class="container content-block" style="padding: 40px 0; margin-top: 80px;">
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       
@@ -90,7 +100,7 @@
                </div>
                <div style="font-size: 13px; color: #666; margin-bottom: 12px;">Necessary for the operation of the website. These cookies cannot be disabled.</div>
                
-               <!-- Sub-cookies van Essential (Ingespringens via padding-left) -->
+               <!-- Sub-cookies van Essential -->
                <div class="redim-cc-cookies" style="padding-left: 25px;">
                   <div class="redim-cc-cookie-item">
                      <label class="redim-cc-switch"><input type="checkbox" checked disabled><span class="redim-cc-slider"></span></label>
@@ -121,8 +131,8 @@
                   <span style="font-size: 16px; font-weight: bold;">Other (10)</span>
                </div>
                
-               <!-- Sub-cookies van Other (Ingesprongen via padding-left) -->
-               <div class="redim-cc-cookies" style="padding-left: 25px;">
+               <!-- Sub-cookies van Other -->
+               <div class="redim-cc-cookies" id="other-subcookies" style="padding-left: 25px;">
                   <div class="redim-cc-cookie-item">
                      <label class="redim-cc-switch"><input type="checkbox" checked><span class="redim-cc-slider"></span></label>
                      <span><code>mcforms-25358287-sessionId</code></span>
@@ -192,5 +202,14 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script>
+  // Script om onderliggende cookies mee te schakelen met de 'Other' hoofdcategorie
+  $(document).ready(function() {
+    $('#toggle-other').on('change', function() {
+      var isChecked = $(this).is(':checked');
+      $('#other-subcookies input[type="checkbox"]').prop('checked', isChecked);
+    });
+  });
+</script>
 </body>
 </html>
