@@ -1,166 +1,268 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Volleyball - Antwerp Brilliant Games 2026</title>
-<meta name="description" content="Discover everything about the ABG 2026 Volleyball tournament: timing, location, levels, rules, and registration details.">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-<link href="../css/style.css" rel="stylesheet">
-<link href="../css/index.css" rel="stylesheet">
-<link href="../css/sport.css" rel="stylesheet">
-<link href="../css/volleyball.css" rel="stylesheet">
-</head>
-<body>
-
-<!-- Navbar -->
-<nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container navbar-container-flex">
-    
-    <!-- 1. Logo Links & Hamburger knop -->
-    <div class="navbar-header navbar-header-custom">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand navbar-brand-custom">
-        <img src="../ABG_balk.png" alt="Antwerp Brilliant Games" height="100">
-      </a> 
-    </div>
-
-    <!-- 2 & 3. Navigatielinks omsloten door de collapse container -->
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <!-- Sporten in het midden -->
-      <ul class="nav navbar-nav navbar-menu-center">
-        <li><a href="../index.html">Home</a></li>
-        <li><a href="badminton.html">Badminton</a></li>
-        <li><a href="tennis.html">Tennis</a></li>
-        <li class="active"><a href="volleybal.html">Volleyball</a></li>
-      </ul>
-
-      <!-- Rest Rechts -->
-      <ul class="nav navbar-nav navbar-menu-right">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Info <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="./info/tourist-info.html">Visitor info</a></li>
-            <li><a href="./info/party.html">Party</a></li>
-            <li><a href="./info/contact.html">Contact</a></li>
-          </ul>
-        </li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Account <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="./account/login.html">Login</a></li>
-            <li><a href="./account/t&c.html">Terms-and-Conditions</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-
-  </div>
-</nav>
-
-<!-- Hero Title -->
- <div class="hero-title container">
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2 modern-card text-center">
-      <h1>Volleyball Tournament</h1>
-      <h2>Saturday, November 7, 2026</h2>
-      <img src="../abg_volleybal.jpg" alt="ABG round logo 2026" width="50%" >
-    </div>
-  </div>
-</div>
-
-<!-- Main Content Grid -->
-<div class="container">
-  <div class="row">
-    
-    <div class="col-md-8 col-md-offset-2">
-      
-      <div class="modern-card text-center" style="margin-bottom: 30px;">
-        <p class="card-text-large">Get ready for high-flying spikes, great teamwork, and an unforgettable day of volleyball action!</p>
-        <div style="margin-top: 25px;">
-          <a href="create-registration-account.html" class="btn btn-success btn-lg btn-modern">Go to Registration</a>
-        </div>
-      </div>
-
-      <div class="modern-card">
-        <h3 class="section-title text-center"><i class="fa fa-clock-o"></i> Timing & Schedule</h3>
-        <ul class="overview-list" style="max-width: 90%; margin: 0 auto;">
-          <li><i class="fa fa-check-circle"></i> <strong>Doors open:</strong> 08:30 AM</li>
-          <li><i class="fa fa-users"></i> <strong>Captain's briefing:</strong> 09:00 AM</li>
-          <li><i class="fa fa-play-circle"></i> <strong>Start tournament:</strong> 09:30 AM</li>
-          <li><i class="fa fa-trophy"></i> <strong>Finals & Ceremony:</strong> Around 05:00 PM</li>
-        </ul>
-
-        <hr class="card-divider">
-
-        <h3 class="section-title text-center"><i class="fa fa-map-marker"></i> Location</h3>
-        <div style="text-align: center; margin-bottom: 20px;">
-          <p><strong>Venue:</strong> Sportcentrum Arena</p>
-          <p><strong>Address:</strong> De Gryspeerstraat 86, 2100 Deurne (Antwerp)</p>
-          <p><strong>Public Transport:</strong> Easily accessible via local tram and bus lines. Check <a href="https://www.delijn.be/" target="_blank" rel="noopener">De Lijn</a> for detailed connections.</p>
-          <p><strong>Parking:</strong> Parking facilities available near the sports complex.</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Volleyball - Antwerp Brilliant Games 2026</title>
+    <meta
+      name="description"
+      content="Discover everything about the ABG 2026 Volleyball tournament: timing, location, levels, rules, and registration details."
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link href="../css/style.css" rel="stylesheet" />
+    <link href="../css/index.css" rel="stylesheet" />
+    <link href="../css/sport.css" rel="stylesheet" />
+    <link href="../css/volleyball.css" rel="stylesheet" />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container navbar-container-flex">
+        <!-- 1. Logo Links & Hamburger knop -->
+        <div class="navbar-header navbar-header-custom">
+          <button
+            type="button"
+            class="navbar-toggle collapsed"
+            data-toggle="collapse"
+            data-target="#myNavbar"
+            aria-expanded="false"
+          >
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand navbar-brand-custom">
+            <img
+              src="../ABG_balk.png"
+              alt="Antwerp Brilliant Games"
+              height="100"
+            />
+          </a>
         </div>
 
-        <hr class="card-divider">
+        <!-- 2 & 3. Navigatielinks omsloten door de collapse container -->
+        <div class="collapse navbar-collapse" id="myNavbar">
+          <!-- Sporten in het midden -->
+          <ul class="nav navbar-nav navbar-menu-center">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="badminton.html">Badminton</a></li>
+            <li><a href="tennis.html">Tennis</a></li>
+            <li class="active"><a href="volleybal.html">Volleyball</a></li>
+          </ul>
 
-        <h3 class="section-title text-center"><i class="fa fa-list-alt"></i> Categories & Format</h3>
-        <ul class="overview-list" style="max-width: 90%; margin: 0 auto; line-height: 1.8;">
-          <li><i class="fa fa-check"></i> Recreational & Competitive divisions.</li>
-          <li><i class="fa fa-check"></i> Mixed teams formatting available.</li>
-          <li><i class="fa fa-check"></i> Poule phase followed by placement and knock-out matches to guarantee plenty of playing time for every team.</li>
-        </ul>
-
-        <hr class="card-divider">
-
-        <h3 class="section-title text-center"><i class="fa fa-cutlery"></i> Catering & Extras</h3>
-        <ul class="overview-list" style="max-width: 90%; margin: 0 auto; line-height: 1.8;">
-          <li><i class="fa fa-coffee"></i> Cafeteria services available on-site for drinks, snacks, and lunch options throughout the day.</li>
-        </ul>
+          <!-- Rest Rechts -->
+          <ul class="nav navbar-nav navbar-menu-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                >Info <span class="caret"></span
+              ></a>
+              <ul class="dropdown-menu">
+                <li><a href="./info/tourist-info.html">Visitor info</a></li>
+                <li><a href="./info/party.html">Party</a></li>
+                <li><a href="./info/contact.html">Contact</a></li>
+              </ul>
+            </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                >Account <span class="caret"></span
+              ></a>
+              <ul class="dropdown-menu">
+                <li><a href="./account/login.html">Login</a></li>
+                <li><a href="./account/t&c.html">Terms-and-Conditions</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
       </div>
+    </nav>
 
+    <!-- Hero Title -->
+    <div class="hero-title container">
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2 modern-card text-center">
+          <h1>Volleyball Tournament</h1>
+          <h2>Saturday, November 7, 2026</h2>
+          <img
+            src="../abg_volleybal.jpg"
+            alt="ABG round logo 2026"
+            width="50%"
+          />
+        </div>
+      </div>
     </div>
 
-  </div>
-</div>
-
-<!-- Footer -->
-<footer>
-  <div class="social-section footer-social-section">
+    <!-- Main Content Grid -->
     <div class="container">
       <div class="row">
-        <div class="col-md-8 col-md-offset-2 text-center">
-          <h2 class="footer-social-title">Visit our socials!</h2>
-          <ul class="social-icons-custom">
-            <li>
-              <a href="https://www.instagram.com/antwerp_brilliant_games/" target="_blank" rel="noopener" title="follow us on instagram">
-                <img src="https://antwerpbrilliantgames.be/images/icons/instagram_logo.png" alt="follow us on instagram">
-                <span>Instagram</span>
-              </a>
-            </li>
-            <li>
-              <a href="https://activecompany.be/en/" target="_blank" rel="noopener" title="Active Company Antwerpen">
-                <img src="https://antwerpbrilliantgames.be/images/logo/ActiveCompanyAntwerp_Social_Media_Logo-2022.jpg" alt="Active Company Antwerpen" class="active-logo">
-                <span>Active Company Antwerpen</span>
-              </a>
-            </li>
-          </ul>
+        <div class="col-md-8 col-md-offset-2">
+          <div class="modern-card text-center" style="margin-bottom: 30px">
+            <p class="card-text-large">
+              Get ready for high-flying spikes, great teamwork, and an
+              unforgettable day of volleyball action!
+            </p>
+            <div style="margin-top: 25px">
+              <a
+                href="create-registration-account.html"
+                class="btn btn-success btn-lg btn-modern"
+                >Go to Registration</a
+              >
+            </div>
+          </div>
+
+          <div class="modern-card">
+            <h3 class="section-title text-center">
+              <i class="fa fa-clock-o"></i> Timing & Schedule
+            </h3>
+            <ul class="overview-list" style="max-width: 90%; margin: 0 auto">
+              <li>
+                <i class="fa fa-check-circle"></i>
+                <strong>Doors open:</strong> 08:30 AM
+              </li>
+              <li>
+                <i class="fa fa-users"></i>
+                <strong>Captain's briefing:</strong> 09:00 AM
+              </li>
+              <li>
+                <i class="fa fa-play-circle"></i>
+                <strong>Start tournament:</strong> 09:30 AM
+              </li>
+              <li>
+                <i class="fa fa-trophy"></i>
+                <strong>Finals & Ceremony:</strong> Around 05:00 PM
+              </li>
+            </ul>
+
+            <hr class="card-divider" />
+
+            <h3 class="section-title text-center">
+              <i class="fa fa-map-marker"></i> Location
+            </h3>
+            <div style="text-align: center; margin-bottom: 20px">
+              <p><strong>Venue:</strong> Sportcentrum Arena</p>
+              <p>
+                <strong>Address:</strong> De Gryspeerstraat 86, 2100 Deurne
+                (Antwerp)
+              </p>
+              <p>
+                <strong>Public Transport:</strong> Easily accessible via local
+                tram and bus lines. Check
+                <a href="https://www.delijn.be/" target="_blank" rel="noopener"
+                  >De Lijn</a
+                >
+                for detailed connections.
+              </p>
+              <p>
+                <strong>Parking:</strong> Parking facilities available near the
+                sports complex.
+              </p>
+            </div>
+
+            <hr class="card-divider" />
+
+            <h3 class="section-title text-center">
+              <i class="fa fa-list-alt"></i> Categories & Format
+            </h3>
+            <ul
+              class="overview-list"
+              style="max-width: 90%; margin: 0 auto; line-height: 1.8"
+            >
+              <li>
+                <i class="fa fa-check"></i> Recreational & Competitive
+                divisions.
+              </li>
+              <li>
+                <i class="fa fa-check"></i> Mixed teams formatting available.
+              </li>
+              <li>
+                <i class="fa fa-check"></i> Poule phase followed by placement
+                and knock-out matches to guarantee plenty of playing time for
+                every team.
+              </li>
+            </ul>
+
+            <hr class="card-divider" />
+
+            <h3 class="section-title text-center">
+              <i class="fa fa-cutlery"></i> Catering & Extras
+            </h3>
+            <ul
+              class="overview-list"
+              style="max-width: 90%; margin: 0 auto; line-height: 1.8"
+            >
+              <li>
+                <i class="fa fa-coffee"></i> Cafeteria services available
+                on-site for drinks, snacks, and lunch options throughout the
+                day.
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="container text-center footer-bottom footer-bottom-container">
-    <p>&copy; 2026 Antwerp Brilliant Games. All rights reserved.</p>
-  </div>
-</footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</body>
+    <!-- Footer -->
+    <footer>
+      <div class="social-section footer-social-section">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8 col-md-offset-2 text-center">
+              <h2 class="footer-social-title">Visit our socials!</h2>
+              <ul class="social-icons-custom">
+                <li>
+                  <a
+                    href="https://www.instagram.com/antwerp_brilliant_games/"
+                    target="_blank"
+                    rel="noopener"
+                    title="follow us on instagram"
+                  >
+                    <img
+                      src="https://antwerpbrilliantgames.be/images/icons/instagram_logo.png"
+                      alt="follow us on instagram"
+                    />
+                    <span>Instagram</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://activecompany.be/en/"
+                    target="_blank"
+                    rel="noopener"
+                    title="Active Company Antwerpen"
+                  >
+                    <img
+                      src="https://antwerpbrilliantgames.be/images/logo/ActiveCompanyAntwerp_Social_Media_Logo-2022.jpg"
+                      alt="Active Company Antwerpen"
+                      class="active-logo"
+                    />
+                    <span>Active Company Antwerpen</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container text-center footer-bottom footer-bottom-container">
+        <p>&copy; 2026 Antwerp Brilliant Games. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  </body>
 </html>

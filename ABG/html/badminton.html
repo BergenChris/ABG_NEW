@@ -1,194 +1,329 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Badminton - Antwerp Brilliant Games 2026</title>
-<meta name="description" content="Discover everything about the ABG 2026 Badminton tournament: timing, location, levels, rules, and registration details.">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-<link href="../css/style.css" rel="stylesheet">
-<link href="../css/index.css" rel="stylesheet">
-<link href="../css/sport.css" rel="stylesheet">
-<link href="../css/badminton.css" rel="stylesheet">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Badminton - Antwerp Brilliant Games 2026</title>
+    <meta
+      name="description"
+      content="Discover everything about the ABG 2026 Badminton tournament: timing, location, levels, rules, and registration details."
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link href="../css/style.css" rel="stylesheet" />
+    <link href="../css/index.css" rel="stylesheet" />
+    <link href="../css/sport.css" rel="stylesheet" />
+    <link href="../css/badminton.css" rel="stylesheet" />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container navbar-container-flex">
+        <!-- 1. Logo Links & Hamburger knop -->
+        <div class="navbar-header navbar-header-custom">
+          <button
+            type="button"
+            class="navbar-toggle collapsed"
+            data-toggle="collapse"
+            data-target="#myNavbar"
+            aria-expanded="false"
+          >
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <img
+            src="../ABG_balk.png"
+            alt="Antwerp Brilliant Games"
+            height="100"
+          />
+        </div>
 
-<!-- Navbar -->
-<nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container navbar-container-flex">
-    
-    <!-- 1. Logo Links & Hamburger knop -->
-    <div class="navbar-header navbar-header-custom">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-       <img src="../ABG_balk.png" alt="Antwerp Brilliant Games" height="100">
-    </div>
-
-    <!-- 2 & 3. Navigatielinks omsloten door de collapse container -->
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <!-- Sporten in het midden -->
-      <ul class="nav navbar-nav navbar-menu-center">
-        <li><a href="../index.html">Home</a></li>
-        <li class="active"><a href="badminton.html">Badminton</a></li>
-        <li><a href="tennis.html">Tennis</a></li>
-        <li><a href="volleybal.html">Volleyball</a></li>
-      </ul>
-
-      <!-- Rest Rechts -->
-      <ul class="nav navbar-nav navbar-menu-right">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Info <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="./info/tourist-info.html">Visitor info</a></li>
-            <li><a href="./info/party.html">Party</a></li>
-            <li><a href="./info/contact.html">Contact</a></li>
+        <!-- 2 & 3. Navigatielinks omsloten door de collapse container -->
+        <div class="collapse navbar-collapse" id="myNavbar">
+          <!-- Sporten in het midden -->
+          <ul class="nav navbar-nav navbar-menu-center">
+            <li><a href="../index.html">Home</a></li>
+            <li class="active"><a href="badminton.html">Badminton</a></li>
+            <li><a href="tennis.html">Tennis</a></li>
+            <li><a href="volleybal.html">Volleyball</a></li>
           </ul>
-        </li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Account <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="./account/login.html">Login</a></li>
-            <li><a href="./account/t&c.html">Terms-and-Conditions</a></li>
+
+          <!-- Rest Rechts -->
+          <ul class="nav navbar-nav navbar-menu-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                >Info <span class="caret"></span
+              ></a>
+              <ul class="dropdown-menu">
+                <li><a href="./info/tourist-info.html">Visitor info</a></li>
+                <li><a href="./info/party.html">Party</a></li>
+                <li><a href="./info/contact.html">Contact</a></li>
+              </ul>
+            </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                >Account <span class="caret"></span
+              ></a>
+              <ul class="dropdown-menu">
+                <li><a href="./account/login.html">Login</a></li>
+                <li><a href="./account/t&c.html">Terms-and-Conditions</a></li>
+              </ul>
+            </li>
           </ul>
-        </li>
-      </ul>
-    </div>
-
-  </div>
-</nav>
-
-<!-- Hero Title -->
-<!-- Hero Title -->
-<div class="hero-title container">
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2 modern-card text-center">
-      <h1>Badminton Tournament</h1>
-      <h2>Saturday, November 7, 2026</h2>
-      <img src="../ABG_badminton.jpg" alt="ABG round logo 2026" width="50%" >
-    </div>
-  </div>
-</div>
-
-<!-- Main Content -->
-<div class="container">
-  <div class="row">
-    
-    <!-- Left / Main Column -->
-    <div class="col-md-8 col-md-offset-2">
-    
-      <div class="modern-card text-center" style="margin-bottom: 30px;">
-        <p class="card-text-large">Get ready for fast rallies and fierce competition at our premier badminton venue!</p>
-        <div style="margin-top: 20px;">
-          <a href="create-registration-account.html" class="btn btn-success btn-lg btn-modern">Click here to go to registration</a>
         </div>
       </div>
+    </nav>
 
-      <div class="modern-card">
-        <h3 class="section-title"><i class="fa fa-clock-o"></i> Timing & Schedule</h3>
-        <ul class="overview-list">
-          <li><i class="fa fa-check-circle"></i> <strong>Registration starts:</strong> July 21st, 2026 at 10:00 CEST. *(You will need your double partner's name and email. Each player registers separately; no blind dates).*</li>
-          <li><i class="fa fa-calendar-check-o"></i> <strong>Tournament Day:</strong> Saturday, November 7, 2026</li>
-        </ul>
-        
-        <h4 style="color: #0C155C; font-weight: 600; margin-top: 25px;">Tournament Day Schedule</h4>
-        <ul class="overview-list">
-          <li><strong>08:00:</strong> Doors open</li>
-          <li><strong>08:30:</strong> End of registration verification</li>
-          <li><strong>08:45:</strong> Tournament briefing / info session</li>
-          <li><strong>09:00:</strong> Start tournament <span class="text-muted">(Strictly programmed, please be on time!)</span></li>
-        </ul>
-
-        <hr class="card-divider">
-
-        <h3 class="section-title"><i class="fa fa-map-marker"></i> Location</h3>
-        <p><strong>Venue:</strong> Sporthal St. Eduardus Instituut</p>
-        <p><strong>Address:</strong> Broeder Frederikstraat 3, 2170 Merksem</p>
-        <p><strong>Public Transport:</strong> Tram 2 or 3A: Get off at stop <em>Merksem Oudebareel</em>. Plan your itinerary via <a href="https://www.delijn.be/" target="_blank" rel="noopener">De Lijn</a>.</p>
-        <p><strong>Parking:</strong> Free car parking is available right on-site at the venue.</p>
-
-        <hr class="card-divider">
-
-        <h3 class="section-title"><i class="fa fa-trophy"></i> Tournament Levels & Categories</h3>
-        <p>All levels are gender-neutral (categories correspond to standard men's doubles benchmarks):</p>
-        <ul class="overview-list" style="line-height: 1.8;">
-          <li><i class="fa fa-angle-right"></i> Doubles A</li>
-          <li><i class="fa fa-angle-right"></i> Doubles B+</li>
-          <li><i class="fa fa-angle-right"></i> Doubles B-</li>
-          <li><i class="fa fa-angle-right"></i> Doubles C+</li>
-          <li><i class="fa fa-angle-right"></i> Doubles C-</li>
-        </ul>
-
-        <hr class="card-divider">
-
-        <h3 class="section-title"><i class="fa fa-list-alt"></i> Rules & Format</h3>
-        <ul class="overview-list" style="line-height: 1.8;">
-          <li><i class="fa fa-check"></i> <strong>Morning Phase:</strong> Poule (Group) phase. Every team plays multiple matches to determine placement.</li>
-          <li><i class="fa fa-check"></i> <strong>Afternoon Phase:</strong> Knock-out phase. All teams advance to afternoon brackets to guarantee a full day of playing.</li>
-          <li><i class="fa fa-check"></i> <strong>Shuttlecocks:</strong> Official match shuttle is the <em>Victor Champion No. 1</em> (feather). <em>Exception for C- Level:</em> Matches may use <em>Yonex Mavis 300</em> (plastic) only if all players unanimously agree prior to the match.</li>
-        </ul>
-
-        <hr class="card-divider">
-
-        <h3 class="section-title"><i class="fa fa-cutlery"></i> Catering & Extras</h3>
-        <ul class="overview-list" style="line-height: 1.8;">
-          <li><i class="fa fa-coffee"></i> <strong>Lunch Break:</strong> Enjoy our famous buffet-style lunch provided for all players between the group and knock-out stages.</li>
-          <li><i class="fa fa-apple"></i> <strong>Refreshments:</strong> Free sweets, fruits, water, and coffee available throughout the day.</li>
-          <li><i class="fa fa-glass"></i> <strong>Cafeteria:</strong> Venue cafeteria will be open for extra cravings or drinks.</li>
-        </ul>
-
-        <hr class="card-divider">
-
-        <h3 class="section-title"><i class="fa fa-eur"></i> Entry Fee & Registration Policy</h3>
-        <ul class="overview-list" style="line-height: 1.8;">
-          <li><i class="fa fa-info-circle"></i> <strong>Price:</strong> €50 per player.</li>
-          <li><i class="fa fa-info-circle"></i> <strong>Included:</strong> Tournament entry, official tournament goodie bag, and the full buffet lunch.</li>
-          <li><i class="fa fa-info-circle"></i> <strong>Withdrawal Policy:</strong> Refunds cannot be guaranteed for cancellations requested after October 1st, 2026.</li>
-          <li><i class="fa fa-info-circle"></i> <strong>Reservation Rule:</strong> A slot in a division is only secured when both partners have completed registration and payment.</li>
-        </ul>
+    <!-- Hero Title -->
+    <!-- Hero Title -->
+    <div class="hero-title container">
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2 modern-card text-center">
+          <h1>Badminton Tournament</h1>
+          <h2>Saturday, November 7, 2026</h2>
+          <img
+            src="../ABG_badminton.jpg"
+            alt="ABG round logo 2026"
+            width="50%"
+          />
+        </div>
       </div>
-
     </div>
 
-  </div>
-</div>
-
-<!-- Footer -->
-<footer>
-  <div class="social-section footer-social-section">
+    <!-- Main Content -->
     <div class="container">
       <div class="row">
-        <div class="col-md-8 col-md-offset-2 text-center">
-          <h2 class="footer-social-title">Visit our socials!</h2>
-          <ul class="social-icons-custom">
-            <li>
-              <a href="https://www.instagram.com/antwerp_brilliant_games/" target="_blank" rel="noopener" title="follow us on instagram">
-                <img src="https://antwerpbrilliantgames.be/images/icons/instagram_logo.png" alt="follow us on instagram">
-                <span>Instagram</span>
-              </a>
-            </li>
-            <li>
-              <a href="https://activecompany.be/en/" target="_blank" rel="noopener" title="Active Company Antwerpen">
-                <img src="https://antwerpbrilliantgames.be/images/logo/ActiveCompanyAntwerp_Social_Media_Logo-2022.jpg" alt="Active Company Antwerpen" class="active-logo">
-                <span>Active Company Antwerpen</span>
-              </a>
-            </li>
-          </ul>
+        <!-- Left / Main Column -->
+        <div class="col-md-8 col-md-offset-2">
+          <div class="modern-card text-center" style="margin-bottom: 30px">
+            <p class="card-text-large">
+              Get ready for fast rallies and fierce competition at our premier
+              badminton venue!
+            </p>
+            <div style="margin-top: 20px">
+              <a
+                href="create-registration-account.html"
+                class="btn btn-success btn-lg btn-modern"
+                >Click here to go to registration</a
+              >
+            </div>
+          </div>
+
+          <div class="modern-card">
+            <h3 class="section-title">
+              <i class="fa fa-clock-o"></i> Timing & Schedule
+            </h3>
+            <ul class="overview-list">
+              <li>
+                <i class="fa fa-check-circle"></i>
+                <strong>Registration starts:</strong> July 21st, 2026 at 10:00
+                CEST. *(You will need your double partner's name and email. Each
+                player registers separately; no blind dates).*
+              </li>
+              <li>
+                <i class="fa fa-calendar-check-o"></i>
+                <strong>Tournament Day:</strong> Saturday, November 7, 2026
+              </li>
+            </ul>
+
+            <h4 style="color: #0c155c; font-weight: 600; margin-top: 25px">
+              Tournament Day Schedule
+            </h4>
+            <ul class="overview-list">
+              <li><strong>08:00:</strong> Doors open</li>
+              <li><strong>08:30:</strong> End of registration verification</li>
+              <li>
+                <strong>08:45:</strong> Tournament briefing / info session
+              </li>
+              <li>
+                <strong>09:00:</strong> Start tournament
+                <span class="text-muted"
+                  >(Strictly programmed, please be on time!)</span
+                >
+              </li>
+            </ul>
+
+            <hr class="card-divider" />
+
+            <h3 class="section-title">
+              <i class="fa fa-map-marker"></i> Location
+            </h3>
+            <p><strong>Venue:</strong> Sporthal St. Eduardus Instituut</p>
+            <p>
+              <strong>Address:</strong> Broeder Frederikstraat 3, 2170 Merksem
+            </p>
+            <p>
+              <strong>Public Transport:</strong> Tram 2 or 3A: Get off at stop
+              <em>Merksem Oudebareel</em>. Plan your itinerary via
+              <a href="https://www.delijn.be/" target="_blank" rel="noopener"
+                >De Lijn</a
+              >.
+            </p>
+            <p>
+              <strong>Parking:</strong> Free car parking is available right
+              on-site at the venue.
+            </p>
+
+            <hr class="card-divider" />
+
+            <h3 class="section-title">
+              <i class="fa fa-trophy"></i> Tournament Levels & Categories
+            </h3>
+            <p>
+              All levels are gender-neutral (categories correspond to standard
+              men's doubles benchmarks):
+            </p>
+            <ul class="overview-list" style="line-height: 1.8">
+              <li><i class="fa fa-angle-right"></i> Doubles A</li>
+              <li><i class="fa fa-angle-right"></i> Doubles B+</li>
+              <li><i class="fa fa-angle-right"></i> Doubles B-</li>
+              <li><i class="fa fa-angle-right"></i> Doubles C+</li>
+              <li><i class="fa fa-angle-right"></i> Doubles C-</li>
+            </ul>
+
+            <hr class="card-divider" />
+
+            <h3 class="section-title">
+              <i class="fa fa-list-alt"></i> Rules & Format
+            </h3>
+            <ul class="overview-list" style="line-height: 1.8">
+              <li>
+                <i class="fa fa-check"></i>
+                <strong>Morning Phase:</strong> Poule (Group) phase. Every team
+                plays multiple matches to determine placement.
+              </li>
+              <li>
+                <i class="fa fa-check"></i>
+                <strong>Afternoon Phase:</strong> Knock-out phase. All teams
+                advance to afternoon brackets to guarantee a full day of
+                playing.
+              </li>
+              <li>
+                <i class="fa fa-check"></i>
+                <strong>Shuttlecocks:</strong> Official match shuttle is the
+                <em>Victor Champion No. 1</em> (feather).
+                <em>Exception for C- Level:</em> Matches may use
+                <em>Yonex Mavis 300</em> (plastic) only if all players
+                unanimously agree prior to the match.
+              </li>
+            </ul>
+
+            <hr class="card-divider" />
+
+            <h3 class="section-title">
+              <i class="fa fa-cutlery"></i> Catering & Extras
+            </h3>
+            <ul class="overview-list" style="line-height: 1.8">
+              <li>
+                <i class="fa fa-coffee"></i> <strong>Lunch Break:</strong> Enjoy
+                our famous buffet-style lunch provided for all players between
+                the group and knock-out stages.
+              </li>
+              <li>
+                <i class="fa fa-apple"></i> <strong>Refreshments:</strong> Free
+                sweets, fruits, water, and coffee available throughout the day.
+              </li>
+              <li>
+                <i class="fa fa-glass"></i> <strong>Cafeteria:</strong> Venue
+                cafeteria will be open for extra cravings or drinks.
+              </li>
+            </ul>
+
+            <hr class="card-divider" />
+
+            <h3 class="section-title">
+              <i class="fa fa-eur"></i> Entry Fee & Registration Policy
+            </h3>
+            <ul class="overview-list" style="line-height: 1.8">
+              <li>
+                <i class="fa fa-info-circle"></i> <strong>Price:</strong> €50
+                per player.
+              </li>
+              <li>
+                <i class="fa fa-info-circle"></i>
+                <strong>Included:</strong> Tournament entry, official tournament
+                goodie bag, and the full buffet lunch.
+              </li>
+              <li>
+                <i class="fa fa-info-circle"></i>
+                <strong>Withdrawal Policy:</strong> Refunds cannot be guaranteed
+                for cancellations requested after October 1st, 2026.
+              </li>
+              <li>
+                <i class="fa fa-info-circle"></i>
+                <strong>Reservation Rule:</strong> A slot in a division is only
+                secured when both partners have completed registration and
+                payment.
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="container text-center footer-bottom footer-bottom-container">
-    <p>&copy; 2026 Antwerp Brilliant Games. All rights reserved.</p>
-  </div>
-</footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</body>
+    <!-- Footer -->
+    <footer>
+      <div class="social-section footer-social-section">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8 col-md-offset-2 text-center">
+              <h2 class="footer-social-title">Visit our socials!</h2>
+              <ul class="social-icons-custom">
+                <li>
+                  <a
+                    href="https://www.instagram.com/antwerp_brilliant_games/"
+                    target="_blank"
+                    rel="noopener"
+                    title="follow us on instagram"
+                  >
+                    <img
+                      src="https://antwerpbrilliantgames.be/images/icons/instagram_logo.png"
+                      alt="follow us on instagram"
+                    />
+                    <span>Instagram</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://activecompany.be/en/"
+                    target="_blank"
+                    rel="noopener"
+                    title="Active Company Antwerpen"
+                  >
+                    <img
+                      src="https://antwerpbrilliantgames.be/images/logo/ActiveCompanyAntwerp_Social_Media_Logo-2022.jpg"
+                      alt="Active Company Antwerpen"
+                      class="active-logo"
+                    />
+                    <span>Active Company Antwerpen</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container text-center footer-bottom footer-bottom-container">
+        <p>&copy; 2026 Antwerp Brilliant Games. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  </body>
 </html>

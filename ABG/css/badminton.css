@@ -1,7 +1,7 @@
 /* --- BADMINTON PAGE STYLES --- */
 .content-block h1 {
   font-weight: 700;
-  color: #0C155C;
+  color: #0c155c;
 }
 
 .content-block .lead {
@@ -12,6 +12,6 @@
 .badminton-highlight {
   background-color: #f0f4f8;
   padding: 15px;
-  border-left: 4px solid #0C155C;
+  border-left: 4px solid #0c155c;
   margin: 15px 0;
 }

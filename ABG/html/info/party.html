@@ -1,129 +1,232 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>ABG Party - Antwerp Brilliant Games</title>
-<meta name="description" content="Join the official closing party of the Antwerp Brilliant Games 2026 at Woodpop. Great music, drinks, and celebration with athletes and friends.">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link href="../../css/style.css" rel="stylesheet">
-<link href="../../css/index.css" rel="stylesheet">
-<link href="../../css/party.css" rel="stylesheet"> 
-
-</head>
-<body>
-
-<!-- Navbar -->
-<nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container" style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
-    
-    <!-- 1. Logo Links -->
-    <div class="navbar-header" style="float: none;">
-       <img src="../../ABG_balk.png" alt="Antwerp Brilliant Games" height="100">
-    </div>
-
-    <!-- 2. Sporten in het midden -->
-    <ul class="nav navbar-nav" style="float: none; margin: 0; display: flex;">
-      <li><a href="../../index.html">Home</a></li>
-      <li><a href="../badminton.html">Badminton</a></li>
-      <li><a href="../tennis.html">Tennis</a></li>
-      <li><a href="../volleybal.html">Volleyball</a></li>
-    </ul>
-
-    <!-- 3. Rest Rechts (Info is actief, Party is geselecteerd) -->
-    <ul class="nav navbar-nav navbar-right" style="float: none; margin: 0; display: flex;">
-      <li class="dropdown active">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Info <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="tourist-info.html">Visitor info</a></li>
-          <li class="active"><a href="party.html">Party</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </li>
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Registration <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="login.html">Login</a></li>
-          <li><a href="create-registration-account.html">Create Registration Account</a></li>
-          <li><a href="terms-and-conditions.html">Terms-and-Conditions</a></li>
-        </ul>
-      </li>
-    </ul>
-
-  </div>
-</nav>
-
-<!-- Main Content / Spacer voor fixed navbar -->
-<div style="margin-top: 90px;"></div>
-
-<!-- Party content -->
-<div class="container content-block" style="padding: 40px 0;">
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      
-      <div class="party-card">
-        <h1>ABG Closing Party</h1>
-        <p class="lead" style="color: #64748b; font-size: 17px; margin-bottom: 25px;">Celebrate, dance, and connect at the official Antwerp Brilliant Games party!</p>
-        
-        <p style="margin-bottom: 20px;">After a thrilling weekend full of competitive sports, teamwork, and sweat, it is time to let loose and celebrate together. The official closing party of the Antwerp Brilliant Games takes place on <strong>Saturday, November 7, 2026</strong>.</p>
-        
-        <hr style="border-top: 1px solid #e2e8f0; margin: 25px 0;">
-
-        <h3 style="font-size: 20px; font-weight: 600; color: #0f172a; margin-bottom: 12px;">Location: Woodpop</h3>
-        <p style="margin-bottom: 15px;">We are thrilled to host our legendary closing party at <strong>Woodpop</strong>, one of Antwerp's most vibrant and popular queer-friendly party spots located right in the heart of the city.</p>
-        <p style="margin-bottom: 20px;">Expect fantastic tunes, great drinks, a wonderful inclusive atmosphere, and an unforgettable night surrounded by athletes, friends, and supporters from all over.</p>
-
-        <!-- Practical details container -->
-        <div class="details-box">
-          <h4 style="font-size: 16px; font-weight: 600; color: #0f172a; margin-top: 0; margin-bottom: 10px;">Practical Details</h4>
-          <ul>
-            <li><strong>Date:</strong> Saturday, November 7, 2026</li>
-            <li><strong>Time:</strong> Starting from 10:00 PM onwards</li>
-            <li><strong>Access:</strong> Included for tournament participants or available via ticket info at the venue.</li>
-          </ul>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>ABG Party - Antwerp Brilliant Games</title>
+    <meta
+      name="description"
+      content="Join the official closing party of the Antwerp Brilliant Games 2026 at Woodpop. Great music, drinks, and celebration with athletes and friends."
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link href="../../css/style.css" rel="stylesheet" />
+    <link href="../../css/index.css" rel="stylesheet" />
+    <link href="../../css/party.css" rel="stylesheet" />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div
+        class="container"
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          width: 100%;
+        "
+      >
+        <!-- 1. Logo Links -->
+        <div class="navbar-header" style="float: none">
+          <img
+            src="../../ABG_balk.png"
+            alt="Antwerp Brilliant Games"
+            height="100"
+          />
         </div>
 
-        <div style="margin-top: 30px;">
-          <a href="https://www.woodpop.be" target="_blank" rel="noopener" class="btn btn-primary btn-lg" style="font-weight: 500; border-radius: 6px;">Visit Woodpop Website</a>
-        </div>
+        <!-- 2. Sporten in het midden -->
+        <ul
+          class="nav navbar-nav"
+          style="float: none; margin: 0; display: flex"
+        >
+          <li><a href="../../index.html">Home</a></li>
+          <li><a href="../badminton.html">Badminton</a></li>
+          <li><a href="../tennis.html">Tennis</a></li>
+          <li><a href="../volleybal.html">Volleyball</a></li>
+        </ul>
+
+        <!-- 3. Rest Rechts (Info is actief, Party is geselecteerd) -->
+        <ul
+          class="nav navbar-nav navbar-right"
+          style="float: none; margin: 0; display: flex"
+        >
+          <li class="dropdown active">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+              >Info <span class="caret"></span
+            ></a>
+            <ul class="dropdown-menu">
+              <li><a href="tourist-info.html">Visitor info</a></li>
+              <li class="active"><a href="party.html">Party</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+              >Registration <span class="caret"></span
+            ></a>
+            <ul class="dropdown-menu">
+              <li><a href="login.html">Login</a></li>
+              <li>
+                <a href="create-registration-account.html"
+                  >Create Registration Account</a
+                >
+              </li>
+              <li>
+                <a href="terms-and-conditions.html">Terms-and-Conditions</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
       </div>
+    </nav>
 
-    </div>
-  </div>
-</div>
+    <!-- Main Content / Spacer voor fixed navbar -->
+    <div style="margin-top: 90px"></div>
 
-<!-- Footer -->
-<footer>
-  <div class="social-section footer-social-section">
-    <div class="container">
+    <!-- Party content -->
+    <div class="container content-block" style="padding: 40px 0">
       <div class="row">
-        <div class="col-md-8 col-md-offset-2 text-center">
-          <h2 class="footer-social-title">Visit our socials!</h2>
-          <ul class="social-icons-custom">
-            <li>
-              <a href="https://www.instagram.com/antwerp_brilliant_games/" target="_blank" rel="noopener" title="follow us on instagram">
-                <img src="https://antwerpbrilliantgames.be/images/icons/instagram_logo.png" alt="follow us on instagram">
-                <span>Instagram</span>
-              </a>
-            </li>
-            <li>
-              <a href="https://activecompany.be/en/" target="_blank" rel="noopener" title="Active Company Antwerpen">
-                <img src="https://antwerpbrilliantgames.be/images/logo/ActiveCompanyAntwerp_Social_Media_Logo-2022.jpg" alt="Active Company Antwerpen" class="active-logo">
-                <span>Active Company Antwerpen</span>
-              </a>
-            </li>
-          </ul>
+        <div class="col-md-8 col-md-offset-2">
+          <div class="party-card">
+            <h1>ABG Closing Party</h1>
+            <p
+              class="lead"
+              style="color: #64748b; font-size: 17px; margin-bottom: 25px"
+            >
+              Celebrate, dance, and connect at the official Antwerp Brilliant
+              Games party!
+            </p>
+
+            <p style="margin-bottom: 20px">
+              After a thrilling weekend full of competitive sports, teamwork,
+              and sweat, it is time to let loose and celebrate together. The
+              official closing party of the Antwerp Brilliant Games takes place
+              on <strong>Saturday, November 7, 2026</strong>.
+            </p>
+
+            <hr style="border-top: 1px solid #e2e8f0; margin: 25px 0" />
+
+            <h3
+              style="
+                font-size: 20px;
+                font-weight: 600;
+                color: #0f172a;
+                margin-bottom: 12px;
+              "
+            >
+              Location: Woodpop
+            </h3>
+            <p style="margin-bottom: 15px">
+              We are thrilled to host our legendary closing party at
+              <strong>Woodpop</strong>, one of Antwerp's most vibrant and
+              popular queer-friendly party spots located right in the heart of
+              the city.
+            </p>
+            <p style="margin-bottom: 20px">
+              Expect fantastic tunes, great drinks, a wonderful inclusive
+              atmosphere, and an unforgettable night surrounded by athletes,
+              friends, and supporters from all over.
+            </p>
+
+            <!-- Practical details container -->
+            <div class="details-box">
+              <h4
+                style="
+                  font-size: 16px;
+                  font-weight: 600;
+                  color: #0f172a;
+                  margin-top: 0;
+                  margin-bottom: 10px;
+                "
+              >
+                Practical Details
+              </h4>
+              <ul>
+                <li><strong>Date:</strong> Saturday, November 7, 2026</li>
+                <li><strong>Time:</strong> Starting from 10:00 PM onwards</li>
+                <li>
+                  <strong>Access:</strong> Included for tournament participants
+                  or available via ticket info at the venue.
+                </li>
+              </ul>
+            </div>
+
+            <div style="margin-top: 30px">
+              <a
+                href="https://www.woodpop.be"
+                target="_blank"
+                rel="noopener"
+                class="btn btn-primary btn-lg"
+                style="font-weight: 500; border-radius: 6px"
+                >Visit Woodpop Website</a
+              >
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="container text-center footer-bottom footer-bottom-container">
-    <p>&copy; 2026 Antwerp Brilliant Games. All rights reserved.</p>
-  </div>
-</footer>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</body>
+
+    <!-- Footer -->
+    <footer>
+      <div class="social-section footer-social-section">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8 col-md-offset-2 text-center">
+              <h2 class="footer-social-title">Visit our socials!</h2>
+              <ul class="social-icons-custom">
+                <li>
+                  <a
+                    href="https://www.instagram.com/antwerp_brilliant_games/"
+                    target="_blank"
+                    rel="noopener"
+                    title="follow us on instagram"
+                  >
+                    <img
+                      src="https://antwerpbrilliantgames.be/images/icons/instagram_logo.png"
+                      alt="follow us on instagram"
+                    />
+                    <span>Instagram</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://activecompany.be/en/"
+                    target="_blank"
+                    rel="noopener"
+                    title="Active Company Antwerpen"
+                  >
+                    <img
+                      src="https://antwerpbrilliantgames.be/images/logo/ActiveCompanyAntwerp_Social_Media_Logo-2022.jpg"
+                      alt="Active Company Antwerpen"
+                      class="active-logo"
+                    />
+                    <span>Active Company Antwerpen</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container text-center footer-bottom footer-bottom-container">
+        <p>&copy; 2026 Antwerp Brilliant Games. All rights reserved.</p>
+      </div>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  </body>
 </html>

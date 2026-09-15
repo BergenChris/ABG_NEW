@@ -1,7 +1,7 @@
 /* --- SPORT PAGES STYLES (Badminton, Tennis, Volleyball) --- */
 .content-block h1 {
   font-weight: 700;
-  color: #0C155C;
+  color: #0c155c;
 }
 
 .content-block .lead {
@@ -10,10 +10,10 @@
 
 .panel {
   border-radius: 4px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .panel h4 {
-  color: #0C155C;
+  color: #0c155c;
   font-weight: bold;
 }

@@ -13,7 +13,7 @@ a {
   margin-bottom: 0;
   border-radius: 0;
   height: 90px;
-  background: #0C155C;
+  background: #0c155c;
   color: #fff;
   font-size: 20px;
 }
@@ -48,7 +48,7 @@ a {
 }
 
 /* Tekstkleur verandert naar lichterblauw bij hover/focus of actieve pagina */
-.navbar-default .navbar-nav > li > a:hover, 
+.navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus,
 .navbar-default .navbar-nav > .active > a,
 .navbar-default .navbar-nav > .active > a:hover,
@@ -66,7 +66,7 @@ a {
 
 .navbar-default .dropdown-menu > li > a:hover {
   color: #ffffff !important;
-  background-color: #0C155C !important;
+  background-color: #0c155c !important;
 }
 
 /* --- ALGEMENE CONTENT LAYOUT --- */
@@ -82,7 +82,7 @@ a {
 
 /* --- FOOTER --- */
 footer {
-  background: #0C155C;
+  background: #0c155c;
   color: #aaa;
   padding: 25px 0;
   margin-top: 40px;
@@ -95,7 +95,7 @@ footer a {
 
 /* --- FOOTER STYLING --- */
 footer {
-  background: #0C155C;
+  background: #0c155c;
   color: #aaa;
   padding: 25px 0 15px;
   margin-top: 40px;
@@ -109,7 +109,7 @@ footer a {
 
 .social-section {
   padding: 20px 0;
-  background: #0C155C;
+  background: #0c155c;
 }
 
 .social-section h2 {
