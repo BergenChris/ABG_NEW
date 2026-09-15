@@ -225,7 +225,6 @@ body {
 
   .navbar-nav .dropdown-menu > li > a {
     background-color: #ffffff !important;
-    color: #0C155C !important;
     border-bottom: 1px solid #f8fafc;
     font-size: 13px;
     padding: 8px 10px !important;
@@ -263,8 +262,7 @@ body {
 
 /* Hero Section */
 .hero-title {
-  background: linear-gradient(135deg, #0C155C 0%, #1e293b 100%);
-  color: #ffffff;
+  color: #0C155C;
   padding: 60px 15px 40px;
   margin-bottom: 40px;
   text-align: center;
