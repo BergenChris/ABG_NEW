@@ -30,7 +30,7 @@
     <link href="../../css/style.css" rel="stylesheet" />
     <link href="../../css/index.css" rel="stylesheet" />
     <link href="../../css/account/login.css" rel="stylesheet" />
-    
+
     <!-- Supabase CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -131,26 +131,39 @@
                 Complete your payment or buy additional Woodpop tickets below.
               </p>
 
-              <div id="loading-container" style="padding: 40px 0;">
-                <i class="fa fa-spinner fa-spin fa-3x" style="color: #1c2674;"></i>
-                <p style="margin-top: 15px;">Loading payment details...</p>
+              <div id="loading-container" style="padding: 40px 0">
+                <i
+                  class="fa fa-spinner fa-spin fa-3x"
+                  style="color: #1c2674"
+                ></i>
+                <p style="margin-top: 15px">Loading payment details...</p>
               </div>
 
               <!-- Content wordt ingevuld via JavaScript -->
-              <div id="payment-content" style="display: none;">
-                <div class="section-heading text-left">Registration Summary</div>
-                <div class="text-left" style="margin-bottom: 20px;">
+              <div id="payment-content" style="display: none">
+                <div class="section-heading text-left">
+                  Registration Summary
+                </div>
+                <div class="text-left" style="margin-bottom: 20px">
                   <p><strong>Name:</strong> <span id="summary-name">-</span></p>
-                  <p><strong>Sport:</strong> <span id="summary-sport">Badminton</span></p>
-                  <p><strong>Team Level:</strong> <span id="summary-level">-</span></p>
-                  <p><strong>Status:</strong> <span id="summary-status">-</span></p>
+                  <p>
+                    <strong>Sport:</strong>
+                    <span id="summary-sport">Badminton</span>
+                  </p>
+                  <p>
+                    <strong>Team Level:</strong>
+                    <span id="summary-level">-</span>
+                  </p>
+                  <p>
+                    <strong>Status:</strong> <span id="summary-status">-</span>
+                  </p>
                 </div>
 
                 <!-- Dynamisch container voor of wel betalen of wachtlijst melding -->
                 <div id="dynamic-payment-flow">
                   <div class="section-heading text-left">Order Details</div>
-                  
-                  <div class="text-left" style="margin-bottom: 15px;">
+
+                  <div class="text-left" style="margin-bottom: 15px">
                     <!-- Toernooi fee regel -->
                     <div class="breakdown-row" id="tournament-fee-row">
                       <span>Tournament Fee:</span>
@@ -158,31 +171,53 @@
                     </div>
 
                     <!-- Extra Tickets Woodpop regel -->
-                    <div class="form-group" style="margin-top: 15px; margin-bottom: 10px;">
-                      <label for="input-woodpop-tickets">Buy extra Tickets to Woodpop (&euro; 10,00 each):</label>
-                      <p class="text-muted" style="font-size: 90%; margin-bottom: 5px;">Current tickets already owned: <strong id="current-tickets-label">0</strong></p>
+                    <div
+                      class="form-group"
+                      style="margin-top: 15px; margin-bottom: 10px"
+                    >
+                      <label for="input-woodpop-tickets"
+                        >Buy extra Tickets to Woodpop (&euro; 10,00
+                        each):</label
+                      >
+                      <p
+                        class="text-muted"
+                        style="font-size: 90%; margin-bottom: 5px"
+                      >
+                        Current tickets already owned:
+                        <strong id="current-tickets-label">0</strong>
+                      </p>
                       <div class="row">
                         <div class="col-xs-6">
-                          <input type="number" id="input-woodpop-tickets" class="form-control text-center" value="0" min="0" max="10" />
+                          <input
+                            type="number"
+                            id="input-woodpop-tickets"
+                            class="form-control text-center"
+                            value="0"
+                            min="0"
+                            max="10"
+                          />
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  <hr style="margin: 20px 0;">
+                  <hr style="margin: 20px 0" />
 
                   <div class="text-left">
-                    <span style="font-size: 12pt; font-weight: bold; color: #555;">Total Amount Due:</span>
-                    <div class="price-tag" id="total-price-display">&euro; 0,00</div>
+                    <span
+                      style="font-size: 12pt; font-weight: bold; color: #555"
+                      >Total Amount Due:</span
+                    >
+                    <div class="price-tag" id="total-price-display">
+                      &euro; 0,00
+                    </div>
                   </div>
 
-                  <div id="payment-action-area" style="margin-top: 30px;">
+                  <div id="payment-action-area" style="margin-top: 30px">
                     <!-- Wordt dynamisch ingevuld -->
                   </div>
                 </div>
-
               </div>
-
             </div>
           </div>
         </div>
@@ -222,7 +257,11 @@
                       src="../../ABG_cirkel.png"
                       alt="Active Company Antwerpen"
                       class="active-logo"
-                      style="background-color: #ffffff; padding: 5px; border-radius: 4px"
+                      style="
+                        background-color: #ffffff;
+                        padding: 5px;
+                        border-radius: 4px;
+                      "
                     />
                     <span>Website</span>
                   </a>
@@ -256,19 +295,28 @@
         const { createClient } = window.supabase;
         const abgSupabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        const TOURNAMENT_PRICE = 25.00;
-        const TICKET_PRICE = 10.00;
+        const TOURNAMENT_PRICE = 25.0;
+        const TICKET_PRICE = 10.0;
 
         document.addEventListener("DOMContentLoaded", async function () {
           const dropdownList = document.getElementById("account-dropdown-list");
           const loadingContainer = document.getElementById("loading-container");
           const paymentContent = document.getElementById("payment-content");
-          const dynamicPaymentFlow = document.getElementById("dynamic-payment-flow");
-          const paymentActionArea = document.getElementById("payment-action-area");
+          const dynamicPaymentFlow = document.getElementById(
+            "dynamic-payment-flow",
+          );
+          const paymentActionArea = document.getElementById(
+            "payment-action-area",
+          );
           const ticketInput = document.getElementById("input-woodpop-tickets");
-          const currentTicketsLabel = document.getElementById("current-tickets-label");
-          const totalPriceDisplay = document.getElementById("total-price-display");
-          const tournamentFeeRow = document.getElementById("tournament-fee-row");
+          const currentTicketsLabel = document.getElementById(
+            "current-tickets-label",
+          );
+          const totalPriceDisplay = document.getElementById(
+            "total-price-display",
+          );
+          const tournamentFeeRow =
+            document.getElementById("tournament-fee-row");
 
           // 1. Controleer sessie
           const {
@@ -319,15 +367,19 @@
           }
 
           // Vul de samenvatting in
-          document.getElementById("summary-name").innerText = `${regData.firstName || ''} ${regData.lastName || ''}`;
-          document.getElementById("summary-sport").innerText = regData.sport || 'Badminton';
-          document.getElementById("summary-level").innerText = regData.team_level || '-';
-          
-          const currentStatus = (regData.status || '').toLowerCase();
-          document.getElementById("summary-status").innerText = regData.status || 'Registered';
+          document.getElementById("summary-name").innerText =
+            `${regData.firstName || ""} ${regData.lastName || ""}`;
+          document.getElementById("summary-sport").innerText =
+            regData.sport || "Badminton";
+          document.getElementById("summary-level").innerText =
+            regData.team_level || "-";
+
+          const currentStatus = (regData.status || "").toLowerCase();
+          document.getElementById("summary-status").innerText =
+            regData.status || "Registered";
 
           // --- CONDITIE 1: Wachtlijst (waitinglist) check ---
-          if (currentStatus === 'waitinglist') {
+          if (currentStatus === "waitinglist") {
             dynamicPaymentFlow.innerHTML = `
               <div class="alert alert-info" style="margin-top: 20px; text-align: left;">
                 <h4><i class="fa fa-info-circle"></i> You are currently on the Waiting List</h4>
@@ -358,8 +410,8 @@
             const baseAmount = isTournamentPaid ? 0 : TOURNAMENT_PRICE;
             const ticketsAmount = extraTicketsCount * TICKET_PRICE;
             const total = baseAmount + ticketsAmount;
-            
-            totalPriceDisplay.innerHTML = `&euro; ${total.toFixed(2).replace('.', ',')}`;
+
+            totalPriceDisplay.innerHTML = `&euro; ${total.toFixed(2).replace(".", ",")}`;
             return total;
           }
 
@@ -375,46 +427,57 @@
           `;
 
           // Koppel actie aan de betaalknop via Stripe Edge Function
-          document.getElementById("pay-now-btn").addEventListener("click", async function () {
-            const btn = this;
-            const extraTicketsToAdd = parseInt(ticketInput.value) || 0;
-            const newTotalWoodpopTickets = existingTickets + extraTicketsToAdd;
-            
-            btn.disabled = true;
-            btn.innerHTML = `<i class="fa fa-spinner fa-spin"></i> Connecting to Stripe...`;
+          document
+            .getElementById("pay-now-btn")
+            .addEventListener("click", async function () {
+              const btn = this;
+              const extraTicketsToAdd = parseInt(ticketInput.value) || 0;
+              const newTotalWoodpopTickets =
+                existingTickets + extraTicketsToAdd;
 
-            try {
-              // Roep de Supabase Edge Function aan voor Stripe Checkout
-              const response = await fetch(`${SUPABASE_URL}/functions/v1/stripe`, {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                  "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
-                },
-                body: JSON.stringify({
-                  userId: user.id,
-                  email: user.email,
-                  extraTickets: extraTicketsToAdd,
-                  newTotalTickets: newTotalWoodpopTickets
-                })
-              });
+              btn.disabled = true;
+              btn.innerHTML = `<i class="fa fa-spinner fa-spin"></i> Connecting to Stripe...`;
 
-              const data = await response.json();
-              
-              if (data.url) {
-                // Redirect naar de beveiligde Stripe betaalpagina
-                window.location.href = data.url;
-              } else {
-                throw new Error(data.error || "Kon geen betaalsessie aanmaken bij Stripe.");
+              try {
+                // Roep de Supabase Edge Function aan voor Stripe Checkout
+                const response = await fetch(
+                  `${SUPABASE_URL}/functions/v1/stripe`,
+                  {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                      Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+                    },
+                    body: JSON.stringify({
+                      userId: user.id,
+                      email: user.email,
+                      extraTickets: extraTicketsToAdd,
+                      newTotalTickets: newTotalWoodpopTickets,
+                      payTournamentFee: !isTournamentPaid, // Stuur mee of de toernee-fee voldaan moet worden
+                    }),
+                  },
+                );
+
+                const data = await response.json();
+
+                if (data.url) {
+                  // Redirect naar de beveiligde Stripe betaalpagina
+                  window.location.href = data.url;
+                } else {
+                  throw new Error(
+                    data.error || "Kon geen betaalsessie aanmaken bij Stripe.",
+                  );
+                }
+              } catch (err) {
+                console.error("Fout bij betaling:", err);
+                alert(
+                  "Payment initialization failed: " +
+                    (err.message || "Unknown error"),
+                );
+                btn.disabled = false;
+                btn.innerHTML = `<i class="fa fa-credit-card"></i> Pay with Stripe / iDeal`;
               }
-
-            } catch (err) {
-              console.error("Fout bij betaling:", err);
-              alert("Payment initialization failed: " + (err.message || "Unknown error"));
-              btn.disabled = false;
-              btn.innerHTML = `<i class="fa fa-credit-card"></i> Pay with Stripe / iDeal`;
-            }
-          });
+            });
         });
       })();
     </script>
