@@ -304,14 +304,14 @@
           site. We use NO MARKETING cookies.
         </p>
         <button
+          id="acceptCookiesBtn"
           class="btn btn-success btn-sm btn-modern btn-accept"
-          onclick="document.getElementById('cookieBar').style.display = 'none'"
         >
           Accept all
         </button>
         <button
+          id="rejectCookiesBtn"
           class="btn btn-default btn-sm btn-modern"
-          onclick="document.getElementById('cookieBar').style.display = 'none'"
         >
           Reject all
         </button>
@@ -330,44 +330,106 @@
 
       const abgSupabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+      function generateUUID() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+          var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+          return v.toString(16);
+        });
+      }
+
+      function setBrowserCookie(name, value, days) {
+        let expires = "";
+        if (days) {
+          let date = new Date();
+          date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+          expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "") + expires + "; path=/";
+      }
+
+      function getBrowserCookie(name) {
+        let nameEQ = name + "=";
+        let ca = document.cookie.split(';');
+        for(let i=0; i < ca.length; i++) {
+          let c = ca[i];
+          while (c.charAt(0)==' ') c = c.substring(1,c.length);
+          if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        }
+        return null;
+      }
+
       document.addEventListener("DOMContentLoaded", async function () {
         const dropdownList = document.getElementById("account-dropdown-list");
         const cookieBar = document.getElementById("cookieBar");
+        const acceptBtn = document.getElementById("acceptCookiesBtn");
+        const rejectBtn = document.getElementById("rejectCookiesBtn");
 
-        // 1. Controleer of er al een cookie-record bestaat (op basis van session user of local consent_id)
-        let hasCookieRecord = false;
-        const { data: { session } } = await abgSupabase.auth.getSession();
-        const userId = session ? session.user.id : null;
-        const consentId = localStorage.getItem("abg_consent_id");
+        // 1. Controleer of er al een browser-cookie OF een opgeslagen abg_consent_id in localStorage staat
+        const cookieConsentValue = getBrowserCookie("abg_cookie_consent");
+        const localConsentId = localStorage.getItem("abg_consent_id");
 
-        if (userId) {
-          const { data, error } = await abgSupabase
-            .from("cookies")
-            .select("consent_id")
-            .eq("user_id", userId)
-            .maybeSingle();
-          if (data) hasCookieRecord = true;
-        } else if (consentId) {
-          const { data, error } = await abgSupabase
-            .from("cookies")
-            .select("consent_id")
-            .eq("consent_id", consentId)
-            .maybeSingle();
-          if (data) hasCookieRecord = true;
-        }
-
-        // Als er een rij bestaat, verberg de banner; anders tonen
-        if (hasCookieRecord) {
+        if (cookieConsentValue || localConsentId) {
+          // Keuze is al gemaakt -> verberg de banner direct
           if (cookieBar) cookieBar.style.display = "none";
         } else {
+          // Geen enkele indicatie van een eerdere keuze -> toon de banner
           if (cookieBar) cookieBar.style.display = "block";
+        }
+
+        // Functie wanneer er op Accept of Reject wordt geklikt
+        async function handleCookieChoice(accepted) {
+          // Verberg de banner onmiddellijk in de UI
+          if (cookieBar) cookieBar.style.display = "none";
+
+          // Sla direct op in browser-cookie én localStorage
+          setBrowserCookie("abg_cookie_consent", accepted ? "accepted" : "rejected", 365);
+
+          let consentId = localStorage.getItem("abg_consent_id");
+          if (!consentId) {
+            consentId = generateUUID();
+            localStorage.setItem("abg_consent_id", consentId);
+          }
+
+          // Stuur naar Supabase op de achtergrond
+          try {
+            const { data: { session } } = await abgSupabase.auth.getSession();
+            const userId = session ? session.user.id : null;
+
+            const record = {
+              consent_id: consentId,
+              accepted_all: accepted,
+              updated_at: new Date()
+            };
+
+            if (userId) {
+              record.user_id = userId;
+            }
+
+            await abgSupabase.from("cookies").upsert(record, { 
+              onConflict: userId ? 'user_id' : 'consent_id' 
+            });
+          } catch (err) {
+            console.warn("Kon cookiekeuze niet naar Supabase sturen (anonieme modus):", err);
+          }
+        }
+
+        if (acceptBtn) {
+          acceptBtn.addEventListener("click", async function () {
+            await handleCookieChoice(true);
+          });
+        }
+
+        if (rejectBtn) {
+          rejectBtn.addEventListener("click", async function () {
+            await handleCookieChoice(false);
+          });
         }
 
         // 2. Navbar account menu logica
         if (!dropdownList) return;
 
+        const { data: { session } } = await abgSupabase.auth.getSession();
         if (session) {
-          // Ingelogd menu
           dropdownList.innerHTML = `
             <li><a href="html/account/account.html">My Registration</a></li>
             <li><a href="html/account/t&c.html">Terms-and-Conditions</a></li>
@@ -383,7 +445,6 @@
             });
           }
         } else {
-          // Uitgelogd menu
           dropdownList.innerHTML = `
             <li><a href="html/account/login.html">Login</a></li>
             <li><a href="html/account/t&c.html">Terms-and-Conditions</a></li>
