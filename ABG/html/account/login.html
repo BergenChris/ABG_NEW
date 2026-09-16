@@ -31,6 +31,9 @@
     <link href="../../css/index.css" rel="stylesheet" />
     <link href="../../css/account/login.css" rel="stylesheet" />
     <link href="../../css/login.css" rel="stylesheet" />
+
+    <!-- Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   </head>
   <body class="login-page-body">
     <!-- Navbar / Header (ABG Stijl met strakke logica) -->
@@ -99,8 +102,15 @@
                 <p class="text-muted">Log in to your ABG account to continue</p>
               </div>
 
-              <!-- Login Formulier (ID toegevoegd zodat het script werkt!) -->
-              <form id="login-form" action="#" method="POST">
+              <!-- Login Formulier -->
+              <form id="login-form">
+                <!-- Foutmelding box (indien login mislukt) -->
+                <div
+                  id="login-error-alert"
+                  class="alert alert-danger"
+                  style="display: none; margin-bottom: 20px"
+                ></div>
+
                 <!-- E-mailadres -->
                 <div class="form-group login-field-group">
                   <label for="email" class="login-label">Email Address</label>
@@ -140,6 +150,7 @@
                 <!-- Submit Knop -->
                 <button
                   type="submit"
+                  id="login-submit-btn"
                   class="btn btn-success btn-lg btn-block btn-modern login-submit-btn"
                 >
                   Log In
@@ -192,7 +203,7 @@
                     title="Active Company Antwerpen"
                   >
                     <img
-                         src="https://antwerpbrilliantgames.be/images/logo/ActiveCompanyAntwerp_Social_Media_Logo-2022.jpg"
+                      src="https://antwerpbrilliantgames.be/images/logo/ActiveCompanyAntwerp_Social_Media_Logo-2022.jpg"
                       alt="Active Company Antwerpen"
                       class="active-logo"
                     />
@@ -209,56 +220,96 @@
       </div>
     </footer>
 
-    <!-- Scripts (Eerst jQuery & Bootstrap, dan eigen logica) -->
+    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
+    <!-- Supabase Integratie -->
     <script>
-      // Login Formulier Afhandeling
-      document.getElementById("login-form").addEventListener("submit", function (e) {
-          e.preventDefault();
+      (function() {
+          const SUPABASE_URL = 'https://bhyokpduzcpdutifrzro.supabase.co';
+          const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJoeW9rcGR1emNwZHV0aWZyenJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk1MDY3OTUsImV4cCI6MjEwNTA4Mjc5NX0.47cnkFu32TWL1hwaeQRWyNu4TQYkZ94pNzKUzvTaP9M';
 
-          // Zet login op true
-          localStorage.setItem("abg_logged_in", "true");
-
-          // Controleer of ze al hun registratieformulier hadden ingevuld
-          const isRegistered = localStorage.getItem("abg_registered");
-
-          if (isRegistered === "true") {
-              window.location.href = "account.html"; // Al geregistreerd -> direct naar account
-          } else {
-              window.location.href = "create-registration.html"; // Nog niet geregistreerd -> naar registratieformulier
+          if (!window.supabase || !window.supabase.createClient) {
+              console.error('Supabase script is niet geladen!');
+              return;
           }
-      });
 
-      // Navbar Dynamische Account Status
-      document.addEventListener("DOMContentLoaded", function () {
-          const isLoggedIn = localStorage.getItem("abg_logged_in");
-          const dropdownList = document.getElementById("account-dropdown-list");
+          const { createClient } = window.supabase;
+          const abgSupabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-          if (isLoggedIn) {
-              dropdownList.innerHTML = `
-                  <li><a href="account.html">My Registration</a></li>
-                  <li><a href="t&c.html">Terms-and-Conditions</a></li>
-                  <li><a href="#" id="nav-logout-action">Log Out</a></li>
-              `;
+          document.addEventListener("DOMContentLoaded", async function () {
+              const dropdownList = document.getElementById("account-dropdown-list");
+              const errorAlert = document.getElementById("login-error-alert");
 
-              const logoutNavBtn = document.getElementById("nav-logout-action");
-              if (logoutNavBtn) {
-                  logoutNavBtn.addEventListener("click", function (e) {
-                      e.preventDefault();
-                      localStorage.removeItem("abg_logged_in");
-                      localStorage.removeItem("abg_registered");
-                      window.location.href = "login.html";
-                  });
+              // 1. Controleer of er al een actieve sessie is
+              const { data: { session } } = await abgSupabase.auth.getSession();
+
+              if (session) {
+                  // Reeds ingelogd, stuur door naar account of registratie
+                  const { data: regData } = await abgSupabase
+                      .from("registraties")
+                      .select("id")
+                      .eq("user_id", session.user.id)
+                      .maybeSingle();
+
+                  if (regData) {
+                      window.location.href = "account.html";
+                  } else {
+                      window.location.href = "create-registration.html";
+                  }
+                  return;
               }
-          } else {
+
+              // Vul het navigatiemenu voor niet-ingelogde gebruikers
               dropdownList.innerHTML = `
                   <li><a href="login.html">Login</a></li>
                   <li><a href="t&c.html">Terms-and-Conditions</a></li>
               `;
-          }
-      });
+
+              // 2. Login formulier afhandeling via Supabase Auth
+              const loginForm = document.getElementById("login-form");
+              loginForm.addEventListener("submit", async function (e) {
+                  e.preventDefault();
+                  errorAlert.style.display = "none";
+
+                  const email = document.getElementById("email").value.trim();
+                  const password = document.getElementById("password").value;
+                  const submitBtn = document.getElementById("login-submit-btn");
+
+                  submitBtn.disabled = true;
+                  submitBtn.innerText = "Logging in...";
+
+                  // Authenticatie uitvoeren via Supabase
+                  const { data: authData, error: authError } = await abgSupabase.auth.signInWithPassword({
+                      email: email,
+                      password: password
+                  });
+
+                  if (authError) {
+                      errorAlert.innerText = authError.message;
+                      errorAlert.style.display = "block";
+                      submitBtn.disabled = false;
+                      submitBtn.innerText = "Log In";
+                      return;
+                  }
+
+                  // Login succesvol! Controleer of de gebruiker al een registratie heeft
+                  const userId = authData.user.id;
+                  const { data: regData, error: regError } = await abgSupabase
+                      .from("registraties")
+                      .select("id")
+                      .eq("user_id", userId)
+                      .maybeSingle();
+
+                  if (regData) {
+                      window.location.href = "account.html";
+                  } else {
+                      window.location.href = "create-registration.html";
+                  }
+              });
+          });
+      })();
     </script>
   </body>
 </html>
