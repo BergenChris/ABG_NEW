@@ -32,12 +32,11 @@ a {
 }
 
 .navbar-brand {
-  padding: 15px 0;
   height: auto;
 }
 
 .navbar-brand img {
-  height: 60px;
+  height: 90px;
 }
 
 /* Navbar links: standaard wit en bold */

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Create Account - Antwerp Brilliant Games 2026</title>
+    <meta
+      name="description"
+      content="Create your account for Antwerp Brilliant Games."
+    />
+
+    <!-- Stylesheets -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Bestaande project stylesheets -->
+    <link href="../../css/style.css" rel="stylesheet" />
+    <link href="../../css/index.css" rel="stylesheet" />
+    <link href="../../css/account/login.css" rel="stylesheet" />
+    <link href="../../css/login.css" rel="stylesheet" />
+
+    <style>
+      body { padding-top: 80px; }
+      .register-wrapper { padding: 40px 0; }
+      .modern-card { background: #fff; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); padding: 30px; margin-bottom: 30px; }
+      .section-heading { font-size: 16pt; color: #E31B23; font-weight: bold; margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+    </style>
+  </head>
+  <body class="login-page-body">
+
+    <!-- Navbar / Header (ABG Stijl met dynamische Account status) -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container navbar-container-flex">
+        <div class="navbar-header navbar-header-custom">
+          <img src="../../ABG_balk.png" alt="Antwerp Brilliant Games" height="90" />
+        </div>
+
+        <div class="collapse navbar-collapse" id="myNavbar">
+          <ul class="nav navbar-nav navbar-menu-center">
+            <li><a href="../../index.html">Home</a></li>
+            <li><a href="../badminton.html">Badminton</a></li>
+            <li><a href="../tennis.html">Tennis</a></li>
+            <li><a href="../volleybal.html">Volleyball</a></li>
+          </ul>
+
+          <ul class="nav navbar-nav navbar-menu-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Info <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="../info/tourist-info.html">Visitor info</a></li>
+                <li><a href="../info/party.html">Party</a></li>
+                <li><a href="../info/contact.html">Contact</a></li>
+              </ul>
+            </li>
+            
+            <!-- Dynamisch Account Menu -->
+            <li class="dropdown" id="account-menu-item">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Account <span class="caret"></span></a>
+              <ul class="dropdown-menu" id="account-dropdown-list">
+                <!-- Wordt automatisch ingevuld door Javascript -->
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content: Create Account Form -->
+    <main class="login-main-wrapper register-wrapper">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 col-md-offset-2">
+            <div class="modern-card">
+              
+              <div class="text-center" style="margin-bottom: 25px">
+                <h2 style="margin-top: 0; color: #1c2674; font-weight: bold;">
+                  Create Your Account
+                </h2>
+                <p class="text-muted">Step 1: Set up your account credentials before registering for tournaments.</p>
+              </div>
+
+              <!-- Maak Account Formulier -->
+              <form id="create-account-form" action="#" method="POST">
+                
+                <div class="section-heading">Account Credentials</div>
+                
+                <div class="form-group login-field-group">
+                  <label class="login-label">Full Name</label>
+                  <input type="text" id="acc-name" required class="form-control login-input" placeholder="e.g. Chris Bergen" />
+                </div>
+
+                <div class="form-group login-field-group">
+                  <label class="login-label">Email Address</label>
+                  <input type="email" id="acc-email" required class="form-control login-input" placeholder="your.email@example.com" />
+                </div>
+
+                <div class="form-group login-field-group">
+                  <label class="login-label">Password</label>
+                  <input type="password" id="acc-password" required class="form-control login-input" placeholder="••••••••" />
+                </div>
+
+                <div class="checkbox" style="margin: 20px 0;">
+                  <label>
+                    <input type="checkbox" required /> I accept the <a href="t&c.html" target="_blank">Terms and Conditions</a>
+                  </label>
+                </div>
+
+                <!-- Submit Knop -->
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-lg btn-block btn-modern login-submit-btn"
+                >
+                  Create Account & Continue to Registration
+                </button>
+              </form>
+
+              <div class="text-center" style="margin-top: 20px;">
+                <p class="text-muted">Already have an account? <a href="login.html" style="color: #E31B23; font-weight: bold;">Log in here</a></p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="social-section footer-social-section">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8 col-md-offset-2 text-center">
+              <h2 class="footer-social-title">Visit our socials!</h2>
+              <ul class="social-icons-custom">
+                <li>
+                  <a href="https://www.instagram.com/antwerp_brilliant_games/" target="_blank" rel="noopener">
+                    <img src="https://antwerpbrilliantgames.be/images/icons/instagram_logo.png" alt="Instagram" />
+                    <span>Instagram</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://activecompany.be/en/" target="_blank" rel="noopener">
+                    <img src="https://activecompany.be/images/logo/ActiveCompanyAntwerp_Social_Media_Logo-2022.jpg" alt="Active Company" class="active-logo" />
+                    <span>Active Company Antwerpen</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container text-center footer-bottom footer-bottom-container">
+        <p>&copy; 2026 Antwerp Brilliant Games. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <!-- Navbar dynamische logica & Formulier logica -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+          const isLoggedIn = localStorage.getItem('abg_logged_in');
+          const dropdownList = document.getElementById('account-dropdown-list');
+
+          if (isLoggedIn) {
+              dropdownList.innerHTML = `
+                  <li><a href="account.html">My Registration</a></li>
+                  <li><a href="t&c.html">Terms-and-Conditions</a></li>
+                  <li><a href="#" id="nav-logout-action">Log Out</a></li>
+              `;
+              const logoutNavBtn = document.getElementById('nav-logout-action');
+              if (logoutNavBtn) {
+                  logoutNavBtn.addEventListener('click', function(e) {
+                      e.preventDefault();
+                      localStorage.removeItem('abg_logged_in');
+                      localStorage.removeItem('abg_registered');
+                      window.location.href = 'login.html';
+                  });
+              }
+          } else {
+              dropdownList.innerHTML = `
+                  <li><a href="login.html">Login</a></li>
+                  <li><a href="t&c.html">Terms-and-Conditions</a></li>
+              `;
+          }
+      });
+
+      // Account aanmaken logica: Zet ingelogd op true, maar registratie blijft nog false
+      document.getElementById('create-account-form').addEventListener('submit', function(e) {
+          e.preventDefault();
+          
+          localStorage.setItem('abg_logged_in', 'true');
+          // abg_registered wordt pas true nadat registration.html is ingevuld!
+          
+          // Stuur door naar de registratiepagina om de details in te vullen
+          window.location.href = 'create-registration.html';
+      });
+    </script>
+  </body>
+</html>

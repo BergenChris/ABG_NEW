@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Complete Registration - Antwerp Brilliant Games 2026</title>
+    <meta
+      name="description"
+      content="Complete your tournament registration for Antwerp Brilliant Games."
+    />
+
+    <!-- Stylesheets -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Bestaande project stylesheets -->
+    <link href="../../css/style.css" rel="stylesheet" />
+    <link href="../../css/index.css" rel="stylesheet" />
+    <link href="../../css/account/login.css" rel="stylesheet" />
+    <link href="../../css/login.css" rel="stylesheet" />
+
+    <style>
+      body { padding-top: 80px; }
+      .register-wrapper { padding: 40px 0; }
+      .modern-card { background: #fff; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); padding: 30px; margin-bottom: 30px; }
+      .section-heading { font-size: 14pt; color: #E31B23; font-weight: bold; font-style: italic; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 30px; }
+    </style>
+
+    <!-- BEVEILIGINGSCRIPT 1: Al ingelogd? Zo niet, terug naar login -->
+    <!-- BEVEILIGINGSCRIPT 2: Al geregistreerd? Dan deze pagina overslaan en direct naar account.html -->
+    <script>
+        const userToken = localStorage.getItem('abg_logged_in');
+        if (!userToken) {
+            window.location.href = 'login.html';
+        } else {
+            const isRegistered = localStorage.getItem('abg_registered');
+            if (isRegistered === 'true') {
+                window.location.href = 'account.html';
+            }
+        }
+    </script>
+  </head>
+  <body class="login-page-body">
+
+    <!-- Navbar / Header (ABG Stijl met strakke logica) -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container navbar-container-flex">
+        <div class="navbar-header navbar-header-custom">
+          <img src="../../ABG_balk.png" alt="Antwerp Brilliant Games" height="90" />
+        </div>
+
+        <div class="collapse navbar-collapse" id="myNavbar">
+          <ul class="nav navbar-nav navbar-menu-center">
+            <li><a href="../../index.html">Home</a></li>
+            <li><a href="../badminton.html">Badminton</a></li>
+            <li><a href="../tennis.html">Tennis</a></li>
+            <li><a href="../volleybal.html">Volleyball</a></li>
+          </ul>
+
+          <ul class="nav navbar-nav navbar-menu-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Info <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="../info/tourist-info.html">Visitor info</a></li>
+                <li><a href="../info/party.html">Party</a></li>
+                <li><a href="../info/contact.html">Contact</a></li>
+              </ul>
+            </li>
+            
+            <!-- Dynamisch Account Menu -->
+            <li class="dropdown" id="account-menu-item">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Account <span class="caret"></span></a>
+              <ul class="dropdown-menu" id="account-dropdown-list">
+                <!-- Wordt automatisch ingevuld door Javascript -->
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content: Create Registration Form -->
+    <main class="login-main-wrapper register-wrapper">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 col-md-offset-2">
+            <div class="modern-card">
+              
+              <div class="text-center" style="margin-bottom: 25px">
+                <h2 style="margin-top: 0; color: #1c2674; font-weight: bold;">
+                  Complete Your Registration
+                </h2>
+                <p class="text-muted">Step 2: Fill out your tournament details and preferences.</p>
+              </div>
+
+              <!-- Registratie Formulier -->
+              <form id="create-registration-form" action="#" method="POST">
+                
+                <!-- ACCOUNT DETAILS -->
+                <div class="section-heading" style="margin-top: 0;">Account Details</div>
+                
+                <div class="form-group login-field-group">
+                  <label class="login-label">In which tournament will you participate?</label>
+                  <select class="form-control login-input" id="reg-tournament">
+                    <option selected>Badminton</option>
+                    <option>Tennis</option>
+                    <option>Volleyball</option>
+                  </select>
+                </div>
+
+                <div class="form-group login-field-group">
+                  <label class="login-label">Country of Residence</label>
+                  <input type="text" class="form-control login-input" value="Belgium" required />
+                </div>
+
+                <div class="form-group login-field-group">
+                  <label class="login-label">Your Gender</label>
+                  <select class="form-control login-input">
+                    <option selected>Male</option>
+                    <option>Female</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+
+                <!-- BADMINTON INFO -->
+                <div class="section-heading">Badminton Info</div>
+
+                <div class="form-group login-field-group">
+                  <label class="login-label">Badminton Sportsclub</label>
+                  <input type="text" class="form-control login-input" value="Active Company Antwerp" />
+                </div>
+
+                <div class="form-group login-field-group">
+                  <label class="login-label">Your Own Player Level</label>
+                  <select class="form-control login-input">
+                    <option selected>B+</option>
+                    <option>A</option>
+                    <option>B</option>
+                    <option>C</option>
+                  </select>
+                </div>
+
+                <div class="form-group login-field-group">
+                  <label class="login-label">Select your Team Level</label>
+                  <select class="form-control login-input">
+                    <option selected>-</option>
+                    <option>Beginner</option>
+                    <option>Intermediate</option>
+                    <option>Advanced</option>
+                  </select>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group login-field-group">
+                      <label class="login-label">Badminton Partner First Name</label>
+                      <input type="text" class="form-control login-input" placeholder="Optional" />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group login-field-group">
+                      <label class="login-label">Badminton Partner Name</label>
+                      <input type="text" class="form-control login-input" placeholder="Optional" />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group login-field-group">
+                      <label class="login-label">Your Partner's Level</label>
+                      <input type="text" class="form-control login-input" placeholder="Optional" />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group login-field-group">
+                      <label class="login-label">Badminton Partner Email</label>
+                      <input type="email" class="form-control login-input" placeholder="Optional" />
+                    </div>
+                  </div>
+                </div>
+
+                <!-- DIETARY & ALLERGIES -->
+                <div class="section-heading">Dietary & Preferences</div>
+
+                <div class="form-group login-field-group">
+                  <label class="login-label">Dietary Restrictions</label>
+                  <input type="text" class="form-control login-input" value="- none -" />
+                </div>
+
+                <div class="form-group login-field-group">
+                  <label class="login-label">Allergies</label>
+                  <input type="text" class="form-control login-input" value="- none -" />
+                </div>
+
+                <div class="form-group login-field-group">
+                  <label class="login-label">I join the Meet & Greet</label>
+                  <select class="form-control login-input">
+                    <option selected>Yes</option>
+                    <option>No</option>
+                  </select>
+                </div>
+
+                <div class="checkbox" style="margin: 20px 0;">
+                  <label>
+                    <input type="checkbox" required /> I accept the <a href="t&c.html" target="_blank">Terms and Conditions</a>
+                  </label>
+                </div>
+
+                <!-- Submit Knop -->
+                <button
+                  type="submit"
+                  class="btn btn-success btn-lg btn-block btn-modern login-submit-btn"
+                >
+                  Save Registration & View Account Overview
+                </button>
+              </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="social-section footer-social-section">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8 col-md-offset-2 text-center">
+              <h2 class="footer-social-title">Visit our socials!</h2>
+              <ul class="social-icons-custom">
+                <li>
+                  <a href="https://www.instagram.com/antwerp_brilliant_games/" target="_blank" rel="noopener">
+                    <img src="https://antwerpbrilliantgames.be/images/icons/instagram_logo.png" alt="Instagram" />
+                    <span>Instagram</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://activecompany.be/en/" target="_blank" rel="noopener">
+                    <img src="https://activecompany.be/images/logo/ActiveCompanyAntwerp_Social_Media_Logo-2022.jpg" alt="Active Company" class="active-logo" />
+                    <span>Active Company Antwerpen</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container text-center footer-bottom footer-bottom-container">
+        <p>&copy; 2026 Antwerp Brilliant Games. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <!-- Navbar logica & Formulier opslaan logica -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+          const isLoggedIn = localStorage.getItem('abg_logged_in');
+          const dropdownList = document.getElementById('account-dropdown-list');
+
+          if (isLoggedIn) {
+              dropdownList.innerHTML = `
+                  <li><a href="account.html">My Registration</a></li>
+                  <li><a href="t&c.html">Terms-and-Conditions</a></li>
+                  <li><a href="#" id="nav-logout-action">Log Out</a></li>
+              `;
+              const logoutNavBtn = document.getElementById('nav-logout-action');
+              if (logoutNavBtn) {
+                  logoutNavBtn.addEventListener('click', function(e) {
+                      e.preventDefault();
+                      localStorage.removeItem('abg_logged_in');
+                      localStorage.removeItem('abg_registered');
+                      window.location.href = 'login.html';
+                  });
+              }
+          } else {
+              dropdownList.innerHTML = `
+                  <li><a href="login.html">Login</a></li>
+                  <li><a href="t&c.html">Terms-and-Conditions</a></li>
+              `;
+          }
+      });
+
+      // Registratie opslaan logica: Gegarandeerd op true zetten en doorsturen
+      document.querySelector('.login-submit-btn').addEventListener('click', function(e) {
+          e.preventDefault();
+          
+          // Sla de registratie op in localStorage
+          localStorage.setItem('abg_registered', 'true');
+          
+          // Stuur direct door naar het account overzicht
+          window.location.href = 'account.html';
+      });
+    </script>
+  </body>
+</html>

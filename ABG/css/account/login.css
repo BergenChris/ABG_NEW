@@ -1,0 +1,103 @@
+/* --- Layout wrapper voor de pagina content --- */
+.login-main-wrapper {
+    flex: 1 0 auto;
+    padding-top: 120px; /* Zorgt dat de navbar de kaart niet afweekt */
+    padding-bottom: 60px;
+}
+
+/* --- Extra padding binnen de modern-card voor de login --- */
+.login-card-padding {
+    padding: 40px !important;
+}
+
+/* --- Formulier stijlen en spacing --- */
+.login-field-group {
+    margin-bottom: 22px !important;
+}
+
+.login-label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    font-size: 13px;
+    color: #0c155c; /* Sluit mooi aan bij de huisstijl blauw */
+}
+
+/* Inputs die mooi matchen met Bootstrap en modern design */
+.login-input {
+    height: 48px !important;
+    padding: 10px 16px !important;
+    background-color: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+    font-size: 14px !important;
+    transition: all 0.2s ease-in-out;
+}
+
+.login-input:focus {
+    border-color: #2563eb !important;
+    background-color: #ffffff !important;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1) !important;
+}
+
+/* --- Wachtwoord vergeten regel --- */
+.login-password-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.login-forgot-link {
+    font-size: 12px;
+    font-weight: 600;
+    color: #2563eb;
+    text-decoration: none;
+}
+
+.login-forgot-link:hover {
+    text-decoration: underline;
+}
+
+/* --- Submit knop extra styling --- */
+.login-submit-btn {
+    margin-top: 10px;
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px;
+}
+
+/* --- Scheidingslijn (Divider) --- */
+.login-divider {
+    position: relative;
+    margin: 25px 0;
+    text-align: center;
+    border-top: 1px solid #e2e8f0;
+}
+
+.login-divider span {
+    position: relative;
+    top: -10px;
+    background: #ffffff;
+    padding: 0 12px;
+    font-size: 12px;
+    color: #94a3b8;
+    text-transform: uppercase;
+}
+
+/* --- Onderste registratie tekst --- */
+.login-register-text {
+    font-size: 14px;
+    color: #475569;
+}
+
+.login-register-text a {
+    color: #2563eb;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.login-register-text a:hover {
+    text-decoration: underline;
+}
