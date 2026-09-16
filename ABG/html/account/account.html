@@ -233,11 +233,11 @@
                   </tr>
                   <tr>
                     <td class="label-cell">Dietary Restrictions</td>
-                    <td id="val-food">- none -</td>
+                    <td id="val-food"></td>
                   </tr>
                   <tr>
                     <td class="label-cell">Allergies</td>
-                    <td id="val-allergies">- none -</td>
+                    <td id="val-allergies"></td>
                   </tr>
                 </table>
 
@@ -499,8 +499,8 @@
                   document.getElementById("val-own-level").innerText = regData.own_level || "-";
                   document.getElementById("val-partner-email").innerText = regData.partner_email || "-";
                   
-                  document.getElementById("val-food").innerText = regData["food-restictions"]?.value || "- none -";
-                  document.getElementById("val-allergies").innerText = regData.allergies?.value || "- none -";
+                  document.getElementById("val-food").innerText = regData["food-restictions"]?.value || "-";
+                  document.getElementById("val-allergies").innerText = regData.allergies?.value || "-";
 
                   document.getElementById("val-meet-greet").innerText = regData.meet_and_greet ? "Yes" : "No";
                   document.getElementById("val-first-name").innerText = regData.firstName || "-";

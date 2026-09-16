@@ -161,7 +161,7 @@
 
                 <div class="form-group login-field-group">
                   <label class="login-label">Your Gender</label>
-                  <select class="form-control login-input" id="reg-gender">
+                  <select class="form-control login-input" id="reg-gender" required>
                     <option selected value="Male">Male</option>
                     <option value="Female">Female</option>
                     <option value="Other">Other</option>
@@ -178,13 +178,14 @@
                     id="reg-club"
                     class="form-control login-input"
                     value="Active Company Antwerp"
+                    required
                   />
                 </div>
 
                 <div class="form-group login-field-group">
                   <label class="login-label">Your Own Player Level</label>
-                  <select class="form-control login-input" id="reg-own-level">
-                    <option selected value="-">-</option>
+                  <select class="form-control login-input" id="reg-own-level" required>
+                    <option selected value="">-</option>
                     <option value="A">A</option>
                     <option value="B+">B+</option>
                     <option value="B-">B-</option>
@@ -195,8 +196,8 @@
 
                 <div class="form-group login-field-group">
                   <label class="login-label">Select your Team Level</label>
-                  <select class="form-control login-input" id="reg-team-level">
-                    <option selected value="-">-</option>
+                  <select class="form-control login-input" id="reg-team-level" required>
+                    <option selected value="">-</option>
                     <!-- Normale reeksen -->
                     <option value="A">A</option>
                     <option value="B+">B+</option>
@@ -213,12 +214,13 @@
                 </div>
 
                 <div class="form-group login-field-group">
-                  <label class="login-label">Partner Email (Optional)</label>
+                  <label class="login-label">Partner Email </label>
                   <input
                     type="email"
                     id="reg-partner-email"
                     class="form-control login-input"
                     placeholder="partner@example.com"
+                    required
                   />
                 </div>
 
@@ -245,7 +247,7 @@
 
                 <div class="form-group login-field-group">
                   <label class="login-label">I join the Meet & Greet</label>
-                  <select class="form-control login-input" id="reg-meet-greet">
+                  <select class="form-control login-input" id="reg-meet-greet" required>
                     <option selected value="Yes">Yes</option>
                     <option value="No">No</option>
                   </select>
@@ -265,7 +267,7 @@
                   id="submit-form-btn"
                   class="btn btn-success btn-lg btn-block btn-modern login-submit-btn"
                 >
-                  Save Registration & View Account Overview
+                  Save Registration
                 </button>
               </form>
             </div>
@@ -275,7 +277,7 @@
     </main>
 
     <!-- Footer -->
-   <footer>
+    <footer>
       <div class="social-section footer-social-section">
         <div class="container">
           <div class="row">
@@ -367,10 +369,10 @@
           const user = session.user;
 
           dropdownList.innerHTML = `
-                <li><a href="account.html">My Registration</a></li>
-                <li><a href="t&c.html">Terms-and-Conditions</a></li>
-                <li><a href="#" id="nav-logout-action">Log Out</a></li>
-            `;
+              <li><a href="account.html">My Registration</a></li>
+              <li><a href="t&c.html">Terms-and-Conditions</a></li>
+              <li><a href="#" id="nav-logout-action">Log Out</a></li>
+              `;
 
           const logoutNavBtn = document.getElementById("nav-logout-action");
           if (logoutNavBtn) {
@@ -421,7 +423,7 @@
           }
         });
 
-        // 4. Formulier verzenden
+        // 4. Formulier verzenden (zonder Stripe)
         document
           .getElementById("create-registration-form")
           .addEventListener("submit", async function (e) {
@@ -459,11 +461,12 @@
               if (teamLevelVal === "-") {
                 alert("Gelieve een team level te selecteren.");
                 submitBtn.disabled = false;
-                submitBtn.innerText = "Save Registration & View Account Overview";
+                submitBtn.innerText = "Save Registration";
                 return;
               }
 
-              const { error } = await abgSupabase.from("details").insert([
+              // Sla registratie op in de Supabase 'details' tabel
+              const { error: insertError } = await abgSupabase.from("details").insert([
                 {
                   user_id: user.id,
                   sport: sportVal,
@@ -475,26 +478,26 @@
                   own_level: ownLevelVal,
                   team_level: teamLevelVal,
                   partner_email: partnerEmailVal ? partnerEmailVal : null,
-                  "food-restictions": { value: foodVal },
-                  allergies: { value: allergiesVal },
+                  "food-restictions": foodVal,
+                  allergies: allergiesVal,
                   meet_and_greet: meetGreetVal,
-                  status: teamLevelVal.startsWith("Waiting List")
-                    ? "waitlist"
-                    : "registered",
+                  status: teamLevelVal.startsWith("Waiting List") ? "waitlist" : "registered",
+                  tournament_paid: false 
                 },
               ]);
 
-              if (error) {
-                throw error;
+              if (insertError) {
+                throw insertError;
               }
 
-              alert("Registratie succesvol opgeslagen!");
+              // Direct doorsturen naar de accountpagina na succesvolle opslag
               window.location.href = "account.html";
+
             } catch (err) {
-              console.error("Fout bij opslaan registratie:", err);
-              alert("Opslaan mislukt: " + (err.message || "Onbekende fout"));
+              console.error("Fout bij registratie:", err);
+              alert("Er is iets misgegaan: " + (err.message || "Onbekende fout"));
               submitBtn.disabled = false;
-              submitBtn.innerText = "Save Registration & View Account Overview";
+              submitBtn.innerText = "Save Registration";
             }
           });
       })();
