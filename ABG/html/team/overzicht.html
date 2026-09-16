@@ -117,7 +117,7 @@
 
       <!-- Filters -->
       <div class="row filters-row">
-        <div class="col-md-6">
+        <div class="col-md-6" id="table-selector-col">
           <label for="table-selector">Selecteer Tabel / Weergave:</label>
           <select id="table-selector" class="form-control">
             <option value="details_badminton">Details - Badminton</option>
@@ -127,7 +127,7 @@
             <option value="admins">Admins</option>
           </select>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6" id="level-filter-container">
           <label for="level-selector">Filter op Level / Categorie:</label>
           <select id="level-selector" class="form-control">
             <option value="all">Alles (Geen filter)</option>
@@ -186,7 +186,7 @@
       </div>
     </div>
 
-    <!-- Footer (Exact gekopieerd van de originele stijl) -->
+    <!-- Footer -->
     <footer>
       <div class="social-section footer-social-section">
         <div class="container">
@@ -265,6 +265,8 @@
 
       const tableSelector = document.getElementById("table-selector");
       const levelSelector = document.getElementById("level-selector");
+      const levelFilterContainer = document.getElementById("level-filter-container");
+      const tableSelectorCol = document.getElementById("table-selector-col");
       const bodyRow = document.getElementById("table-body");
       const headRow = document.getElementById("table-head-row");
       const countEl = document.getElementById("record-count");
@@ -306,6 +308,15 @@
 
         const selectedVal = tableSelector.value;
         const selectedFilter = levelSelector.value;
+
+        // Beheer zichtbaarheid van het level-filter (verberg bij admins, toon bij de rest)
+        if (selectedVal === "admins") {
+          levelFilterContainer.style.display = "none";
+          tableSelectorCol.className = "col-md-12"; // Maak de tabel-selector breed als de filter weg is
+        } else {
+          levelFilterContainer.style.display = "block";
+          tableSelectorCol.className = "col-md-6";
+        }
 
         headRow.innerHTML = "";
         bodyRow.innerHTML =
@@ -430,7 +441,6 @@
         }
 
         // --- 4. STANDAARD TABELLEN AFHANDELING ---
-        // --- 4. STANDAARD TABELLEN AFHANDELING ---
         let tableName = "registrations2026";
         let query = abgSupabase.from(tableName).select("*").range(0, 4999);
 
@@ -447,15 +457,6 @@
 
         let { data, error } = await query;
 
-        if (error && tableName === "details") {
-          const fallbackQuery = await abgSupabase
-            .from(tableName)
-            .select("*")
-            .range(0, 4999);
-          data = fallbackQuery.data;
-          error = fallbackQuery.error;
-        }
-
         if (error) {
           bodyRow.innerHTML = `<tr><td colspan='8' class='text-danger text-center'>Error loading data: ${error.message}</td></tr>`;
           countEl.innerText = "Error";
@@ -469,19 +470,7 @@
           return;
         }
 
-        // Flatten de user email als die via een relatie binnenkomt
-        let processedData = data.map((row) => {
-          let newRow = { ...row };
-          if (
-            newRow.users &&
-            typeof newRow.users === "object" &&
-            newRow.users.email
-          ) {
-            newRow["email"] = newRow.users.email;
-          }
-          delete newRow.users;
-          return newRow;
-        });
+        let processedData = data;
 
         const allKeysSet = new Set();
         processedData.forEach((row) => {
@@ -491,29 +480,34 @@
         });
         currentExportKeys = Array.from(allKeysSet);
 
-        let filteredData = processedData.filter((row) => {
-          if (selectedFilter === "all") return true;
+        // --- FILTER TOEPASSEN (Sla over als het om admins gaat) ---
+        let filteredData = processedData;
 
-          if (selectedFilter.startsWith("waitlist_")) {
-            const targetLvl = selectedFilter
-              .replace("waitlist_", "")
-              .toLowerCase();
-            let val = row["status"];
-            if (val) {
-              const statusStr = String(val).trim().toLowerCase();
+        if (selectedVal !== "admins") {
+          filteredData = processedData.filter((row) => {
+            if (selectedFilter === "all") return true;
+
+            if (selectedFilter.startsWith("waitlist_")) {
+              const targetLvl = selectedFilter
+                .replace("waitlist_", "")
+                .toLowerCase();
+              let val = row["status"];
+              if (val) {
+                const statusStr = String(val).trim().toLowerCase();
+                return (
+                  statusStr.includes("wait") && statusStr.includes(targetLvl)
+                );
+              }
+              return false;
+            } else {
+              let val = row["team_level"];
               return (
-                statusStr.includes("wait") && statusStr.includes(targetLvl)
+                val &&
+                String(val).trim().toUpperCase() === selectedFilter.toUpperCase()
               );
             }
-            return false;
-          } else {
-            let val = row["team_level"];
-            return (
-              val &&
-              String(val).trim().toUpperCase() === selectedFilter.toUpperCase()
-            );
-          }
-        });
+          });
+        }
 
         countEl.innerText = `Total records shown: ${filteredData.length} (of ${processedData.length})`;
 
