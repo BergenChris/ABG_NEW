@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -7,10 +7,6 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
     <title>Cookie Settings - Antwerp Brilliant Games</title>
-    <meta
-      name="description"
-      content="Manage your cookie preferences for the Antwerp Brilliant Games website."
-    />
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css"
       rel="stylesheet"
@@ -34,8 +30,6 @@
     <!-- Navbar -->
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container navbar-container-flex">
-        
-        <!-- 1. Logo Links & Hamburger knop -->
         <div class="navbar-header navbar-header-custom">
           <button
             type="button"
@@ -49,7 +43,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand navbar-brand-custom">
+          <a class="navbar-brand navbar-brand-custom" href="../index.html">
             <img
               src="../ABG_balk.png"
               alt="Antwerp Brilliant Games"
@@ -58,9 +52,7 @@
           </a>
         </div>
 
-        <!-- 2 & 3. Navigatielinks omsloten door de collapse container -->
         <div class="collapse navbar-collapse" id="cookieNavbar">
-          <!-- Sporten in het midden -->
           <ul class="nav navbar-nav navbar-menu-center">
             <li><a href="../index.html">Home</a></li>
             <li><a href="badminton.html">Badminton</a></li>
@@ -68,7 +60,6 @@
             <li><a href="volleybal.html">Volleyball</a></li>
           </ul>
 
-          <!-- Rest Rechts -->
           <ul class="nav navbar-nav navbar-menu-right">
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"
@@ -85,16 +76,13 @@
                 >Account <span class="caret"></span
               ></a>
               <ul class="dropdown-menu" id="account-dropdown-list">
-                <!-- Wordt dynamisch ingevuld via script hieronder -->
                 <li><a href="account/login.html">Login</a></li>
                 <li><a href="account/t&c.html">Terms-and-Conditions</a></li>
               </ul>
             </li>
           </ul>
         </div>
-        <!-- /.navbar-collapse -->
       </div>
-      <!-- /.container -->
     </nav>
 
     <!-- Main Content -->
@@ -136,17 +124,15 @@
             <div class="redim-cc-content" style="margin: 15px 0; color: #555">
               We use cookies on our website. Some of them are essential for the
               operation of the site, while others help us to improve this site
-              and the user experience (tracking cookies). You can decide for
-              yourself whether you want to allow cookies or not. Please note
-              that if you reject them, you may not be able to use all the
-              functionalities of the site. We use NO MARKETING cookies.
+              and the user experience. You can decide for yourself.
             </div>
 
+            <!-- Knoppen met correcte ID's -->
             <div class="redim-cc-buttons" style="margin-bottom: 20px">
-              <button type="button" class="btn btn-success btn-sm">
+              <button type="button" id="btn-accept-all" class="btn btn-success btn-sm">
                 Accept all
               </button>
-              <button type="button" class="btn btn-default btn-sm">
+              <button type="button" id="btn-reject-all" class="btn btn-default btn-sm">
                 Reject all
               </button>
             </div>
@@ -163,7 +149,7 @@
               >
                 <div class="redim-cc-cat-head" style="margin-bottom: 8px">
                   <label class="redim-cc-switch">
-                    <input type="checkbox" checked disabled />
+                    <input type="checkbox" id="essential" checked disabled />
                     <span class="redim-cc-slider"></span>
                   </label>
                   <span style="font-size: 16px; font-weight: bold"
@@ -173,18 +159,14 @@
                     >Always on</span
                   >
                 </div>
-                <div style="font-size: 13px; color: #666; margin-bottom: 12px">
-                  Necessary for the operation of the website. These cookies
-                  cannot be disabled.
-                </div>
-
-                <!-- Sub-cookies van Essential -->
                 <div class="redim-cc-cookies" style="padding-left: 25px">
                   <div class="redim-cc-cookie-item">
                     <label class="redim-cc-switch"
-                      ><input type="checkbox" checked disabled /><span
-                        class="redim-cc-slider"
-                      ></span
+                      ><input
+                        type="checkbox"
+                        id="joomla_session"
+                        checked
+                        disabled /><span class="redim-cc-slider"></span
                     ></label>
                     <span
                       ><code>b699cf95abd3bf016d744562728c5432</code> (Joomla
@@ -193,9 +175,11 @@
                   </div>
                   <div class="redim-cc-cookie-item">
                     <label class="redim-cc-switch"
-                      ><input type="checkbox" checked disabled /><span
-                        class="redim-cc-slider"
-                      ></span
+                      ><input
+                        type="checkbox"
+                        id="redim_cookie_hint"
+                        checked
+                        disabled /><span class="redim-cc-slider"></span
                     ></label>
                     <span
                       ><code>reDimCookieHint</code> · reDim Cookie Hint</span
@@ -203,9 +187,11 @@
                   </div>
                   <div class="redim-cc-cookie-item">
                     <label class="redim-cc-switch"
-                      ><input type="checkbox" checked disabled /><span
-                        class="redim-cc-slider"
-                      ></span
+                      ><input
+                        type="checkbox"
+                        id="redim_cookie_consent"
+                        checked
+                        disabled /><span class="redim-cc-slider"></span
                     ></label>
                     <span
                       ><code>reDimCookieConsent</code> · reDim Cookie Hint</span
@@ -213,9 +199,11 @@
                   </div>
                   <div class="redim-cc-cookie-item">
                     <label class="redim-cc-switch"
-                      ><input type="checkbox" checked disabled /><span
-                        class="redim-cc-slider"
-                      ></span
+                      ><input
+                        type="checkbox"
+                        id="redim_cookie_consent_id"
+                        checked
+                        disabled /><span class="redim-cc-slider"></span
                     ></label>
                     <span
                       ><code>reDimCookieConsentId</code> · reDim Cookie
@@ -225,7 +213,7 @@
                 </div>
               </div>
 
-              <!-- Categorie 2: Other -->
+              <!-- Categorie 2: Other (10 cookies) -->
               <div class="redim-cc-cat" style="margin-bottom: 20px">
                 <div class="redim-cc-cat-head" style="margin-bottom: 12px">
                   <label class="redim-cc-switch">
@@ -237,7 +225,6 @@
                   >
                 </div>
 
-                <!-- Sub-cookies van Other -->
                 <div
                   class="redim-cc-cookies"
                   id="other-subcookies"
@@ -245,39 +232,43 @@
                 >
                   <div class="redim-cc-cookie-item">
                     <label class="redim-cc-switch"
-                      ><input type="checkbox" checked /><span
-                        class="redim-cc-slider"
-                      ></span
+                      ><input
+                        type="checkbox"
+                        id="mcforms_25358287_session_id"
+                        checked /><span class="redim-cc-slider"></span
                     ></label>
                     <span><code>mcforms-25358287-sessionId</code></span>
                   </div>
                   <div class="redim-cc-cookie-item">
                     <label class="redim-cc-switch"
-                      ><input type="checkbox" checked /><span
-                        class="redim-cc-slider"
-                      ></span
+                      ><input
+                        type="checkbox"
+                        id="mcforms_25358287_last_events"
+                        checked /><span class="redim-cc-slider"></span
                     ></label>
                     <span><code>mcforms-25358287-lastEvents</code></span>
                   </div>
                   <div class="redim-cc-cookie-item">
                     <label class="redim-cc-switch"
-                      ><input type="checkbox" checked /><span
-                        class="redim-cc-slider"
-                      ></span
+                      ><input
+                        type="checkbox"
+                        id="mcforms_event_25358287"
+                        checked /><span class="redim-cc-slider"></span
                     ></label>
                     <span><code>mcforms_event_25358287</code></span>
                   </div>
                   <div class="redim-cc-cookie-item">
                     <label class="redim-cc-switch"
-                      ><input type="checkbox" checked /><span
-                        class="redim-cc-slider"
-                      ></span
+                      ><input
+                        type="checkbox"
+                        id="cache_sprite_plyr"
+                        checked /><span class="redim-cc-slider"></span
                     ></label>
                     <span><code>cache-sprite-plyr</code></span>
                   </div>
                   <div class="redim-cc-cookie-item">
                     <label class="redim-cc-switch"
-                      ><input type="checkbox" checked /><span
+                      ><input type="checkbox" id="plyr" checked /><span
                         class="redim-cc-slider"
                       ></span
                     ></label>
@@ -285,9 +276,10 @@
                   </div>
                   <div class="redim-cc-cookie-item">
                     <label class="redim-cc-switch"
-                      ><input type="checkbox" checked /><span
-                        class="redim-cc-slider"
-                      ></span
+                      ><input
+                        type="checkbox"
+                        id="mcforms_25358287_experience_config_version"
+                        checked /><span class="redim-cc-slider"></span
                     ></label>
                     <span
                       ><code
@@ -297,33 +289,37 @@
                   </div>
                   <div class="redim-cc-cookie-item">
                     <label class="redim-cc-switch"
-                      ><input type="checkbox" checked /><span
-                        class="redim-cc-slider"
-                      ></span
+                      ><input
+                        type="checkbox"
+                        id="mcforms_25358287_time_queue_events"
+                        checked /><span class="redim-cc-slider"></span
                     ></label>
                     <span><code>mcforms-25358287-timeQueueEvents</code></span>
                   </div>
                   <div class="redim-cc-cookie-item">
                     <label class="redim-cc-switch"
-                      ><input type="checkbox" checked /><span
-                        class="redim-cc-slider"
-                      ></span
+                      ><input
+                        type="checkbox"
+                        id="mcforms_25358287_session"
+                        checked /><span class="redim-cc-slider"></span
                     ></label>
                     <span><code>mcforms-25358287-session</code></span>
                   </div>
                   <div class="redim-cc-cookie-item">
                     <label class="redim-cc-switch"
-                      ><input type="checkbox" checked /><span
-                        class="redim-cc-slider"
-                      ></span
+                      ><input
+                        type="checkbox"
+                        id="mcforms_25358287_state"
+                        checked /><span class="redim-cc-slider"></span
                     ></label>
                     <span><code>mcforms-25358287-state</code></span>
                   </div>
                   <div class="redim-cc-cookie-item">
                     <label class="redim-cc-switch"
-                      ><input type="checkbox" checked /><span
-                        class="redim-cc-slider"
-                      ></span
+                      ><input
+                        type="checkbox"
+                        id="mcforms_25358287_pageviews"
+                        checked /><span class="redim-cc-slider"></span
                     ></label>
                     <span><code>mcforms-25358287-pageviews</code></span>
                   </div>
@@ -331,6 +327,7 @@
               </div>
             </div>
 
+            <!-- Opslaan knop met ID -->
             <div
               style="
                 margin-top: 25px;
@@ -338,7 +335,7 @@
                 padding-top: 15px;
               "
             >
-              <button type="button" class="btn btn-primary btn-sm">
+              <button type="button" id="btn-save-selection" class="btn btn-primary btn-sm">
                 Save selection
               </button>
             </div>
@@ -346,84 +343,33 @@
             <p style="margin-top: 15px; font-size: 12px; color: #888">
               Consent ID: <code>e2354dd975a852f53502ca03c41d2afc</code>
             </p>
-
-            <div
-              style="
-                clear: both;
-                margin-top: 20px;
-                text-align: center;
-                font-size: 11px;
-                color: #888;
-              "
-            >
-              CookieHint and Consent by
-              <a
-                href="https://www.redim.de/"
-                target="_blank"
-                rel="noopener"
-                style="color: inherit; text-decoration: underline"
-                >reDim GmbH</a
-              >
-            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Footer -->
-    <footer>
-      <div class="social-section footer-social-section">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-8 col-md-offset-2 text-center">
-              <h2 class="footer-social-title">Visit our socials!</h2>
-              <ul class="social-icons-custom">
-                <li>
-                  <a
-                    href="https://www.instagram.com/antwerp_brilliant_games/"
-                    target="_blank"
-                    rel="noopener"
-                    title="follow us on instagram"
-                  >
-                    <img
-                      src="https://antwerpbrilliantgames.be/images/icons/instagram_logo.png"
-                      alt="follow us on instagram"
-                    />
-                    <span>Instagram</span>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://activecompany.be/en/"
-                    target="_blank"
-                    rel="noopener"
-                    title="Active Company Antwerpen"
-                  >
-                    <img
-                      src="../ABG_cirkel.png"
-                      alt="Active Company Antwerpen"
-                      class="active-logo"
-                      style="background-color: #ffffff; padding: 5px; border-radius: 4px"
-                    />
-                    <span>Website</span>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="container text-center footer-bottom footer-bottom-container">
-        <p>&copy; 2026 Antwerp Brilliant Games. All rights reserved.</p>
-      </div>
-    </footer>
-
+    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    
-    <!-- Script voor onderliggende cookies -->
+
+    <!-- Supabase Initialisatie -->
+    <script>
+      const SUPABASE_URL = "https://bhyokpduzcpdutifrzro.supabase.co";
+      const SUPABASE_ANON_KEY =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJoeW9rcGR1emNwZHV0aWZyenJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk1MDY3OTUsImV4cCI6MjEwNTA4Mjc5NX0.47cnkFu32TWL1hwaeQRWyNu4TQYkZ94pNzKUzvTaP9M";
+
+      const abgSupabase = supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY,
+      );
+    </script>
+
+    <!-- Cookie Functionaliteit -->
     <script>
       $(document).ready(function () {
+        console.log("Cookie script is geladen!");
+
+        // Toggle voor de 'Other' categorie en sub-checkboxen
         $("#toggle-other").on("change", function () {
           var isChecked = $(this).is(":checked");
           $('#other-subcookies input[type="checkbox"]').prop(
@@ -431,46 +377,95 @@
             isChecked,
           );
         });
-      });
-    </script>
 
-    <!-- Supabase Auth Logica voor de Navbar -->
-    <script>
-      const SUPABASE_URL = "https://bhyokpduzcpdutifrzro.supabase.co";
-      const SUPABASE_ANON_KEY =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJoeW9rcGR1emNwZHV0aWZyenJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk1MDY3OTUsImV4cCI6MjEwNTA4Mjc5NX0.47cnkFu32TWL1hwaeQRWyNu4TQYkZ94pNzKUzvTaP9M";
+        // Functie om consent op te slaan via UPSERT
+        async function saveAllCookiesToDB($btnElement) {
+          console.log("Functie saveAllCookiesToDB gestart...");
 
-      const abgSupabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+          const expDate = new Date();
+          expDate.setFullYear(expDate.getFullYear() + 1);
+          const formattedDate = expDate.toISOString().split("T")[0];
 
-      document.addEventListener("DOMContentLoaded", async function () {
-        const dropdownList = document.getElementById("account-dropdown-list");
-        if (!dropdownList) return;
-
-        const {
-          data: { session },
-        } = await abgSupabase.auth.getSession();
-
-        if (session) {
-          dropdownList.innerHTML = `
-            <li><a href="account/account.html">My Registration</a></li>
-            <li><a href="account/t&c.html">Terms-and-Conditions</a></li>
-            <li><a href="#" id="cookie-logout-btn">Log Out</a></li>
-          `;
-
-          const logoutBtn = document.getElementById("cookie-logout-btn");
-          if (logoutBtn) {
-            logoutBtn.addEventListener("click", async function (e) {
-              e.preventDefault();
-              await abgSupabase.auth.signOut();
-              window.location.reload();
-            });
+          let consentId = localStorage.getItem("abg_consent_id");
+          if (!consentId) {
+            consentId =
+              "consent_" + Math.random().toString(36).substring(2) + Date.now();
+            localStorage.setItem("abg_consent_id", consentId);
           }
-        } else {
-          dropdownList.innerHTML = `
-            <li><a href="account/login.html">Login</a></li>
-            <li><a href="account/t&c.html">Terms-and-Conditions</a></li>
-          `;
+
+          const {
+            data: { session },
+          } = await abgSupabase.auth.getSession();
+          const userId = session ? session.user.id : null;
+
+          const getCheck = (selector) =>
+            $(selector).prop("checked") ? true : false;
+
+          const cookieData = {
+            consent_id: consentId,
+            user_id: userId,
+            created_at: new Date(),
+            joomla_session: true,
+            redim_cookie_hint: true,
+            redim_cookie_consent: true,
+            redim_cookie_consent_id: true,
+            mcforms_25358287_session_id: getCheck(
+              "#mcforms_25358287_session_id",
+            ),
+            mcforms_25358287_last_events: getCheck(
+              "#mcforms_25358287_last_events",
+            ),
+            mcforms_event_25358287: getCheck("#mcforms_event_25358287"),
+            cache_sprite_plyr: getCheck("#cache_sprite_plyr"),
+            plyr: getCheck("#plyr"),
+            mcforms_25358287_experience_config_version: getCheck(
+              "#mcforms_25358287_experience_config_version",
+            ),
+            mcforms_25358287_time_queue_events: getCheck(
+              "#mcforms_25358287_time_queue_events",
+            ),
+            mcforms_25358287_session: getCheck("#mcforms_25358287_session"),
+            mcforms_25358287_state: getCheck("#mcforms_25358287_state"),
+            mcforms_25358287_pageviews: getCheck("#mcforms_25358287_pageviews"),
+            user_agent: navigator.userAgent,
+            consent_version: "v1.0",
+            expiration_date: formattedDate,
+          };
+
+          console.log("Te verzenden cookie data:", cookieData);
+
+          const { data, error } = await abgSupabase
+            .from("cookies")
+            .upsert([cookieData], { onConflict: "consent_id" });
+
+          if (error) {
+            console.error("SUPABASE ERROR:", error);
+            alert("DB Error: " + error.message);
+            return;
+          }
+
+          alert("Opgeslagen in database!");
         }
+
+        // Knoppen koppelen
+        $("#btn-save-selection").on("click", async function (e) {
+          e.preventDefault();
+          await saveAllCookiesToDB($(this));
+        });
+
+        $("#btn-accept-all").on("click", async function (e) {
+          e.preventDefault();
+          $('input[type="checkbox"]:not(:disabled)').prop("checked", true);
+          $("#toggle-other").prop("checked", true);
+          await saveAllCookiesToDB($(this));
+        });
+
+        $("#btn-reject-all").on("click", async function (e) {
+          e.preventDefault();
+          $('input[type="checkbox"]:not(:disabled)').prop("checked", false);
+          $("#toggle-other").prop("checked", false);
+          await saveAllCookiesToDB($(this));
+        });
       });
     </script>
   </body>

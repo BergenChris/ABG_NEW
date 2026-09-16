@@ -270,7 +270,7 @@
                     title="Active Company Antwerpen"
                   >
                     <img
-                      src="ABG_cirkel.png"
+                      src="/ABG/ABG_cirkel.png"
                       alt="Active Company Antwerpen"
                       class="active-logo"
                       style="background-color: #ffffff; padding: 5px; border-radius: 4px"
@@ -284,12 +284,15 @@
         </div>
       </div>
       <div class="container text-center footer-bottom footer-bottom-container">
+        <p><img src="/ABG/cookie-icon.svg" alt="Cookie Icon" height="20" /><a href="/ABG/html/cookies.html"> Cookies</a></p>
+      </div>
+      <div class="container text-center footer-bottom footer-bottom-container">
         <p>&copy; 2026 Antwerp Brilliant Games. All rights reserved.</p>
       </div>
     </footer>
 
     <!-- Cookie banner -->
-    <div class="cookie-bar" id="cookieBar">
+    <div class="cookie-bar" id="cookieBar" style="display: none;">
       <div class="container cookie-bar-container">
         <strong class="cookie-bar-title">We use cookies</strong>
         <p class="cookie-bar-text">
@@ -319,7 +322,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-    <!-- Supabase Auth Logica voor de Navbar -->
+    <!-- Supabase Auth Logica voor de Navbar & Cookie Check -->
     <script>
       const SUPABASE_URL = "https://bhyokpduzcpdutifrzro.supabase.co";
       const SUPABASE_ANON_KEY =
@@ -329,11 +332,39 @@
 
       document.addEventListener("DOMContentLoaded", async function () {
         const dropdownList = document.getElementById("account-dropdown-list");
-        if (!dropdownList) return;
+        const cookieBar = document.getElementById("cookieBar");
 
-        const {
-          data: { session },
-        } = await abgSupabase.auth.getSession();
+        // 1. Controleer of er al een cookie-record bestaat (op basis van session user of local consent_id)
+        let hasCookieRecord = false;
+        const { data: { session } } = await abgSupabase.auth.getSession();
+        const userId = session ? session.user.id : null;
+        const consentId = localStorage.getItem("abg_consent_id");
+
+        if (userId) {
+          const { data, error } = await abgSupabase
+            .from("cookies")
+            .select("consent_id")
+            .eq("user_id", userId)
+            .maybeSingle();
+          if (data) hasCookieRecord = true;
+        } else if (consentId) {
+          const { data, error } = await abgSupabase
+            .from("cookies")
+            .select("consent_id")
+            .eq("consent_id", consentId)
+            .maybeSingle();
+          if (data) hasCookieRecord = true;
+        }
+
+        // Als er een rij bestaat, verberg de banner; anders tonen
+        if (hasCookieRecord) {
+          if (cookieBar) cookieBar.style.display = "none";
+        } else {
+          if (cookieBar) cookieBar.style.display = "block";
+        }
+
+        // 2. Navbar account menu logica
+        if (!dropdownList) return;
 
         if (session) {
           // Ingelogd menu
