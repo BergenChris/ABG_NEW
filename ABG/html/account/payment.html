@@ -26,7 +26,7 @@
       rel="stylesheet"
     />
 
-    <!-- Project stylesheets (pas de paden aan indien nodig afhankelijk van je mappenstructuur) -->
+    <!-- Project stylesheets -->
     <link href="../../css/style.css" rel="stylesheet" />
     <link href="../../css/index.css" rel="stylesheet" />
     <link href="../../css/account/login.css" rel="stylesheet" />
@@ -60,10 +60,15 @@
         margin-bottom: 20px;
       }
       .price-tag {
-        font-size: 24pt;
+        font-size: 22pt;
         color: #1c2674;
         font-weight: bold;
-        margin: 15px 0;
+        margin: 10px 0;
+      }
+      .breakdown-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
       }
     </style>
   </head>
@@ -120,10 +125,10 @@
           <div class="col-md-6 col-md-offset-3">
             <div class="modern-card text-center">
               <h2 style="margin-top: 0; color: #1c2674; font-weight: bold">
-                Tournament Payment
+                Tournament & Tickets Payment
               </h2>
               <p class="text-muted">
-                Complete your payment to confirm your tournament participation.
+                Complete your payment or buy additional Woodpop tickets below.
               </p>
 
               <div id="loading-container" style="padding: 40px 0;">
@@ -131,22 +136,51 @@
                 <p style="margin-top: 15px;">Loading payment details...</p>
               </div>
 
-              <!-- Content wordt ingevuld via JavaScript afhankelijk van de status -->
+              <!-- Content wordt ingevuld via JavaScript -->
               <div id="payment-content" style="display: none;">
                 <div class="section-heading text-left">Registration Summary</div>
                 <div class="text-left" style="margin-bottom: 20px;">
                   <p><strong>Name:</strong> <span id="summary-name">-</span></p>
                   <p><strong>Sport:</strong> <span id="summary-sport">Badminton</span></p>
                   <p><strong>Team Level:</strong> <span id="summary-level">-</span></p>
+                  <p><strong>Status:</strong> <span id="summary-status">-</span></p>
                 </div>
 
-                <div class="section-heading text-left">Amount Due</div>
-                <div class="price-tag">&euro; 25,00</div>
-                <p class="text-muted" style="font-size: 11pt;">Includes access to the tournament and the Meet & Greet.</p>
+                <!-- Dynamisch container voor of wel betalen of wachtlijst melding -->
+                <div id="dynamic-payment-flow">
+                  <div class="section-heading text-left">Order Details</div>
+                  
+                  <div class="text-left" style="margin-bottom: 15px;">
+                    <!-- Toernooi fee regel -->
+                    <div class="breakdown-row" id="tournament-fee-row">
+                      <span>Tournament Fee:</span>
+                      <span><strong>&euro; 25,00</strong></span>
+                    </div>
 
-                <div id="payment-action-area" style="margin-top: 30px;">
-                  <!-- Wordt dynamisch aangepast (Betaalknop of Reeds betaald melding) -->
+                    <!-- Extra Tickets Woodpop regel -->
+                    <div class="form-group" style="margin-top: 15px; margin-bottom: 10px;">
+                      <label for="input-woodpop-tickets">Buy extra Tickets to Woodpop (&euro; 10,00 each):</label>
+                      <p class="text-muted" style="font-size: 90%; margin-bottom: 5px;">Current tickets already owned: <strong id="current-tickets-label">0</strong></p>
+                      <div class="row">
+                        <div class="col-xs-6">
+                          <input type="number" id="input-woodpop-tickets" class="form-control text-center" value="0" min="0" max="10" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <hr style="margin: 20px 0;">
+
+                  <div class="text-left">
+                    <span style="font-size: 12pt; font-weight: bold; color: #555;">Total Amount Due:</span>
+                    <div class="price-tag" id="total-price-display">&euro; 0,00</div>
+                  </div>
+
+                  <div id="payment-action-area" style="margin-top: 30px;">
+                    <!-- Wordt dynamisch ingevuld -->
+                  </div>
                 </div>
+
               </div>
 
             </div>
@@ -222,11 +256,19 @@
         const { createClient } = window.supabase;
         const abgSupabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+        const TOURNAMENT_PRICE = 25.00;
+        const TICKET_PRICE = 10.00;
+
         document.addEventListener("DOMContentLoaded", async function () {
           const dropdownList = document.getElementById("account-dropdown-list");
           const loadingContainer = document.getElementById("loading-container");
           const paymentContent = document.getElementById("payment-content");
+          const dynamicPaymentFlow = document.getElementById("dynamic-payment-flow");
           const paymentActionArea = document.getElementById("payment-action-area");
+          const ticketInput = document.getElementById("input-woodpop-tickets");
+          const currentTicketsLabel = document.getElementById("current-tickets-label");
+          const totalPriceDisplay = document.getElementById("total-price-display");
+          const tournamentFeeRow = document.getElementById("tournament-fee-row");
 
           // 1. Controleer sessie
           const {
@@ -280,55 +322,94 @@
           document.getElementById("summary-name").innerText = `${regData.firstName || ''} ${regData.lastName || ''}`;
           document.getElementById("summary-sport").innerText = regData.sport || 'Badminton';
           document.getElementById("summary-level").innerText = regData.team_level || '-';
+          
+          const currentStatus = (regData.status || '').toLowerCase();
+          document.getElementById("summary-status").innerText = regData.status || 'Registered';
 
-          // 3. Controleer of reeds betaald is (`tournament_paid`)
-          if (regData.tournament_paid === true) {
-            paymentActionArea.innerHTML = `
-              <div class="alert alert-success" style="font-size: 12pt; padding: 15px;">
-                <i class="fa fa-check-circle"></i> <strong>Payment Successful!</strong><br>
-                You have already paid for this tournament. Thank you!
+          // --- CONDITIE 1: Wachtlijst (waitinglist) check ---
+          if (currentStatus === 'waitinglist') {
+            dynamicPaymentFlow.innerHTML = `
+              <div class="alert alert-info" style="margin-top: 20px; text-align: left;">
+                <h4><i class="fa fa-info-circle"></i> You are currently on the Waiting List</h4>
+                <p>Payment is not required at this moment. You will be notified by email as soon as a spot becomes available and you are moved to the confirmed list.</p>
               </div>
-              <a href="account.html" class="btn btn-default btn-lg btn-block" style="margin-top: 15px;">Back to My Account</a>
+              <a href="account.html" class="btn btn-primary btn-block" style="margin-top: 20px;">Back to Account</a>
             `;
-          } else {
-            // Nog niet betaald -> Toon betaalknop
-            paymentActionArea.innerHTML = `
-              <button id="pay-now-btn" class="btn btn-success btn-lg btn-block" style="background-color: #5cb85c; border-color: #4cae4c; font-weight: bold;">
-                <i class="fa fa-credit-card"></i> Pay Now (€ 25,00)
-              </button>
-              <a href="account.html" class="btn btn-link btn-block" style="margin-top: 15px; color: #777;">Cancel / Back to Account</a>
-            `;
-
-            // Koppel actie aan de betaalknop
-            document.getElementById("pay-now-btn").addEventListener("click", async function () {
-              const btn = this;
-              btn.disabled = true;
-              btn.innerHTML = `<i class="fa fa-spinner fa-spin"></i> Processing payment...`;
-
-              try {
-                // Hier kun je later de echte integratie (bijv. Mollie API of Stripe) plaatsen.
-                // Voor nu simuleren we een geslaagde betaling door `tournament_paid` op `true` te zetten in Supabase.
-                
-                const { error: updateError } = await abgSupabase
-                  .from("details")
-                  .update({ tournament_paid: true })
-                  .eq("user_id", user.id);
-
-                if (updateError) throw updateError;
-
-                // Kleine vertraging voor de UX en daarna doorsturen naar accountpagina
-                setTimeout(() => {
-                  window.location.href = "account.html?paid=success";
-                }, 1000);
-
-              } catch (err) {
-                console.error("Fout bij betaling:", err);
-                alert("Payment simulation failed: " + (err.message || "Unknown error"));
-                btn.disabled = false;
-                btn.innerHTML = `<i class="fa fa-credit-card"></i> Pay Now (€ 25,00)`;
-              }
-            });
+            return;
           }
+
+          // --- CONDITIE 2: Tournament paid check ---
+          const isTournamentPaid = regData.tournament_paid === true;
+
+          if (isTournamentPaid) {
+            if (tournamentFeeRow) {
+              tournamentFeeRow.style.display = "none";
+            }
+          }
+
+          // Bestaand aantal tickets ophalen uit number_ticket_woodpop
+          const existingTickets = regData.number_ticket_woodpop || 0;
+          currentTicketsLabel.innerText = existingTickets;
+          ticketInput.value = 0; // Standaard op 0 extra toe te voegen tickets bij openen pagina
+
+          // Functie om totaalbedrag dynamisch te berekenen
+          function calculateTotal() {
+            const extraTicketsCount = parseInt(ticketInput.value) || 0;
+            const baseAmount = isTournamentPaid ? 0 : TOURNAMENT_PRICE;
+            const ticketsAmount = extraTicketsCount * TICKET_PRICE;
+            const total = baseAmount + ticketsAmount;
+            
+            totalPriceDisplay.innerHTML = `&euro; ${total.toFixed(2).replace('.', ',')}`;
+            return total;
+          }
+
+          ticketInput.addEventListener("input", calculateTotal);
+          calculateTotal();
+
+          // Bouw de actie-knop op
+          paymentActionArea.innerHTML = `
+            <button id="pay-now-btn" class="btn btn-success btn-lg btn-block" style="background-color: #5cb85c; border-color: #4cae4c; font-weight: bold;">
+              <i class="fa fa-credit-card"></i> Pay Now
+            </button>
+            <a href="account.html" class="btn btn-link btn-block" style="margin-top: 15px; color: #777;">Cancel / Back to Account</a>
+          `;
+
+          // Koppel actie aan de betaalknop
+          document.getElementById("pay-now-btn").addEventListener("click", async function () {
+            const btn = this;
+            const extraTicketsToAdd = parseInt(ticketInput.value) || 0;
+            
+            // Tel het nieuwe aantal extra tickets op bij het reeds bestaande aantal in de database
+            const newTotalWoodpopTickets = existingTickets + extraTicketsToAdd;
+            
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fa fa-spinner fa-spin"></i> Processing payment...`;
+
+            try {
+              const updatePayload = {
+                number_ticket_woodpop: newTotalWoodpopTickets,
+                tournament_paid: true 
+              };
+
+              const { error: updateError } = await abgSupabase
+                .from("details")
+                .update(updatePayload)
+                .eq("user_id", user.id);
+
+              if (updateError) throw updateError;
+
+              // Doorsturen naar accountpagina na succesvolle simulatie
+              setTimeout(() => {
+                window.location.href = "account.html?paid=success";
+              }, 1000);
+
+            } catch (err) {
+              console.error("Fout bij betaling:", err);
+              alert("Payment simulation failed: " + (err.message || "Unknown error"));
+              btn.disabled = false;
+              btn.innerHTML = `<i class="fa fa-credit-card"></i> Pay Now`;
+            }
+          });
         });
       })();
     </script>

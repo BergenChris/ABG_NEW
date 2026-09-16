@@ -59,18 +59,20 @@
         margin-bottom: 15px;
       }
       .badge-unpaid {
-        background-color: #d9534f; /* Aangepast naar rood */
+        background-color: #d9534f; /* Rood */
         color: white;
-        padding: 5px 10px;
+        padding: 4px 8px;
         border-radius: 4px;
         font-weight: bold;
+        font-size: 90%;
       }
       .badge-paid {
         background-color: #5cb85c; /* Groen */
         color: white;
-        padding: 5px 10px;
+        padding: 4px 8px;
         border-radius: 4px;
         font-weight: bold;
+        font-size: 90%;
       }
       .payment-alert-box {
         background-color: #fcf8e3;
@@ -79,6 +81,16 @@
         border-radius: 6px;
         margin-bottom: 25px;
         text-align: center;
+      }
+      .payment-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid #f2f2f2;
+      }
+      .payment-row:last-child {
+        border-bottom: none;
       }
     </style>
   </head>
@@ -134,7 +146,7 @@
         <div class="row">
           <div class="col-md-8 col-md-offset-2">
             
-            <!-- Dynamische Betaalwaarschuwing (verschijnt alleen als tournament_paid == false) -->
+            <!-- Dynamische Betaalwaarschuwing -->
             <div id="payment-alert-container" style="display: none;" class="payment-alert-box">
               <h3 style="margin-top: 0; color: #8a6d3b; font-weight: bold;">Payment Required</h3>
               <p>Your registration has been saved, but your tournament fee of <strong>€ 25,00</strong> has not been paid yet.</p>
@@ -156,11 +168,6 @@
               <!-- Gegevens Container -->
               <div id="account-details-content">
                 <p class="text-center text-muted">Loading your registration details...</p>
-              </div>
-
-              <div class="text-center" style="margin-top: 30px;">
-                <a href="register.html" class="btn btn-default" style="margin-right: 10px;">Edit Registration</a>
-                <button id="logout-btn-main" class="btn btn-danger">Log Out</button>
               </div>
             </div>
           </div>
@@ -290,16 +297,24 @@
             return;
           }
 
-          // 3. Controleer of het betaald is of niet
-          if (!regData.tournament_paid) {
-            // Toon de waarschuwing met de betaalknop bovenaan
+          // 3. Toon betaalwaarschuwing bovenaan indien tournament niet betaald is EN status geen waitinglist is
+          const currentStatus = (regData.status || '').toLowerCase();
+          if (!regData.tournament_paid && currentStatus !== 'waitinglist') {
             paymentAlertBox.style.display = "block";
           }
 
-          // 4. Render de gegevens in de card (met rood kruisje voor unpaid en groen vinkje voor paid)
-          const paymentStatusBadge = regData.tournament_paid 
-            ? '<span class="badge-paid"><i class="fa fa-check-circle"></i> Paid</span>' 
-            : '<span class="badge-unpaid"><i class="fa fa-times-circle"></i> Unpaid</span> &nbsp;&nbsp; <a href="payment.html" class="btn btn-warning btn-sm" style="font-weight: bold;"><i class="fa fa-credit-card"></i> Pay Now</a>';
+          // Huidig aantal tickets to woodpop ophalen uit de juiste kolom (number_ticket_woodpop)
+          const woodpopCount = regData.number_ticket_woodpop || 0;
+
+          // 4. Render badge voor tournament status (indien waitinglist, toon dat ook netjes)
+          let tournamentStatusBadge = '';
+          if (currentStatus === 'waitinglist') {
+            tournamentStatusBadge = '<span class="label label-info" style="font-size: 90%; padding: 4px 8px;">Waiting List</span>';
+          } else {
+            tournamentStatusBadge = regData.tournament_paid 
+              ? '<span class="badge-paid"><i class="fa fa-check-circle"></i> Paid</span>' 
+              : '<span class="badge-unpaid"><i class="fa fa-times-circle"></i> Unpaid</span> &nbsp;<a href="payment.html" class="btn btn-warning btn-xs" style="font-weight: bold;"><i class="fa fa-credit-card"></i> Pay Now</a>';
+          }
 
           detailsContainer.innerHTML = `
             <div class="section-heading" style="margin-top: 0;">Account Details</div>
@@ -321,8 +336,27 @@
             <p><strong>Allergies:</strong> ${regData.allergies || "None"}</p>
             <p><strong>Meet & Greet:</strong> ${regData.meet_and_greet ? "Yes" : "No"}</p>
 
-            <div class="section-heading">Payment Status</div>
-            <p><strong>Status:</strong> ${paymentStatusBadge}</p>
+            <div class="section-heading">Payment & Tickets</div>
+            
+            <div class="payment-row">
+              <div>
+                <strong>Tournament Fee:</strong>
+              </div>
+              <div>
+                ${tournamentStatusBadge}
+              </div>
+            </div>
+
+            <div class="payment-row">
+              <div>
+                <strong>Tickets to Woodpop:</strong> <span class="text-primary" style="font-weight: bold; font-size: 110%; margin-left: 5px;">${woodpopCount}</span>
+              </div>
+              <div>
+                <a href="payment.html" class="btn btn-primary btn-sm" style="font-weight: bold;">
+                  <i class="fa fa-ticket"></i> Buy Extra Tickets
+                </a>
+              </div>
+            </div>
           `;
         });
       })();
