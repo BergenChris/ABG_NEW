@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -26,13 +26,17 @@
     <link href="../css/style.css" rel="stylesheet" />
     <link href="../css/index.css" rel="stylesheet" />
     <link href="../css/cookies.css" rel="stylesheet" />
+
+    <!-- Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   </head>
   <body>
     <!-- Navbar -->
     <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
+      <div class="container navbar-container-flex">
+        
+        <!-- 1. Logo Links & Hamburger knop -->
+        <div class="navbar-header navbar-header-custom">
           <button
             type="button"
             class="navbar-toggle collapsed"
@@ -45,11 +49,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a
-            class="navbar-brand"
-            href="../index.html"
-            style="padding: 5px 15px; height: auto"
-          >
+          <a class="navbar-brand navbar-brand-custom">
             <img
               src="../ABG_balk.png"
               alt="Antwerp Brilliant Games"
@@ -58,10 +58,10 @@
           </a>
         </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- 2 & 3. Navigatielinks omsloten door de collapse container -->
         <div class="collapse navbar-collapse" id="cookieNavbar">
           <!-- Sporten in het midden -->
-          <ul class="nav navbar-nav">
+          <ul class="nav navbar-nav navbar-menu-center">
             <li><a href="../index.html">Home</a></li>
             <li><a href="badminton.html">Badminton</a></li>
             <li><a href="tennis.html">Tennis</a></li>
@@ -69,31 +69,25 @@
           </ul>
 
           <!-- Rest Rechts -->
-          <ul class="nav navbar-nav navbar-right">
+          <ul class="nav navbar-nav navbar-menu-right">
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"
                 >Info <span class="caret"></span
               ></a>
               <ul class="dropdown-menu">
-                <li><a href="./info/tourist-info.html">Visitor info</a></li>
-                <li><a href="./info/party.html">Party</a></li>
-                <li><a href="./info/contact.html">Contact</a></li>
+                <li><a href="info/tourist-info.html">Visitor info</a></li>
+                <li><a href="info/party.html">Party</a></li>
+                <li><a href="info/contact.html">Contact</a></li>
               </ul>
             </li>
-            <li class="dropdown">
+            <li class="dropdown" id="account-menu-item">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"
-                >Registration <span class="caret"></span
+                >Account <span class="caret"></span
               ></a>
-              <ul class="dropdown-menu">
-                <li><a href="login.html">Login</a></li>
-                <li>
-                  <a href="./account/create-registration.html"
-                    >Create Registration Account</a
-                  >
-                </li>
-                <li>
-                  <a href="terms-and-conditions.html">Terms-and-Conditions</a>
-                </li>
+              <ul class="dropdown-menu" id="account-dropdown-list">
+                <!-- Wordt dynamisch ingevuld via script hieronder -->
+                <li><a href="account/login.html">Login</a></li>
+                <li><a href="account/t&c.html">Terms-and-Conditions</a></li>
               </ul>
             </li>
           </ul>
@@ -377,7 +371,7 @@
     </div>
 
     <!-- Footer -->
-<footer>
+    <footer>
       <div class="social-section footer-social-section">
         <div class="container">
           <div class="row">
@@ -426,8 +420,9 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    
+    <!-- Script voor onderliggende cookies -->
     <script>
-      // Script om onderliggende cookies mee te schakelen met de 'Other' hoofdcategorie
       $(document).ready(function () {
         $("#toggle-other").on("change", function () {
           var isChecked = $(this).is(":checked");
@@ -436,6 +431,46 @@
             isChecked,
           );
         });
+      });
+    </script>
+
+    <!-- Supabase Auth Logica voor de Navbar -->
+    <script>
+      const SUPABASE_URL = "https://bhyokpduzcpdutifrzro.supabase.co";
+      const SUPABASE_ANON_KEY =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJoeW9rcGR1emNwZHV0aWZyenJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk1MDY3OTUsImV4cCI6MjEwNTA4Mjc5NX0.47cnkFu32TWL1hwaeQRWyNu4TQYkZ94pNzKUzvTaP9M";
+
+      const abgSupabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+      document.addEventListener("DOMContentLoaded", async function () {
+        const dropdownList = document.getElementById("account-dropdown-list");
+        if (!dropdownList) return;
+
+        const {
+          data: { session },
+        } = await abgSupabase.auth.getSession();
+
+        if (session) {
+          dropdownList.innerHTML = `
+            <li><a href="account/account.html">My Registration</a></li>
+            <li><a href="account/t&c.html">Terms-and-Conditions</a></li>
+            <li><a href="#" id="cookie-logout-btn">Log Out</a></li>
+          `;
+
+          const logoutBtn = document.getElementById("cookie-logout-btn");
+          if (logoutBtn) {
+            logoutBtn.addEventListener("click", async function (e) {
+              e.preventDefault();
+              await abgSupabase.auth.signOut();
+              window.location.reload();
+            });
+          }
+        } else {
+          dropdownList.innerHTML = `
+            <li><a href="account/login.html">Login</a></li>
+            <li><a href="account/t&c.html">Terms-and-Conditions</a></li>
+          `;
+        }
       });
     </script>
   </body>

@@ -25,6 +25,9 @@
     />
     <link href="css/style.css" rel="stylesheet" />
     <link href="css/index.css" rel="stylesheet" />
+
+    <!-- Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   </head>
   <body>
     <!-- Navbar -->
@@ -44,7 +47,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand navbar-brand-custom">
+          <a class="navbar-brand navbar-brand-custom" href="index.html">
             <img
               src="ABG_balk.png"
               alt="Antwerp Brilliant Games"
@@ -77,11 +80,12 @@
                 <li><a href="html/info/contact.html">Contact</a></li>
               </ul>
             </li>
-            <li class="dropdown">
+            <li class="dropdown" id="account-menu-item">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"
                 >Account <span class="caret"></span
               ></a>
-              <ul class="dropdown-menu">
+              <ul class="dropdown-menu" id="account-dropdown-list">
+                <!-- Wordt standaard als niet-ingelogd ingevuld, overschreven door script indien nodig -->
                 <li><a href="html/account/login.html">Login</a></li>
                 <li>
                   <a href="html/account/t&c.html">Terms-and-Conditions</a>
@@ -237,7 +241,7 @@
     </div>
 
     <!-- Footer -->
-<footer>
+    <footer>
       <div class="social-section footer-social-section">
         <div class="container">
           <div class="row">
@@ -311,7 +315,50 @@
       </div>
     </div>
 
+    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <!-- Supabase Auth Logica voor de Navbar -->
+    <script>
+      const SUPABASE_URL = "https://bhyokpduzcpdutifrzro.supabase.co";
+      const SUPABASE_ANON_KEY =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJoeW9rcGR1emNwZHV0aWZyenJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk1MDY3OTUsImV4cCI6MjEwNTA4Mjc5NX0.47cnkFu32TWL1hwaeQRWyNu4TQYkZ94pNzKUzvTaP9M";
+
+      const abgSupabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+      document.addEventListener("DOMContentLoaded", async function () {
+        const dropdownList = document.getElementById("account-dropdown-list");
+        if (!dropdownList) return;
+
+        const {
+          data: { session },
+        } = await abgSupabase.auth.getSession();
+
+        if (session) {
+          // Ingelogd menu
+          dropdownList.innerHTML = `
+            <li><a href="html/account/account.html">My Registration</a></li>
+            <li><a href="html/account/t&c.html">Terms-and-Conditions</a></li>
+            <li><a href="#" id="home-logout-btn">Log Out</a></li>
+          `;
+
+          const logoutBtn = document.getElementById("home-logout-btn");
+          if (logoutBtn) {
+            logoutBtn.addEventListener("click", async function (e) {
+              e.preventDefault();
+              await abgSupabase.auth.signOut();
+              window.location.reload();
+            });
+          }
+        } else {
+          // Uitgelogd menu
+          dropdownList.innerHTML = `
+            <li><a href="html/account/login.html">Login</a></li>
+            <li><a href="html/account/t&c.html">Terms-and-Conditions</a></li>
+          `;
+        }
+      });
+    </script>
   </body>
 </html>

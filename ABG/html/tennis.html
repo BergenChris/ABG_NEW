@@ -12,6 +12,9 @@
 <link href="../css/index.css" rel="stylesheet">
 <link href="../css/sport.css" rel="stylesheet">
 <link href="../css/tennis.css" rel="stylesheet">
+
+<!-- Supabase CDN -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -52,9 +55,10 @@
             <li><a href="./info/contact.html">Contact</a></li>
           </ul>
         </li>
-        <li class="dropdown">
+        <li class="dropdown" id="account-menu-item">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Account <span class="caret"></span></a>
-          <ul class="dropdown-menu">
+          <ul class="dropdown-menu" id="account-dropdown-list">
+            <!-- Wordt dynamisch ingevuld via script hieronder -->
             <li><a href="./account/login.html">Login</a></li>
             <li><a href="./account/t&c.html">Terms-and-Conditions</a></li>
           </ul>
@@ -70,7 +74,7 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2 modern-card text-center">
       <h1>Tennis Tournament</h1>
-      <h2>Friday – Sunday, November 6–8, 2026</h2>-
+      <h2>Friday – Sunday, November 6–8, 2026</h2>
       <img src="../abg_tennis.jpg" alt="ABG round logo 2026" width="50%" >
     </div>
   </div>
@@ -179,5 +183,47 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<!-- Supabase Auth Logica voor de Navbar (met aangepaste paden voor submap) -->
+<script>
+  const SUPABASE_URL = "https://bhyokpduzcpdutifrzro.supabase.co";
+  const SUPABASE_ANON_KEY =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJoeW9rcGR1emNwZHV0aWZyenJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk1MDY3OTUsImV4cCI6MjEwNTA4Mjc5NX0.47cnkFu32TWL1hwaeQRWyNu4TQYkZ94pNzKUzvTaP9M";
+
+  const abgSupabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  document.addEventListener("DOMContentLoaded", async function () {
+    const dropdownList = document.getElementById("account-dropdown-list");
+    if (!dropdownList) return;
+
+    const {
+      data: { session },
+    } = await abgSupabase.auth.getSession();
+
+    if (session) {
+      // Ingelogd menu (aangepaste paden vanuit 'html/')
+      dropdownList.innerHTML = `
+        <li><a href="account/account.html">My Registration</a></li>
+        <li><a href="account/t&c.html">Terms-and-Conditions</a></li>
+        <li><a href="#" id="tennis-logout-btn">Log Out</a></li>
+      `;
+
+      const logoutBtn = document.getElementById("tennis-logout-btn");
+      if (logoutBtn) {
+        logoutBtn.addEventListener("click", async function (e) {
+          e.preventDefault();
+          await abgSupabase.auth.signOut();
+          window.location.reload();
+        });
+      }
+    } else {
+      // Uitgelogd menu
+      dropdownList.innerHTML = `
+        <li><a href="account/login.html">Login</a></li>
+        <li><a href="account/t&c.html">Terms-and-Conditions</a></li>
+      `;
+    }
+  });
+</script>
 </body>
 </html>
