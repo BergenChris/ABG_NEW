@@ -139,38 +139,58 @@
       <div class="container">
         <div class="row">
           <div class="col-md-8 col-md-offset-2">
+            
+            <!-- Succesmelding indien net betaald via Stripe -->
+            <div id="payment-success-alert" class="alert alert-success" style="display: none; margin-bottom: 20px;">
+              <i class="fa fa-check-circle"></i> <strong>Payment successful!</strong> Your updates have been processed successfully.
+            </div>
+
             <div class="modern-card">
-              
               <!-- ADMIN PANEEL -->
-              <div id="admin-panel-container" style="display: none;" class="admin-panel-box">
-                <h4 style="margin-top: 0; color: #f0ad4e; font-weight: bold;">
+              <div
+                id="admin-panel-container"
+                style="display: none"
+                class="admin-panel-box"
+              >
+                <h4 style="margin-top: 0; color: #f0ad4e; font-weight: bold">
                   <i class="fa fa-shield"></i> Admin Management Tools
                 </h4>
-                <p class="text-muted" style="font-size: 13px;">
-                  As an administrator, you can view the overview or grant admin rights to another user's email address below.
+                <p class="text-muted" style="font-size: 13px">
+                  As an administrator, you can view the overview or grant admin
+                  rights to another user's email address below.
                 </p>
 
-                <div style="margin-bottom: 15px;">
-                  <a href="../team/overzicht.html" class="btn btn-warning btn-block" style="font-weight: bold; padding: 10px;">
+                <div style="margin-bottom: 15px">
+                  <a
+                    href="../team/overzicht.html"
+                    class="btn btn-warning btn-block"
+                    style="font-weight: bold; padding: 10px"
+                  >
                     <i class="fa fa-users"></i> Go to Full Admin Overview
                   </a>
                 </div>
 
-                <hr style="border-top: 1px solid #faebcc;" />
+                <hr style="border-top: 1px solid #faebcc" />
 
-                <form id="add-admin-form" style="margin-top: 15px;">
-                  <div class="form-group" style="margin-bottom: 10px;">
-                    <label style="font-size: 13px; color: #444;">Make a new user Admin (by Email)</label>
+                <form id="add-admin-form" style="margin-top: 15px">
+                  <div class="form-group" style="margin-bottom: 10px">
+                    <label style="font-size: 13px; color: #444"
+                      >Make a new user Admin (by Email)</label
+                    >
                     <div class="input-group">
-                      <input 
-                        type="email" 
-                        id="new-admin-email" 
-                        class="form-control" 
-                        placeholder="colleague@example.com" 
-                        required 
+                      <input
+                        type="email"
+                        id="new-admin-email"
+                        class="form-control"
+                        placeholder="colleague@example.com"
+                        required
                       />
                       <span class="input-group-btn">
-                        <button type="submit" class="btn btn-success" id="add-admin-btn">
+                        <button
+                          type="submit"
+                          class="btn btn-success"
+                          id="add-admin-btn"
+                        >
                           <i class="fa fa-user-plus"></i> Add Admin
                         </button>
                       </span>
@@ -186,7 +206,7 @@
                 </button>
               </div>
 
-              <!-- SECTIE 1: GEEN REGISTRATIE GEVONDEN (Alleen knop tonen) -->
+              <!-- SECTIE 1: GEEN REGISTRATIE GEVONDEN -->
               <div
                 id="no-registration-section"
                 style="display: none; text-align: center; padding: 40px 20px"
@@ -284,59 +304,35 @@
                 </h3>
 
                 <!-- Overzicht van reeds betaalde items -->
-                <div class="panel panel-default" style="margin-bottom: 25px;">
-                  <div class="panel-heading" style="font-weight: bold; background-color: #f5f5f5;">
+                <div class="panel panel-default" style="margin-bottom: 25px">
+                  <div
+                    class="panel-heading"
+                    style="font-weight: bold; background-color: #f5f5f5"
+                  >
                     <i class="fa fa-list-alt"></i> Your Payment Overview
                   </div>
-                  <div class="panel-body" style="padding: 0;">
-                    <table class="table table-custom" style="margin-top: 0;">
+                  <div class="panel-body" style="padding: 0">
+                    <table class="table table-custom" style="margin-top: 0">
                       <tr>
                         <td class="label-cell">Tournament Registration</td>
-                        <td id="val-tournament-payment"><span class="label label-default">Loading...</span></td>
+                        <td id="val-tournament-payment">
+                          <span class="label label-default">Loading...</span>
+                        </td>
                       </tr>
                       <tr>
                         <td class="label-cell">Party Tickets (Woodpop)</td>
                         <td id="val-party-tickets-count">-</td>
                       </tr>
+                      <tr>
+                        <td class="label-cell">Extra Party Tickets</td>
+                        <td id="val-party-tickets">
+                          <span class="label label-default">Loading...</span>
+                        </td>
+                      </tr>
                     </table>
                   </div>
                 </div>
 
-                <p>
-                  <strong
-                    >Purchase additional participation fees / party tickets:</strong
-                  >
-                </p>
-
-                <div class="payment-card">
-                  <h4 style="margin-top: 0; font-weight: bold; color: #1c2674">
-                    ABG 2026 Party
-                  </h4>
-                  <p><em>- Party admission ticket -</em></p>
-
-                  <div
-                    class="form-group"
-                    style="max-width: 300px; margin-bottom: 15px"
-                  >
-                    <select class="form-control" id="party-tickets-select">
-                      <option value="1">1 ticket – EUR 12</option>
-                      <option value="2">2 tickets – EUR 24</option>
-                      <option value="3">3 tickets – EUR 36</option>
-                      <option value="4">4 tickets – EUR 48</option>
-                      <option value="5">5 tickets – EUR 60</option>
-                    </select>
-                  </div>
-                  <div>
-                    <strong id="total-party-price">EUR 12</strong> &nbsp;&nbsp;
-                    <button
-                      type="button"
-                      class="btn btn-primary"
-                      id="pay-party-btn"
-                    >
-                      Pay
-                    </button>
-                  </div>
-                </div>
               </div>
               <!-- Einde has-registration-section -->
             </div>
@@ -378,7 +374,11 @@
                       src="../../ABG_cirkel.png"
                       alt="Active Company Antwerpen"
                       class="active-logo"
-                      style="background-color: #ffffff; padding: 5px; border-radius: 4px"
+                      style="
+                        background-color: #ffffff;
+                        padding: 5px;
+                        border-radius: 4px;
+                      "
                     />
                     <span>Website</span>
                   </a>
@@ -399,171 +399,215 @@
 
     <!-- Supabase Initialisatie & Databaselogica -->
     <script>
-      (function() {
-          const SUPABASE_URL = 'https://bhyokpduzcpdutifrzro.supabase.co';
-          const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJoeW9rcGR1emNwZHV0aWZyenJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk1MDY3OTUsImV4cCI6MjEwNTA4Mjc5NX0.47cnkFu32TWL1hwaeQRWyNu4TQYkZ94pNzKUzvTaP9M';
+      (function () {
+        const SUPABASE_URL = "https://bhyokpduzcpdutifrzro.supabase.co";
+        const SUPABASE_ANON_KEY =
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJoeW9rcGR1emNwZHV0aWZyenJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk1MDY3OTUsImV4cCI6MjEwNTA4Mjc5NX0.47cnkFu32TWL1hwaeQRWyNu4TQYkZ94pNzKUzvTaP9M";
 
-          if (!window.supabase || !window.supabase.createClient) {
-              console.error('Supabase script is niet geladen!');
-              return;
+        if (!window.supabase || !window.supabase.createClient) {
+          console.error("Supabase script is niet geladen!");
+          return;
+        }
+
+        const { createClient } = window.supabase;
+        const abgSupabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        document.addEventListener("DOMContentLoaded", async function () {
+          const {
+            data: { session },
+            error: sessionError,
+          } = await abgSupabase.auth.getSession();
+
+          if (!session || sessionError) {
+            window.location.href = "login.html";
+            return;
           }
 
-          const { createClient } = window.supabase;
-          const abgSupabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+          const user = session.user;
 
-          document.addEventListener("DOMContentLoaded", async function () {
-              const { data: { session }, error: sessionError } = await abgSupabase.auth.getSession();
+          async function doLogout(e) {
+            e.preventDefault();
+            await abgSupabase.auth.signOut();
+            window.location.href = "login.html";
+          }
 
-              if (!session || sessionError) {
-                  window.location.href = "login.html";
-                  return;
-              }
+          document
+            .getElementById("logout-btn")
+            .addEventListener("click", doLogout);
+          document
+            .getElementById("nav-logout-action")
+            .addEventListener("click", doLogout);
 
-              const user = session.user;
+          // 1. Check of we terugkomen van een succesvolle betaling via Stripe
+          const urlParams = new URLSearchParams(window.location.search);
+          if (urlParams.get("paid") === "success") {
+            document.getElementById("payment-success-alert").style.display = "block";
 
-              async function doLogout(e) {
-                  e.preventDefault();
-                  await abgSupabase.auth.signOut();
-                  window.location.href = "login.html";
-              }
+            // Haal tijdelijk opgeslagen extra tickets op uit localStorage
+            const pendingExtraTickets = parseInt(localStorage.getItem("pending_extra_tickets")) || 0;
 
-              document.getElementById("logout-btn").addEventListener("click", doLogout);
-              document.getElementById("nav-logout-action").addEventListener("click", doLogout);
+            // Haal huidige registratie op om de juiste nieuwe totalen te berekenen
+            const { data: currentReg } = await abgSupabase
+              .from("registrations2026")
+              .select("number_ticket_woodpop")
+              .eq("user_id", user.id)
+              .maybeSingle();
 
-              const { data: adminData } = await abgSupabase
-                  .from("admins")
-                  .select("*")
-                  .eq("email", user.email)
-                  .maybeSingle();
+            const existingTickets = currentReg?.number_ticket_woodpop || 0;
+            const newTotalTickets = existingTickets + pendingExtraTickets;
 
-              if (adminData) {
-                  document.getElementById("admin-panel-container").style.display = "block";
-              }
+            // Update database automatisch na geslaagde betaling
+            await abgSupabase
+              .from("registrations2026")
+              .update({
+                tournament_paid: true,
+                number_ticket_woodpop: newTotalTickets
+              })
+              .eq("user_id", user.id);
 
-              const addAdminForm = document.getElementById("add-admin-form");
-              if (addAdminForm) {
-                  addAdminForm.addEventListener("submit", async function(e) {
-                      e.preventDefault();
-                      const newEmailInput = document.getElementById("new-admin-email");
-                      const emailToAdd = newEmailInput.value.trim().toLowerCase();
-                      const submitBtn = document.getElementById("add-admin-btn");
+            // Opschonen
+            localStorage.removeItem("pending_extra_tickets");
+            window.history.replaceState({}, document.title, window.location.pathname);
+          }
 
-                      if (!emailToAdd) return;
+          const { data: adminData } = await abgSupabase
+            .from("admins")
+            .select("*")
+            .eq("email", user.email)
+            .maybeSingle();
 
-                      submitBtn.disabled = true;
-                      submitBtn.innerText = "Adding...";
+          if (adminData) {
+            document.getElementById("admin-panel-container").style.display =
+              "block";
+          }
 
-                      const { error: insertError } = await abgSupabase
-                          .from("admins")
-                          .insert([{ email: emailToAdd }]);
+          const addAdminForm = document.getElementById("add-admin-form");
+          if (addAdminForm) {
+            addAdminForm.addEventListener("submit", async function (e) {
+              e.preventDefault();
+              const newEmailInput = document.getElementById("new-admin-email");
+              const emailToAdd = newEmailInput.value.trim().toLowerCase();
+              const submitBtn = document.getElementById("add-admin-btn");
 
-                      submitBtn.disabled = false;
-                      submitBtn.innerHTML = '<i class="fa fa-user-plus"></i> Add Admin';
+              if (!emailToAdd) return;
 
-                      if (insertError) {
-                          if (insertError.message.includes("admins_email_key") || insertError.code === "23505") {
-                              alert(`This email address ('${emailToAdd}') is already an administrator.`);
-                          } else {
-                              alert("Failed to add admin: " + insertError.message);
-                          }
-                      } else {
-                          alert(`Success! '${emailToAdd}' has been granted administrator privileges.`);
-                          newEmailInput.value = "";
-                      }
-                  });
-              }
+              submitBtn.disabled = true;
+              submitBtn.innerText = "Adding...";
 
-              const { data: regData, error: regError } = await abgSupabase
-                  .from("details")
-                  .select("*")
-                  .eq("user_id", user.id)
-                  .maybeSingle();
+              const { error: insertError } = await abgSupabase
+                .from("admins")
+                .insert([{ email: emailToAdd }]);
 
-              if (regError) {
-                  console.error("Fout bij ophalen registratie:", regError.message);
-              }
+              submitBtn.disabled = false;
+              submitBtn.innerHTML = '<i class="fa fa-user-plus"></i> Add Admin';
 
-              if (regData) {
-                  document.getElementById("has-registration-section").style.display = "block";
-                  document.getElementById("no-registration-section").style.display = "none";
-
-                  // Velden vullen inclusief First Name en Last Name
-                  document.getElementById("sport-section-title").innerText = (regData.sport || "Tournament") + " Info";
-                  document.getElementById("val-club").innerText = regData.club || "-";
-                  document.getElementById("val-team-level").innerText = regData.team_level || "-";
-                  document.getElementById("val-own-level").innerText = regData.own_level || "-";
-                  document.getElementById("val-partner-email").innerText = regData.partner_email || "-";
-                  
-                  document.getElementById("val-food").innerText = regData["food-restictions"]?.value || " - ";
-                  document.getElementById("val-allergies").innerText = regData.allergies?.value || "- none -";
-
-                  document.getElementById("val-meet-greet").innerText = regData.meet_and_greet ? "Yes" : "No";
-                  document.getElementById("val-first-name").innerText = regData.firstName || "-";
-                  document.getElementById("val-last-name").innerText = regData.lastName || "-";
-                  document.getElementById("val-sport").innerText = regData.sport || "-";
-                  document.getElementById("val-email").innerText = user.email || "-";
-                  document.getElementById("val-country").innerText = regData.country || "-";
-                  document.getElementById("val-gender").innerText = regData.gender || "-";
-
-                  const tournamentPaidEl = document.getElementById("val-tournament-payment");
-                  if (tournamentPaidEl) {
-                      if (regData.tournament_paid === true) {
-                          tournamentPaidEl.innerHTML = '<span class="text-success"><i class="fa fa-check-circle"></i> <strong>Paid</strong></span>';
-                      } else {
-                          tournamentPaidEl.innerHTML = '<span class="text-danger"><i class="fa fa-times-circle"></i> <strong>Unpaid</strong></span>';
-                      }
-                  }
-
-                  const partyTicketsCountEl = document.getElementById("val-party-tickets-count");
-                  if (partyTicketsCountEl) {
-                      const ticketsCount = regData.number_ticket_woodpop || 0;
-                      partyTicketsCountEl.innerHTML = `<strong>${ticketsCount}</strong> ticket(s)`;
-                  }
-
+              if (insertError) {
+                if (
+                  insertError.message.includes("admins_email_key") ||
+                  insertError.code === "23505"
+                ) {
+                  alert(
+                    `This email address ('${emailToAdd}') is already an administrator.`,
+                  );
+                } else {
+                  alert("Failed to add admin: " + insertError.message);
+                }
               } else {
-                  document.getElementById("has-registration-section").style.display = "none";
-                  document.getElementById("no-registration-section").style.display = "block";
+                alert(
+                  `Success! '${emailToAdd}' has been granted administrator privileges.`,
+                );
+                newEmailInput.value = "";
               }
+            });
+          }
 
-              const partySelect = document.getElementById("party-tickets-select");
-              if(partySelect) {
-                  partySelect.addEventListener("change", function() {
-                      const count = parseInt(this.value);
-                      const total = count * 12;
-                      document.getElementById("total-party-price").innerText = "EUR " + total;
-                  });
+          const { data: regData, error: regError } = await abgSupabase
+            .from("registrations2026")
+            .select("*")
+            .eq("user_id", user.id)
+            .maybeSingle();
+
+          if (regError) {
+            console.error("Fout bij ophalen registratie:", regError.message);
+          }
+
+          if (regData) {
+            document.getElementById("has-registration-section").style.display =
+              "block";
+            document.getElementById("no-registration-section").style.display =
+              "none";
+
+            document.getElementById("sport-section-title").innerText =
+              (regData.sport || "Tournament") + " Info";
+            document.getElementById("val-club").innerText = regData.club || "-";
+            document.getElementById("val-team-level").innerText =
+              regData.team_level || "-";
+            document.getElementById("val-own-level").innerText =
+              regData.own_level || "-";
+            document.getElementById("val-partner-email").innerText =
+              regData.partner_email || "-";
+
+            document.getElementById("val-food").innerText =
+              regData["food-restictions"]?.value || "-";
+            document.getElementById("val-allergies").innerText =
+              regData.allergies?.value || "-";
+
+            document.getElementById("val-meet-greet").innerText =
+              regData.meet_and_greet ? "Yes" : "No";
+            document.getElementById("val-first-name").innerText =
+              regData.firstName || "-";
+            document.getElementById("val-last-name").innerText =
+              regData.lastName || "-";
+            document.getElementById("val-sport").innerText =
+              regData.sport || "-";
+            document.getElementById("val-email").innerText = user.email || "-";
+            document.getElementById("val-country").innerText =
+              regData.country || "-";
+            document.getElementById("val-gender").innerText =
+              regData.gender || "-";
+
+            // 1. TOURNAMENT PAYMENT STATUS KOPPELING
+            const tournamentPaidEl = document.getElementById(
+              "val-tournament-payment",
+            );
+            if (tournamentPaidEl) {
+              if (regData.tournament_paid === true) {
+                tournamentPaidEl.innerHTML =
+                  '<span class="text-success"><i class="fa fa-check-circle"></i> <strong>Paid</strong></span>';
+              } else {
+                tournamentPaidEl.innerHTML = `<div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                  <span style="color: #dc3545;"><i class="fa fa-times-circle"></i> <strong>Unpaid</strong></span>
+                  <a href="payment.html" style="background-color: #007bff; color: white; padding: 4px 10px; border-radius: 4px; text-decoration: none; font-size: 12px; font-weight: bold;">Pay Now</a>
+                  </div>
+                `;
               }
+            }
 
-              const payButton = document.getElementById("pay-party-btn");
-              if (payButton) {
-                  payButton.addEventListener("click", async function() {
-                      if (!regData) return;
+            // 2. EXTRA TICKETS / PARTY PAYMENT STATUS KOPPELING
+            const partyTicketEl = document.getElementById("val-party-tickets");
+            if (partyTicketEl) {
+              partyTicketEl.innerHTML = `
+                  <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                      <span style="font-weight: bold;">EUR 10 each</span>
+                      <a href="payment.html" style="background-color: #007bff; color: white; padding: 4px 10px; border-radius: 4px; text-decoration: none; font-size: 12px; font-weight: bold;">Buy extra tickets</a>
+                  </div>
+              `;
+            }
 
-                      const selectedCount = parseInt(partySelect.value) || 0;
-                      const currentCount = regData.number_ticket_woodpop || 0;
-                      const newTotal = currentCount + selectedCount;
-
-                      payButton.disabled = true;
-                      payButton.innerText = "Processing...";
-
-                      const { error: updateError } = await abgSupabase
-                          .from("details")
-                          .update({ number_ticket_woodpop: newTotal })
-                          .eq("user_id", user.id);
-
-                      payButton.disabled = false;
-                      payButton.innerText = "Pay";
-
-                      if (updateError) {
-                          alert("Error updating tickets: " + updateError.message);
-                      } else {
-                          regData.number_ticket_woodpop = newTotal;
-                          document.getElementById("val-party-tickets-count").innerHTML = `<strong>${newTotal}</strong> ticket(s)`;
-                          alert(`Payment successful! Successfully added ${selectedCount} ticket(s). Total is now ${newTotal}.`);
-                      }
-                  });
-              }
-          });
+            const partyTicketsCountEl = document.getElementById(
+              "val-party-tickets-count",
+            );
+            if (partyTicketsCountEl) {
+              const ticketsCount = regData.number_ticket_woodpop || 0;
+              partyTicketsCountEl.innerHTML = `<strong>${ticketsCount}</strong> ticket(s)`;
+            }
+          } else {
+            document.getElementById("has-registration-section").style.display =
+              "none";
+            document.getElementById("no-registration-section").style.display =
+              "block";
+          }
+        });
       })();
     </script>
   </body>

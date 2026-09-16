@@ -385,7 +385,7 @@
 
           // 2. Controleren of er al een registratie bestaat voor deze user
           const { data: existingReg } = await abgSupabase
-            .from("details")
+            .from("registrations2026")
             .select("user_id")
             .eq("user_id", user.id)
             .maybeSingle();
@@ -393,7 +393,7 @@
           if (existingReg) {
             // Check of ze reeds betaald hebben; zo niet, stuur naar payment.html
             const { data: checkPay } = await abgSupabase
-              .from("details")
+              .from("registrations2026")
               .select("tournament_paid")
               .eq("user_id", user.id)
               .single();
@@ -477,7 +477,7 @@
               }
 
               // Sla registratie op in de Supabase 'details' tabel
-              const { error: insertError } = await abgSupabase.from("details").insert([
+              const { error: insertError } = await abgSupabase.from("registrations2026").insert([
                 {
                   user_id: user.id,
                   sport: sportVal,
