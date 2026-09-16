@@ -241,7 +241,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-    <!-- Supabase Logica -->
+    <!-- Supabase Logica & Stripe Checkout Integratie -->
     <script>
       (function () {
         const SUPABASE_URL = "https://bhyokpduzcpdutifrzro.supabase.co";
@@ -350,7 +350,7 @@
           // Bestaand aantal tickets ophalen uit number_ticket_woodpop
           const existingTickets = regData.number_ticket_woodpop || 0;
           currentTicketsLabel.innerText = existingTickets;
-          ticketInput.value = 0; // Standaard op 0 extra toe te voegen tickets bij openen pagina
+          ticketInput.value = 0;
 
           // Functie om totaalbedrag dynamisch te berekenen
           function calculateTotal() {
@@ -368,46 +368,51 @@
 
           // Bouw de actie-knop op
           paymentActionArea.innerHTML = `
-            <button id="pay-now-btn" class="btn btn-success btn-lg btn-block" style="background-color: #5cb85c; border-color: #4cae4c; font-weight: bold;">
-              <i class="fa fa-credit-card"></i> Pay Now
+            <button id="pay-now-btn" class="btn btn-success btn-lg btn-block" style="background-color: #635bff; border-color: #5147e5; font-weight: bold;">
+              <i class="fa fa-credit-card"></i> Pay with Stripe / iDeal
             </button>
             <a href="account.html" class="btn btn-link btn-block" style="margin-top: 15px; color: #777;">Cancel / Back to Account</a>
           `;
 
-          // Koppel actie aan de betaalknop
+          // Koppel actie aan de betaalknop via Stripe Edge Function
           document.getElementById("pay-now-btn").addEventListener("click", async function () {
             const btn = this;
             const extraTicketsToAdd = parseInt(ticketInput.value) || 0;
-            
-            // Tel het nieuwe aantal extra tickets op bij het reeds bestaande aantal in de database
             const newTotalWoodpopTickets = existingTickets + extraTicketsToAdd;
             
             btn.disabled = true;
-            btn.innerHTML = `<i class="fa fa-spinner fa-spin"></i> Processing payment...`;
+            btn.innerHTML = `<i class="fa fa-spinner fa-spin"></i> Connecting to Stripe...`;
 
             try {
-              const updatePayload = {
-                number_ticket_woodpop: newTotalWoodpopTickets,
-                tournament_paid: true 
-              };
+              // Roep de Supabase Edge Function aan voor Stripe Checkout
+              const response = await fetch(`${SUPABASE_URL}/functions/v1/stripe`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
+                },
+                body: JSON.stringify({
+                  userId: user.id,
+                  email: user.email,
+                  extraTickets: extraTicketsToAdd,
+                  newTotalTickets: newTotalWoodpopTickets
+                })
+              });
 
-              const { error: updateError } = await abgSupabase
-                .from("details")
-                .update(updatePayload)
-                .eq("user_id", user.id);
-
-              if (updateError) throw updateError;
-
-              // Doorsturen naar accountpagina na succesvolle simulatie
-              setTimeout(() => {
-                window.location.href = "account.html?paid=success";
-              }, 1000);
+              const data = await response.json();
+              
+              if (data.url) {
+                // Redirect naar de beveiligde Stripe betaalpagina
+                window.location.href = data.url;
+              } else {
+                throw new Error(data.error || "Kon geen betaalsessie aanmaken bij Stripe.");
+              }
 
             } catch (err) {
               console.error("Fout bij betaling:", err);
-              alert("Payment simulation failed: " + (err.message || "Unknown error"));
+              alert("Payment initialization failed: " + (err.message || "Unknown error"));
               btn.disabled = false;
-              btn.innerHTML = `<i class="fa fa-credit-card"></i> Pay Now`;
+              btn.innerHTML = `<i class="fa fa-credit-card"></i> Pay with Stripe / iDeal`;
             }
           });
         });
