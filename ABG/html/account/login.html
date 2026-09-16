@@ -173,7 +173,7 @@
     </main>
 
     <!-- Footer (ABG Stijl) -->
-<footer>
+    <footer>
       <div class="social-section footer-social-section">
         <div class="container">
           <div class="row">
@@ -246,18 +246,8 @@
               const { data: { session } } = await abgSupabase.auth.getSession();
 
               if (session) {
-                  // Reeds ingelogd, stuur door naar account of registratie
-                  const { data: regData } = await abgSupabase
-                      .from("registraties")
-                      .select("id")
-                      .eq("user_id", session.user.id)
-                      .maybeSingle();
-
-                  if (regData) {
-                      window.location.href = "account.html";
-                  } else {
-                      window.location.href = "create-registration.html";
-                  }
+                  // Reeds ingelogd -> direct doorsturen naar account.html (zowel voor deelnemers als admins)
+                  window.location.href = "account.html";
                   return;
               }
 
@@ -294,19 +284,8 @@
                       return;
                   }
 
-                  // Login succesvol! Controleer of de gebruiker al een registratie heeft
-                  const userId = authData.user.id;
-                  const { data: regData, error: regError } = await abgSupabase
-                      .from("registraties")
-                      .select("id")
-                      .eq("user_id", userId)
-                      .maybeSingle();
-
-                  if (regData) {
-                      window.location.href = "account.html";
-                  } else {
-                      window.location.href = "create-registration.html";
-                  }
+                  // Login succesvol! Altijd doorsturen naar account.html
+                  window.location.href = "account.html";
               });
           });
       })();
