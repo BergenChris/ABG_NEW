@@ -6,10 +6,10 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
-    <title>My Registration - Antwerp Brilliant Games 2026</title>
+    <title>Payment - Antwerp Brilliant Games 2026</title>
     <meta
       name="description"
-      content="View your tournament registration details for Antwerp Brilliant Games."
+      content="Complete your tournament payment for Antwerp Brilliant Games."
     />
 
     <!-- Stylesheets -->
@@ -26,19 +26,20 @@
       rel="stylesheet"
     />
 
-    <!-- Project stylesheets -->
+    <!-- Project stylesheets (pas de paden aan indien nodig afhankelijk van je mappenstructuur) -->
     <link href="../../css/style.css" rel="stylesheet" />
     <link href="../../css/index.css" rel="stylesheet" />
     <link href="../../css/account/login.css" rel="stylesheet" />
-    <link href="../../css/account/account.css" rel="stylesheet" />
+    
     <!-- Supabase CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
       body {
         padding-top: 80px;
+        background-color: #f9f9f9;
       }
-      .account-wrapper {
+      .payment-wrapper {
         padding: 40px 0;
       }
       .modern-card {
@@ -55,30 +56,14 @@
         font-style: italic;
         border-bottom: 2px solid #eee;
         padding-bottom: 10px;
-        margin-top: 25px;
-        margin-bottom: 15px;
+        margin-top: 20px;
+        margin-bottom: 20px;
       }
-      .badge-unpaid {
-        background-color: #d9534f; /* Aangepast naar rood */
-        color: white;
-        padding: 5px 10px;
-        border-radius: 4px;
+      .price-tag {
+        font-size: 24pt;
+        color: #1c2674;
         font-weight: bold;
-      }
-      .badge-paid {
-        background-color: #5cb85c; /* Groen */
-        color: white;
-        padding: 5px 10px;
-        border-radius: 4px;
-        font-weight: bold;
-      }
-      .payment-alert-box {
-        background-color: #fcf8e3;
-        border: 1px solid #faebcc;
-        padding: 20px;
-        border-radius: 6px;
-        margin-bottom: 25px;
-        text-align: center;
+        margin: 15px 0;
       }
     </style>
   </head>
@@ -128,40 +113,42 @@
       </div>
     </nav>
 
-    <!-- Main Content: Account / Registration Overview -->
-    <main class="login-main-wrapper account-wrapper">
+    <!-- Main Content: Payment Section -->
+    <main class="login-main-wrapper payment-wrapper">
       <div class="container">
         <div class="row">
-          <div class="col-md-8 col-md-offset-2">
-            
-            <!-- Dynamische Betaalwaarschuwing (verschijnt alleen als tournament_paid == false) -->
-            <div id="payment-alert-container" style="display: none;" class="payment-alert-box">
-              <h3 style="margin-top: 0; color: #8a6d3b; font-weight: bold;">Payment Required</h3>
-              <p>Your registration has been saved, but your tournament fee of <strong>€ 25,00</strong> has not been paid yet.</p>
-              <a href="payment.html" class="btn btn-warning btn-lg" style="margin-top: 10px; font-weight: bold;">
-                <i class="fa fa-credit-card"></i> Pay Now
-              </a>
-            </div>
+          <div class="col-md-6 col-md-offset-3">
+            <div class="modern-card text-center">
+              <h2 style="margin-top: 0; color: #1c2674; font-weight: bold">
+                Tournament Payment
+              </h2>
+              <p class="text-muted">
+                Complete your payment to confirm your tournament participation.
+              </p>
 
-            <div class="modern-card">
-              <div class="text-center" style="margin-bottom: 25px">
-                <h2 style="margin-top: 0; color: #1c2674; font-weight: bold">
-                  My Registration Overview
-                </h2>
-                <p class="text-muted">
-                  Here are the details of your registration for the Antwerp Brilliant Games 2026.
-                </p>
+              <div id="loading-container" style="padding: 40px 0;">
+                <i class="fa fa-spinner fa-spin fa-3x" style="color: #1c2674;"></i>
+                <p style="margin-top: 15px;">Loading payment details...</p>
               </div>
 
-              <!-- Gegevens Container -->
-              <div id="account-details-content">
-                <p class="text-center text-muted">Loading your registration details...</p>
+              <!-- Content wordt ingevuld via JavaScript afhankelijk van de status -->
+              <div id="payment-content" style="display: none;">
+                <div class="section-heading text-left">Registration Summary</div>
+                <div class="text-left" style="margin-bottom: 20px;">
+                  <p><strong>Name:</strong> <span id="summary-name">-</span></p>
+                  <p><strong>Sport:</strong> <span id="summary-sport">Badminton</span></p>
+                  <p><strong>Team Level:</strong> <span id="summary-level">-</span></p>
+                </div>
+
+                <div class="section-heading text-left">Amount Due</div>
+                <div class="price-tag">&euro; 25,00</div>
+                <p class="text-muted" style="font-size: 11pt;">Includes access to the tournament and the Meet & Greet.</p>
+
+                <div id="payment-action-area" style="margin-top: 30px;">
+                  <!-- Wordt dynamisch aangepast (Betaalknop of Reeds betaald melding) -->
+                </div>
               </div>
 
-              <div class="text-center" style="margin-top: 30px;">
-                <a href="register.html" class="btn btn-default" style="margin-right: 10px;">Edit Registration</a>
-                <button id="logout-btn-main" class="btn btn-danger">Log Out</button>
-              </div>
             </div>
           </div>
         </div>
@@ -220,7 +207,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-    <!-- Supabase Logica voor Account / Overzicht -->
+    <!-- Supabase Logica -->
     <script>
       (function () {
         const SUPABASE_URL = "https://bhyokpduzcpdutifrzro.supabase.co";
@@ -229,7 +216,6 @@
 
         if (!window.supabase || !window.supabase.createClient) {
           console.error("Supabase script is niet geladen!");
-          alert("Fout: Kan geen verbinding maken met de database.");
           return;
         }
 
@@ -238,6 +224,9 @@
 
         document.addEventListener("DOMContentLoaded", async function () {
           const dropdownList = document.getElementById("account-dropdown-list");
+          const loadingContainer = document.getElementById("loading-container");
+          const paymentContent = document.getElementById("payment-content");
+          const paymentActionArea = document.getElementById("payment-action-area");
 
           // 1. Controleer sessie
           const {
@@ -253,77 +242,93 @@
           const user = session.user;
 
           dropdownList.innerHTML = `
-              <li><a href="account.html">My Registration</a></li>
-              <li><a href="t&c.html">Terms-and-Conditions</a></li>
-              <li><a href="#" id="nav-logout-action">Log Out</a></li>
-              `;
-
-          const handleLogout = async function (e) {
-            if (e) e.preventDefault();
-            await abgSupabase.auth.signOut();
-            window.location.href = "login.html";
-          };
+            <li><a href="account.html">My Registration</a></li>
+            <li><a href="t&c.html">Terms-and-Conditions</a></li>
+            <li><a href="#" id="nav-logout-action">Log Out</a></li>
+          `;
 
           const logoutNavBtn = document.getElementById("nav-logout-action");
-          if (logoutNavBtn) logoutNavBtn.addEventListener("click", handleLogout);
+          if (logoutNavBtn) {
+            logoutNavBtn.addEventListener("click", async function (e) {
+              e.preventDefault();
+              await abgSupabase.auth.signOut();
+              window.location.href = "login.html";
+            });
+          }
 
-          const logoutMainBtn = document.getElementById("logout-btn-main");
-          if (logoutMainBtn) logoutMainBtn.addEventListener("click", handleLogout);
-
-          // 2. Haal registratiegegevens op uit de 'details' tabel
+          // 2. Haal registratiegegevens op van de ingelogde gebruiker
           const { data: regData, error: regError } = await abgSupabase
             .from("details")
             .select("*")
             .eq("user_id", user.id)
             .maybeSingle();
 
-          const detailsContainer = document.getElementById("account-details-content");
-          const paymentAlertBox = document.getElementById("payment-alert-container");
+          loadingContainer.style.display = "none";
+          paymentContent.style.display = "block";
 
           if (regError || !regData) {
-            detailsContainer.innerHTML = `
-              <div class="text-center">
-                <p class="text-danger">You haven't completed your tournament registration yet.</p>
-                <a href="register.html" class="btn btn-success btn-lg" style="margin-top: 15px;">Complete Registration</a>
+            paymentActionArea.innerHTML = `
+              <div class="alert alert-warning">
+                No active registration found. Please complete your registration first.
               </div>
+              <a href="register.html" class="btn btn-primary btn-lg btn-block">Go to Registration</a>
             `;
             return;
           }
 
-          // 3. Controleer of het betaald is of niet
-          if (!regData.tournament_paid) {
-            // Toon de waarschuwing met de betaalknop bovenaan
-            paymentAlertBox.style.display = "block";
+          // Vul de samenvatting in
+          document.getElementById("summary-name").innerText = `${regData.firstName || ''} ${regData.lastName || ''}`;
+          document.getElementById("summary-sport").innerText = regData.sport || 'Badminton';
+          document.getElementById("summary-level").innerText = regData.team_level || '-';
+
+          // 3. Controleer of reeds betaald is (`tournament_paid`)
+          if (regData.tournament_paid === true) {
+            paymentActionArea.innerHTML = `
+              <div class="alert alert-success" style="font-size: 12pt; padding: 15px;">
+                <i class="fa fa-check-circle"></i> <strong>Payment Successful!</strong><br>
+                You have already paid for this tournament. Thank you!
+              </div>
+              <a href="account.html" class="btn btn-default btn-lg btn-block" style="margin-top: 15px;">Back to My Account</a>
+            `;
+          } else {
+            // Nog niet betaald -> Toon betaalknop
+            paymentActionArea.innerHTML = `
+              <button id="pay-now-btn" class="btn btn-success btn-lg btn-block" style="background-color: #5cb85c; border-color: #4cae4c; font-weight: bold;">
+                <i class="fa fa-credit-card"></i> Pay Now (€ 25,00)
+              </button>
+              <a href="account.html" class="btn btn-link btn-block" style="margin-top: 15px; color: #777;">Cancel / Back to Account</a>
+            `;
+
+            // Koppel actie aan de betaalknop
+            document.getElementById("pay-now-btn").addEventListener("click", async function () {
+              const btn = this;
+              btn.disabled = true;
+              btn.innerHTML = `<i class="fa fa-spinner fa-spin"></i> Processing payment...`;
+
+              try {
+                // Hier kun je later de echte integratie (bijv. Mollie API of Stripe) plaatsen.
+                // Voor nu simuleren we een geslaagde betaling door `tournament_paid` op `true` te zetten in Supabase.
+                
+                const { error: updateError } = await abgSupabase
+                  .from("details")
+                  .update({ tournament_paid: true })
+                  .eq("user_id", user.id);
+
+                if (updateError) throw updateError;
+
+                // Kleine vertraging voor de UX en daarna doorsturen naar accountpagina
+                setTimeout(() => {
+                  window.location.href = "account.html?paid=success";
+                }, 1000);
+
+              } catch (err) {
+                console.error("Fout bij betaling:", err);
+                alert("Payment simulation failed: " + (err.message || "Unknown error"));
+                btn.disabled = false;
+                btn.innerHTML = `<i class="fa fa-credit-card"></i> Pay Now (€ 25,00)`;
+              }
+            });
           }
-
-          // 4. Render de gegevens in de card (met rood kruisje voor unpaid en groen vinkje voor paid)
-          const paymentStatusBadge = regData.tournament_paid 
-            ? '<span class="badge-paid"><i class="fa fa-check-circle"></i> Paid</span>' 
-            : '<span class="badge-unpaid"><i class="fa fa-times-circle"></i> Unpaid</span> &nbsp;&nbsp; <a href="payment.html" class="btn btn-warning btn-sm" style="font-weight: bold;"><i class="fa fa-credit-card"></i> Pay Now</a>';
-
-          detailsContainer.innerHTML = `
-            <div class="section-heading" style="margin-top: 0;">Account Details</div>
-            <p><strong>Name:</strong> ${regData.firstName || ""} ${regData.lastName || ""}</p>
-            <p><strong>Email:</strong> ${user.email}</p>
-            <p><strong>Country:</strong> ${regData.country || "-"}</p>
-            <p><strong>Gender:</strong> ${regData.gender || "-"}</p>
-
-            <div class="section-heading">Tournament & Partner Info</div>
-            <p><strong>Sport:</strong> ${regData.sport || "-"}</p>
-            <p><strong>Club:</strong> ${regData.club || "-"}</p>
-            <p><strong>Own Level:</strong> ${regData.own_level || "-"}</p>
-            <p><strong>Team Level:</strong> ${regData.team_level || "-"}</p>
-            <p><strong>Partner Email:</strong> ${regData.partner_email || "None"}</p>
-            <p><strong>Registration Status:</strong> ${regData.status || "-"}</p>
-
-            <div class="section-heading">Dietary & Preferences</div>
-            <p><strong>Dietary Restrictions:</strong> ${regData["food-restictions"] || "None"}</p>
-            <p><strong>Allergies:</strong> ${regData.allergies || "None"}</p>
-            <p><strong>Meet & Greet:</strong> ${regData.meet_and_greet ? "Yes" : "No"}</p>
-
-            <div class="section-heading">Payment Status</div>
-            <p><strong>Status:</strong> ${paymentStatusBadge}</p>
-          `;
         });
       })();
     </script>

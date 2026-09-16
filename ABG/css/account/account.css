@@ -1,0 +1,15 @@
+.badge-unpaid {
+  background-color: #d9534f; /* Rood */
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.badge-paid {
+  background-color: #5cb85c; /* Groen */
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-weight: bold;
+}

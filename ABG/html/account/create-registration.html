@@ -391,7 +391,18 @@
             .maybeSingle();
 
           if (existingReg) {
-            window.location.href = "account.html";
+            // Check of ze reeds betaald hebben; zo niet, stuur naar payment.html
+            const { data: checkPay } = await abgSupabase
+              .from("details")
+              .select("tournament_paid")
+              .eq("user_id", user.id)
+              .single();
+
+            if (checkPay && !checkPay.tournament_paid) {
+              window.location.href = "payment.html";
+            } else {
+              window.location.href = "account.html";
+            }
             return;
           }
 
@@ -423,7 +434,7 @@
           }
         });
 
-        // 4. Formulier verzenden (zonder Stripe)
+        // 4. Formulier verzenden
         document
           .getElementById("create-registration-form")
           .addEventListener("submit", async function (e) {
@@ -490,8 +501,8 @@
                 throw insertError;
               }
 
-              // Direct doorsturen naar de accountpagina na succesvolle opslag
-              window.location.href = "account.html";
+              // Direct doorsturen naar de payment pagina na succesvolle opslag!
+              window.location.href = "payment.html";
 
             } catch (err) {
               console.error("Fout bij registratie:", err);
