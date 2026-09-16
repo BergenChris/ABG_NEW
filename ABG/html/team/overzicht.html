@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Overzicht</title>
-    
+
     <!-- Bootstrap CSS CDN -->
     <link
       rel="stylesheet"
@@ -219,7 +219,11 @@
                       src="../../ABG_cirkel.png"
                       alt="Active Company Antwerpen"
                       class="active-logo"
-                      style="background-color: #ffffff; padding: 5px; border-radius: 4px"
+                      style="
+                        background-color: #ffffff;
+                        padding: 5px;
+                        border-radius: 4px;
+                      "
                     />
                     <span>Website</span>
                   </a>
@@ -272,19 +276,21 @@
 
       // Uitlog functionaliteit koppelen
       document.addEventListener("DOMContentLoaded", async function () {
-          if (abgSupabase) {
-              const { data: { session } } = await abgSupabase.auth.getSession();
-              if (session) {
-                  const logoutAction = document.getElementById("nav-logout-action");
-                  if (logoutAction) {
-                      logoutAction.addEventListener("click", async function (e) {
-                          e.preventDefault();
-                          await abgSupabase.auth.signOut();
-                          window.location.href = "../account/login.html";
-                      });
-                  }
-              }
+        if (abgSupabase) {
+          const {
+            data: { session },
+          } = await abgSupabase.auth.getSession();
+          if (session) {
+            const logoutAction = document.getElementById("nav-logout-action");
+            if (logoutAction) {
+              logoutAction.addEventListener("click", async function (e) {
+                e.preventDefault();
+                await abgSupabase.auth.signOut();
+                window.location.href = "../account/login.html";
+              });
+            }
           }
+        }
       });
 
       // --- 2. HOOFDFUNCTIE OM DATA OP TE HALEN EN TE TONEN ---
@@ -424,11 +430,9 @@
         }
 
         // --- 4. STANDAARD TABELLEN AFHANDELING ---
+        // --- 4. STANDAARD TABELLEN AFHANDELING ---
         let tableName = "registrations2026";
-        let query = abgSupabase
-          .from(tableName)
-          .select("*, users:user_id(email)")
-          .range(0, 4999);
+        let query = abgSupabase.from(tableName).select("*").range(0, 4999);
 
         if (selectedVal === "details_badminton") {
           query = query.eq("sport", "Badminton");
