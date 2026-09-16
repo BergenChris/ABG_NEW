@@ -346,7 +346,7 @@
     </main>
 
     <!-- Footer -->
-   <footer>
+    <footer>
       <div class="social-section footer-social-section">
         <div class="container">
           <div class="row">
@@ -461,7 +461,11 @@
                       submitBtn.innerHTML = '<i class="fa fa-user-plus"></i> Add Admin';
 
                       if (insertError) {
-                          alert("Failed to add admin: " + insertError.message);
+                          if (insertError.message.includes("admins_email_key") || insertError.code === "23505") {
+                              alert(`This email address ('${emailToAdd}') is already an administrator.`);
+                          } else {
+                              alert("Failed to add admin: " + insertError.message);
+                          }
                       } else {
                           alert(`Success! '${emailToAdd}' has been granted administrator privileges.`);
                           newEmailInput.value = "";
