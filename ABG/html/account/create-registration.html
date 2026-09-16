@@ -129,6 +129,28 @@
                 </div>
 
                 <div class="form-group login-field-group">
+                  <label class="login-label">First Name</label>
+                  <input
+                    type="text"
+                    id="reg-first-name"
+                    class="form-control login-input"
+                    placeholder="John"
+                    required
+                  />
+                </div>
+
+                <div class="form-group login-field-group">
+                  <label class="login-label">Last Name</label>
+                  <input
+                    type="text"
+                    id="reg-last-name"
+                    class="form-control login-input"
+                    placeholder="Doe"
+                    required
+                  />
+                </div>
+
+                <div class="form-group login-field-group">
                   <label class="login-label">Country of Residence</label>
                   <input
                     type="text"
@@ -164,10 +186,12 @@
                 <div class="form-group login-field-group">
                   <label class="login-label">Your Own Player Level</label>
                   <select class="form-control login-input" id="reg-own-level">
-                    <option selected value="B+">B+</option>
+                    <option selected value="-">-</option>
                     <option value="A">A</option>
-                    <option value="B">B</option>
-                    <option value="C">C</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="C+">C+</option>
+                    <option value="C-">C-</option>
                   </select>
                 </div>
 
@@ -175,9 +199,18 @@
                   <label class="login-label">Select your Team Level</label>
                   <select class="form-control login-input" id="reg-team-level">
                     <option selected value="-">-</option>
-                    <option value="Beginner">Beginner</option>
-                    <option value="Intermediate">Intermediate</option>
-                    <option value="Advanced">Advanced</option>
+                    <!-- Normale reeksen -->
+                    <option value="A">A</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="C+">C+</option>
+                    <option value="C-">C-</option>
+                    <!-- Wachtlijsten -->
+                    <option value="Waiting List A" class="waiting-list-option" style="display: none">Waiting List A</option>
+                    <option value="Waiting List B+" class="waiting-list-option" style="display: none">Waiting List B+</option>
+                    <option value="Waiting List B-" class="waiting-list-option" style="display: none">Waiting List B-</option>
+                    <option value="Waiting List C+" class="waiting-list-option" style="display: none">Waiting List C+</option>
+                    <option value="Waiting List C-" class="waiting-list-option" style="display: none">Waiting List C-</option>
                   </select>
                 </div>
 
@@ -200,7 +233,6 @@
                     type="text"
                     id="reg-food-restrictions"
                     class="form-control login-input"
-                    value="- none -"
                   />
                 </div>
 
@@ -210,7 +242,6 @@
                     type="text"
                     id="reg-allergies"
                     class="form-control login-input"
-                    value="- none -"
                   />
                 </div>
 
@@ -224,7 +255,8 @@
 
                 <div class="checkbox" style="margin: 20px 0">
                   <label>
-                    <input type="checkbox" id="reg-tc-checkbox" required /> I accept the
+                    <input type="checkbox" id="reg-tc-checkbox" required /> I
+                    accept the
                     <a href="t&c.html" target="_blank">Terms and Conditions</a>
                   </label>
                 </div>
@@ -295,120 +327,174 @@
 
     <!-- Supabase Initialisatie & Logica -->
     <script>
-      (function() {
-          const SUPABASE_URL = 'https://bhyokpduzcpdutifrzro.supabase.co';
-          const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJoeW9rcGR1emNwZHV0aWZyenJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk1MDY3OTUsImV4cCI6MjEwNTA4Mjc5NX0.47cnkFu32TWL1hwaeQRWyNu4TQYkZ94pNzKUzvTaP9M';
-          
-          if (!window.supabase || !window.supabase.createClient) {
-              console.error('Supabase script is niet geladen!');
-              alert('Fout: Kan geen verbinding maken met de database.');
-              return;
+      (function () {
+        const SUPABASE_URL = "https://bhyokpduzcpdutifrzro.supabase.co";
+        const SUPABASE_ANON_KEY =
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJoeW9rcGR1emNwZHV0aWZyenJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk1MDY3OTUsImV4cCI6MjEwNTA4Mjc5NX0.47cnkFu32TWL1hwaeQRWyNu4TQYkZ94pNzKUzvTaP9M";
+
+        if (!window.supabase || !window.supabase.createClient) {
+          console.error("Supabase script is niet geladen!");
+          alert("Fout: Kan geen verbinding maken met de database.");
+          return;
+        }
+
+        const { createClient } = window.supabase;
+        const abgSupabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        const MAX_CAPACITY = {
+          A: 2,
+          "B+": 16,
+          "B-": 16,
+          "C+": 16,
+          "C-": 16,
+        };
+
+        document.addEventListener("DOMContentLoaded", async function () {
+          const dropdownList = document.getElementById("account-dropdown-list");
+
+          // 1. Controleer sessie
+          const {
+            data: { session },
+            error: sessionError,
+          } = await abgSupabase.auth.getSession();
+
+          if (!session || sessionError) {
+            window.location.href = "login.html";
+            return;
           }
 
-          const { createClient } = window.supabase;
-          const abgSupabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+          const user = session.user;
 
-          document.addEventListener("DOMContentLoaded", async function () {
-              const dropdownList = document.getElementById("account-dropdown-list");
-              
-              // 1. Controleer sessie
-              const { data: { session }, error: sessionError } = await abgSupabase.auth.getSession();
-              
-              if (!session || sessionError) {
-                  window.location.href = "login.html";
-                  return;
-              }
+          dropdownList.innerHTML = `
+                <li><a href="account.html">My Registration</a></li>
+                <li><a href="t&c.html">Terms-and-Conditions</a></li>
+                <li><a href="#" id="nav-logout-action">Log Out</a></li>
+            `;
 
-              const user = session.user;
-
-              dropdownList.innerHTML = `
-                  <li><a href="account.html">My Registration</a></li>
-                  <li><a href="t&c.html">Terms-and-Conditions</a></li>
-                  <li><a href="#" id="nav-logout-action">Log Out</a></li>
-              `;
-              
-              const logoutNavBtn = document.getElementById("nav-logout-action");
-              if (logoutNavBtn) {
-                  logoutNavBtn.addEventListener("click", async function (e) {
-                      e.preventDefault();
-                      await abgSupabase.auth.signOut();
-                      window.location.href = "login.html";
-                  });
-              }
-
-              // 2. Controleren of er al een registratie bestaat voor deze user
-              const { data: existingReg, error: fetchError } = await abgSupabase
-                  .from('details')
-                  .select('user_id')
-                  .eq('user_id', user.id)
-                  .maybeSingle();
-
-              // Als er al een registratie is, direct doorsturen naar de accountpagina
-              if (existingReg) {
-                  window.location.href = "account.html";
-                  return;
-              }
-          });
-
-          // 3. Formulier verzenden (Alleen INSERT voor nieuwe registraties)
-          document.getElementById("create-registration-form").addEventListener("submit", async function (e) {
+          const logoutNavBtn = document.getElementById("nav-logout-action");
+          if (logoutNavBtn) {
+            logoutNavBtn.addEventListener("click", async function (e) {
               e.preventDefault();
+              await abgSupabase.auth.signOut();
+              window.location.href = "login.html";
+            });
+          }
 
-              const submitBtn = document.getElementById("submit-form-btn");
-              submitBtn.disabled = true;
-              submitBtn.innerText = "Saving registration...";
+          // 2. Controleren of er al een registratie bestaat voor deze user
+          const { data: existingReg } = await abgSupabase
+            .from("details")
+            .select("user_id")
+            .eq("user_id", user.id)
+            .maybeSingle();
 
-              try {
-                  const { data: { user }, error: userError } = await abgSupabase.auth.getUser();
+          if (existingReg) {
+            window.location.href = "account.html";
+            return;
+          }
 
-                  if (userError || !user) {
-                      alert("Je bent niet ingelogd of je sessie is verlopen.");
-                      window.location.href = "login.html";
-                      return;
-                  }
+          // 3. Controleer per niveau of de hoofdreeks vol is
+          const selectElement = document.getElementById("reg-team-level");
+          const options = Array.from(selectElement.options);
 
-                  const sportVal = "Badminton"; 
-                  const countryVal = document.getElementById("reg-country").value.trim();
-                  const genderVal = document.getElementById("reg-gender").value;
-                  const clubVal = document.getElementById("reg-club").value.trim();
-                  const ownLevelVal = document.getElementById("reg-own-level").value;
-                  const teamLevelVal = document.getElementById("reg-team-level").value;
-                  const partnerEmailVal = document.getElementById("reg-partner-email").value.trim();
-                  const foodVal = document.getElementById("reg-food-restrictions").value.trim();
-                  const allergiesVal = document.getElementById("reg-allergies").value.trim();
-                  const meetGreetVal = document.getElementById("reg-meet-greet").value === "Yes";
+          for (const level of Object.keys(MAX_CAPACITY)) {
+            const { data: count, error: countError } = await abgSupabase.rpc(
+              "get_team_level_count",
+              { target_level: level },
+            );
 
-                  const { error } = await abgSupabase
-                      .from('details')
-                      .insert([
-                          {
-                              user_id: user.id,
-                              sport: sportVal,
-                              country: countryVal,
-                              gender: genderVal,
-                              club: clubVal,
-                              own_level: ownLevelVal,
-                              team_level: teamLevelVal,
-                              partner_email: partnerEmailVal ? partnerEmailVal : null,
-                              "food-restictions": { value: foodVal },
-                              allergies: { value: allergiesVal },
-                              meet_and_greet: meetGreetVal
-                          }
-                      ]);
+            if (!countError && count !== null) {
+              const matchingOption = options.find(
+                (opt) => opt.value === level,
+              );
+              const waitingOption = options.find(
+                (opt) => opt.value === "Waiting List " + level,
+              );
 
-                  if (error) {
-                      throw error;
-                  }
-
-                  alert("Registratie succesvol opgeslagen!");
-                  window.location.href = "account.html";
-
-              } catch (err) {
-                  console.error("Fout bij opslaan registratie:", err);
-                  alert("Opslaan mislukt: " + (err.message || "Onbekende fout"));
-                  submitBtn.disabled = false;
-                  submitBtn.innerText = "Save Registration & View Account Overview";
+              if (count >= MAX_CAPACITY[level]) {
+                if (matchingOption) matchingOption.remove();
+                if (waitingOption) waitingOption.style.display = "block";
+              } else {
+                if (waitingOption) waitingOption.remove();
               }
+            }
+          }
+        });
+
+        // 4. Formulier verzenden
+        document
+          .getElementById("create-registration-form")
+          .addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const submitBtn = document.getElementById("submit-form-btn");
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Saving registration...";
+
+            try {
+              const {
+                data: { user },
+                error: userError,
+              } = await abgSupabase.auth.getUser();
+
+              if (userError || !user) {
+                alert("Je bent niet ingelogd of je sessie is verlopen.");
+                window.location.href = "login.html";
+                return;
+              }
+
+              const sportVal = "Badminton";
+              const firstNameVal = document.getElementById("reg-first-name").value.trim();
+              const lastNameVal = document.getElementById("reg-last-name").value.trim();
+              const countryVal = document.getElementById("reg-country").value.trim();
+              const genderVal = document.getElementById("reg-gender").value;
+              const clubVal = document.getElementById("reg-club").value.trim();
+              const ownLevelVal = document.getElementById("reg-own-level").value;
+              const teamLevelVal = document.getElementById("reg-team-level").value;
+              const partnerEmailVal = document.getElementById("reg-partner-email").value.trim();
+              const foodVal = document.getElementById("reg-food-restrictions").value.trim();
+              const allergiesVal = document.getElementById("reg-allergies").value.trim();
+              const meetGreetVal = document.getElementById("reg-meet-greet").value === "Yes";
+
+              if (teamLevelVal === "-") {
+                alert("Gelieve een team level te selecteren.");
+                submitBtn.disabled = false;
+                submitBtn.innerText = "Save Registration & View Account Overview";
+                return;
+              }
+
+              const { error } = await abgSupabase.from("details").insert([
+                {
+                  user_id: user.id,
+                  sport: sportVal,
+                  firstName: firstNameVal,
+                  lastName: lastNameVal,
+                  country: countryVal,
+                  gender: genderVal,
+                  club: clubVal,
+                  own_level: ownLevelVal,
+                  team_level: teamLevelVal,
+                  partner_email: partnerEmailVal ? partnerEmailVal : null,
+                  "food-restictions": { value: foodVal },
+                  allergies: { value: allergiesVal },
+                  meet_and_greet: meetGreetVal,
+                  status: teamLevelVal.startsWith("Waiting List")
+                    ? "waitlist"
+                    : "registered",
+                },
+              ]);
+
+              if (error) {
+                throw error;
+              }
+
+              alert("Registratie succesvol opgeslagen!");
+              window.location.href = "account.html";
+            } catch (err) {
+              console.error("Fout bij opslaan registratie:", err);
+              alert("Opslaan mislukt: " + (err.message || "Onbekende fout"));
+              submitBtn.disabled = false;
+              submitBtn.innerText = "Save Registration & View Account Overview";
+            }
           });
       })();
     </script>

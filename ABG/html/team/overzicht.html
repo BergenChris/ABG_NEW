@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Overzicht</title>
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <!-- Font Awesome voor icoontjes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- SheetJS (xlsx) CDN voor Excel export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        .container {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .table-responsive {
+            margin-top: 20px;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        .truncate-cell {
+            max-width: 200px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .filters-row {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Admin Overzicht & Inschrijvingen</h2>
+        <p class="text-muted">Beheer hier alle data per sport, admins en het duo-overzicht.</p>
+        <hr>
+
+        <!-- Filters -->
+        <div class="row filters-row">
+            <div class="col-md-6">
+                <label for="table-selector">Selecteer Tabel / Weergave:</label>
+                <select id="table-selector" class="form-control">
+                    <option value="details_badminton">Details - Badminton</option>
+                    <option value="details_tennis">Details - Tennis</option>
+                    <option value="details_volleyball">Details - Volleyball</option>
+                    <option value="duos_overview">Duo's Overzicht</option>
+                    <option value="admins">Admins</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="level-selector">Filter op Level / Categorie:</label>
+                <select id="level-selector" class="form-control">
+                    <option value="all">Alles (Geen filter)</option>
+                    <optgroup label="Team Levels">
+                        <option value="A">A Level</option>
+                        <option value="B">B Level</option>
+                        <option value="C">C Level</option>
+                        <option value="Fun">Fun Level</option>
+                    </optgroup>
+                    <optgroup label="Wachtlijsten">
+                        <option value="waitlist_a">Wachtlijst A</option>
+                        <option value="waitlist_b">Wachtlijst B</option>
+                        <option value="waitlist_c">Wachtlijst C</option>
+                        <option value="waitlist_fun">Wachtlijst Fun</option>
+                    </optgroup>
+                </select>
+            </div>
+        </div>
+
+        <!-- Data Tabel -->
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-hover" id="data-table">
+                <thead>
+                    <tr id="table-head-row">
+                        <!-- Dynamische headers komen hier -->
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    <tr>
+                        <td colspan="8" class="text-center">Gegevens worden geladen...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Onderste rij: Teller links, Download knop rechtsonder -->
+        <div class="row" style="margin-top: 20px;">
+            <div class="col-md-6" style="padding-top: 8px;">
+                <span id="record-count" class="label label-info" style="font-size: 14px; padding: 8px 12px;">Laden...</span>
+            </div>
+            <div class="col-md-6 text-right">
+                <button id="export-excel-btn" class="btn btn-success">
+                    <i class="fa fa-file-excel-o"></i> Download Excel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Configuratie en Logica -->
+    <script>
+        // --- 1. SUPABASE CONFIGURATIE ---
+        const SUPABASE_URL = 'https://bhyokpduzcpdutifrzro.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJoeW9rcGR1emNwZHV0aWZyenJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk1MDY3OTUsImV4cCI6MjEwNTA4Mjc5NX0.47cnkFu32TWL1hwaeQRWyNu4TQYkZ94pNzKUzvTaP9M';
+
+        let abgSupabase = null;
+
+        try {
+            if (!SUPABASE_URL.startsWith('http')) {
+                throw new Error("Ongeldige SUPABASE_URL.");
+            }
+            abgSupabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        } catch (err) {
+            console.error("Supabase initialisatie fout:", err.message);
+        }
+
+        let currentExportData = [];
+        let currentExportKeys = [];
+
+        const tableSelector = document.getElementById("table-selector");
+        const levelSelector = document.getElementById("level-selector");
+        const bodyRow = document.getElementById("table-body");
+        const headRow = document.getElementById("table-head-row");
+        const countEl = document.getElementById("record-count");
+        const exportBtn = document.getElementById("export-excel-btn");
+
+        tableSelector.addEventListener("change", loadSelectedData);
+        levelSelector.addEventListener("change", loadSelectedData);
+        exportBtn.addEventListener("click", downloadExcel);
+
+        // --- 2. HOOFDFUNCTIE OM DATA OP TE HALEN EN TE TONEN ---
+        async function loadSelectedData() {
+            if (!abgSupabase) {
+                bodyRow.innerHTML = "<tr><td colspan='8' class='text-danger text-center'><b>Configuratiefout:</b> Supabase client kon niet geladen worden.</td></tr>";
+                countEl.innerText = "Configuratiefout";
+                currentExportData = [];
+                currentExportKeys = [];
+                return;
+            }
+
+            const selectedVal = tableSelector.value;
+            const selectedFilter = levelSelector.value;
+
+            headRow.innerHTML = "";
+            bodyRow.innerHTML = "<tr><td colspan='8' class='text-center'>Loading records...</td></tr>";
+            countEl.innerText = "Loading...";
+            currentExportData = [];
+            currentExportKeys = [];
+
+            // --- 3. SPECIFIEKE AFHANDELING DUO'S OVERVIEW VIA VIEW ---
+            if (selectedVal === "duos_overview") {
+                let { data: duoData, error: duoError } = await abgSupabase
+                    .from('v_duos_overview')
+                    .select('*')
+                    .range(0, 4999);
+
+                if (duoError) {
+                    bodyRow.innerHTML = `<tr><td colspan='8' class='text-danger text-center'>Error loading duos view: ${duoError.message}</td></tr>`;
+                    countEl.innerText = "Error";
+                    return;
+                }
+
+                if (!duoData || duoData.length === 0) {
+                    bodyRow.innerHTML = "<tr><td colspan='8' class='text-center text-muted'>No duo's found.</td></tr>";
+                    countEl.innerText = "Total records: 0";
+                    return;
+                }
+
+                let filteredDuos = duoData.filter(duo => {
+                    if (selectedFilter === "all") return true;
+                    let lvl = duo.team_level ? String(duo.team_level) : "";
+                    if (selectedFilter.startsWith("waitlist_")) {
+                        const targetLvl = selectedFilter.replace("waitlist_", "").toLowerCase();
+                        return lvl.toLowerCase().includes("wait") && lvl.toLowerCase().includes(targetLvl);
+                    } else {
+                        return lvl.toUpperCase() === selectedFilter.toUpperCase();
+                    }
+                });
+
+                countEl.innerText = `Total records shown: ${filteredDuos.length} (of ${duoData.length} duo's)`;
+
+                currentExportKeys = [
+                    "Team Level", 
+                    "Naam Speler 1", 
+                    "Email Speler 1", 
+                    "Level Speler 1", 
+                    "Naam Speler 2", 
+                    "Email Speler 2", 
+                    "Level Speler 2", 
+                    "Info"
+                ];
+
+                currentExportData = filteredDuos.map(duo => ({
+                    "Team Level": duo.team_level || "",
+                    "Naam Speler 1": duo.naam_speler_1 || "",
+                    "Email Speler 1": duo.email_speler_1 || "",
+                    "Level Speler 1": duo.eigen_level_speler_1 || "",
+                    "Naam Speler 2": duo.naam_speler_2 || "",
+                    "Email Speler 2": duo.email_speler_2 || "",
+                    "Level Speler 2": duo.eigen_level_speler_2 || "",
+                    "Info": duo.info || ""
+                }));
+
+                currentExportKeys.forEach(h => {
+                    const th = document.createElement("th");
+                    th.innerText = h;
+                    headRow.appendChild(th);
+                });
+
+                if (filteredDuos.length === 0) {
+                    bodyRow.innerHTML = "<tr><td colspan='8' class='text-center text-muted'>No duo's match the selected filters.</td></tr>";
+                    return;
+                }
+
+                bodyRow.innerHTML = "";
+                filteredDuos.forEach(duo => {
+                    const tr = document.createElement("tr");
+
+                    const createSimpleTd = (val) => {
+                        const td = document.createElement("td");
+                        const strVal = val !== null && val !== undefined ? String(val).trim() : "";
+                        if (strVal === "" || strVal === "-" || strVal.toLowerCase() === "null") {
+                            td.innerHTML = "<span class='text-muted'>-</span>";
+                        } else {
+                            td.innerText = strVal;
+                            td.title = strVal;
+                        }
+                        return td;
+                    };
+
+                    tr.appendChild(createSimpleTd(duo.team_level));
+                    tr.appendChild(createSimpleTd(duo.naam_speler_1));
+                    tr.appendChild(createSimpleTd(duo.email_speler_1));
+                    tr.appendChild(createSimpleTd(duo.eigen_level_speler_1));
+                    tr.appendChild(createSimpleTd(duo.naam_speler_2));
+                    tr.appendChild(createSimpleTd(duo.email_speler_2));
+                    tr.appendChild(createSimpleTd(duo.eigen_level_speler_2));
+
+                    let tdInfo = document.createElement("td");
+                    if (duo.info) {
+                        tdInfo.innerHTML = `<span title="${duo.info}" style="color: #d9534f; cursor: pointer; font-size: 14px;"><i class="fa fa-info-circle"></i> ${duo.info}</span>`;
+                    } else {
+                        tdInfo.innerHTML = "<span class='text-muted'>-</span>";
+                    }
+                    tr.appendChild(tdInfo);
+
+                    bodyRow.appendChild(tr);
+                });
+
+                return;
+            }
+
+            // --- 4. STANDAARD TABELLEN AFHANDELING ---
+            let tableName = "details";
+            let query = abgSupabase.from(tableName).select("*, users:user_id(email)").range(0, 4999);
+
+            if (selectedVal === "details_badminton") {
+                query = query.eq("sport", "Badminton");
+            } else if (selectedVal === "details_tennis") {
+                query = query.eq("sport", "Tennis");
+            } else if (selectedVal === "details_volleyball") {
+                query = query.eq("sport", "Volleyball");
+            } else if (selectedVal === "admins") {
+                tableName = "admins";
+                query = abgSupabase.from(tableName).select("*").range(0, 4999);
+            }
+
+            let { data, error } = await query;
+
+            if (error && tableName === "details") {
+                const fallbackQuery = await abgSupabase.from(tableName).select("*").range(0, 4999);
+                data = fallbackQuery.data;
+                error = fallbackQuery.error;
+            }
+
+            if (error) {
+                bodyRow.innerHTML = `<tr><td colspan='8' class='text-danger text-center'>Error loading data: ${error.message}</td></tr>`;
+                countEl.innerText = "Error";
+                return;
+            }
+
+            if (!data || data.length === 0) {
+                bodyRow.innerHTML = "<tr><td colspan='8' class='text-center text-muted'>No records found in this view.</td></tr>";
+                countEl.innerText = "Total records: 0";
+                return;
+            }
+
+            // Flatten de user email als die via een relatie binnenkomt
+            let processedData = data.map(row => {
+                let newRow = { ...row };
+                if (newRow.users && typeof newRow.users === 'object' && newRow.users.email) {
+                    newRow['email'] = newRow.users.email;
+                }
+                delete newRow.users; // Verwijder het nested object zelf uit de tabelweergave
+                return newRow;
+            });
+
+            // Verzamel alle unieke kolommen uit de dataset (om lege kolommen te behouden)
+            const allKeysSet = new Set();
+            processedData.forEach(row => {
+                Object.keys(row).forEach(key => {
+                    allKeysSet.add(key);
+                });
+            });
+            currentExportKeys = Array.from(allKeysSet);
+
+            let filteredData = processedData.filter(row => {
+                if (selectedFilter === "all") return true;
+
+                if (selectedFilter.startsWith("waitlist_")) {
+                    const targetLvl = selectedFilter.replace("waitlist_", "").toLowerCase();
+                    let val = row["status"];
+                    if (val) {
+                        const statusStr = String(val).trim().toLowerCase();
+                        return statusStr.includes("wait") && statusStr.includes(targetLvl);
+                    }
+                    return false;
+                } 
+                else {
+                    let val = row["team_level"];
+                    return val && String(val).trim().toUpperCase() === selectedFilter.toUpperCase();
+                }
+            });
+
+            countEl.innerText = `Total records shown: ${filteredData.length} (of ${processedData.length})`;
+
+            if (filteredData.length === 0) {
+                bodyRow.innerHTML = "<tr><td colspan='15' class='text-center text-muted'>No records match the selected filters.</td></tr>";
+                currentExportData = [];
+                return;
+            }
+
+            currentExportData = filteredData.map(row => {
+                let exportRow = {};
+                currentExportKeys.forEach(key => {
+                    let val = row[key];
+                    exportRow[key] = (val !== null && val !== undefined) ? val : "";
+                });
+                return exportRow;
+            });
+
+            currentExportKeys.forEach(key => {
+                const th = document.createElement("th");
+                th.innerText = key.replace(/_/g, ' ').toUpperCase();
+                headRow.appendChild(th);
+            });
+
+            bodyRow.innerHTML = "";
+            filteredData.forEach(row => {
+                const tr = document.createElement("tr");
+                currentExportKeys.forEach(key => {
+                    const td = document.createElement("td");
+                    let val = row[key];
+
+                    if (key.includes('allergy') || key.includes('allergies') || key.includes('food_')) {
+                        td.className = 'truncate-cell';
+                    }
+
+                    const lowerStrVal = val !== null && val !== undefined ? String(val).trim().toLowerCase() : "";
+                    const isEmptyOrNone = (
+                        val === null || 
+                        val === undefined || 
+                        val === "" || 
+                        lowerStrVal === "- none -" || 
+                        lowerStrVal === "none" || 
+                        lowerStrVal === "n/a" || 
+                        lowerStrVal === "-" ||
+                        lowerStrVal === "geen"
+                    );
+
+                    if (isEmptyOrNone) {
+                        td.innerHTML = "<span class='text-muted'>-</span>";
+                    } 
+                    else if (typeof val === "boolean") {
+                        if (key.includes("paid")) {
+                            td.innerHTML = val 
+                                ? '<span class="label label-success">Paid</span>' 
+                                : '<span class="label label-danger">Unpaid</span>';
+                        } else {
+                            td.innerHTML = val 
+                                ? '<span class="label label-info">Yes</span>' 
+                                : '<span class="label label-default">No</span>';
+                        }
+                    } 
+                    else {
+                        let strVal = String(val);
+                        if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/.test(strVal)) {
+                            const dateObj = new Date(strVal);
+                            if (!isNaN(dateObj)) {
+                                strVal = dateObj.toLocaleString();
+                            }
+                        }
+                        td.innerText = strVal;
+                        td.title = strVal;
+                    }
+
+                    tr.appendChild(td);
+                });
+                bodyRow.appendChild(tr);
+            });
+        }
+
+        // --- 5. EXCEL DOWNLOAD FUNCTIE ---
+        function downloadExcel() {
+            if (!currentExportData || currentExportData.length === 0) {
+                alert("Er zijn geen gegevens om te exporteren.");
+                return;
+            }
+
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const dateTimeStr = `${year}-${month}-${day}_${hours}-${minutes}-${seconds}`;
+
+            const selectedTable = tableSelector.value;
+            const selectedFilter = levelSelector.value;
+            const filename = `${selectedTable}_${selectedFilter}_${dateTimeStr}.xlsx`;
+
+            const worksheet = XLSX.utils.json_to_sheet(currentExportData, { header: currentExportKeys });
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, "Overzicht");
+
+            XLSX.writeFile(workbook, filename);
+        }
+
+        loadSelectedData();
+    </script>
+</body>
+</html>

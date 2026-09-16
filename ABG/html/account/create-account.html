@@ -120,6 +120,9 @@
                 </p>
               </div>
 
+              <!-- Melding container voor fouten op de pagina -->
+              <div id="form-alert-container"></div>
+
               <!-- Maak Account Formulier -->
               <form id="create-account-form" action="#" method="POST">
                 <div class="section-heading">Account Credentials</div>
@@ -140,6 +143,17 @@
                   <input
                     type="password"
                     id="acc-password"
+                    required
+                    class="form-control login-input"
+                    placeholder="••••••••"
+                  />
+                </div>
+
+                <div class="form-group login-field-group">
+                  <label class="login-label">Confirm Password</label>
+                  <input
+                    type="password"
+                    id="acc-password-confirm"
                     required
                     class="form-control login-input"
                     placeholder="••••••••"
@@ -240,6 +254,18 @@
           const { createClient } = window.supabase;
           const abgSupabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+          // Hulpfunctie om meldingen op de pagina te tonen
+          function showInlineAlert(message, type = 'danger') {
+              const alertContainer = document.getElementById("form-alert-container");
+              alertContainer.innerHTML = `
+                  <div class="alert alert-${type} alert-dismissible" role="alert" style="margin-bottom: 20px;">
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      ${message}
+                  </div>
+              `;
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+
           // Controleer de database-sessie voor de Navbar bij het laden
           document.addEventListener("DOMContentLoaded", async function () {
               const dropdownList = document.getElementById("account-dropdown-list");
@@ -276,10 +302,19 @@
 
               const emailValue = document.getElementById("acc-email").value.trim();
               const passwordValue = document.getElementById("acc-password").value;
+              const passwordConfirmValue = document.getElementById("acc-password-confirm").value;
               const submitBtn = this.querySelector('button[type="submit"]');
 
               if (passwordValue.length < 6) {
-                  alert('Het wachtwoord moet minimaal 6 tekens lang zijn.');
+                  showInlineAlert('Het wachtwoord moet minimaal 6 tekens lang zijn.', 'warning');
+                  return;
+              }
+
+              // Controle of de twee wachtwoorden identiek zijn
+              if (passwordValue !== passwordConfirmValue) {
+                  showInlineAlert('Passwords didn\'t match. Please try again.', 'danger');
+                  document.getElementById("acc-password-confirm").value = "";
+                  document.getElementById("acc-password-confirm").focus();
                   return;
               }
 
@@ -304,7 +339,7 @@
 
               } catch (err) {
                   console.error('Supabase registratie fout:', err);
-                  alert('Registratie mislukt: ' + (err.message || 'Onbekende fout'));
+                  showInlineAlert('Registratie mislukt: ' + (err.message || 'Onbekende fout'), 'danger');
                   submitBtn.disabled = false;
                   submitBtn.innerText = "Create Account & Continue to Registration";
               }

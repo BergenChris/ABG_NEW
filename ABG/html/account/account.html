@@ -78,6 +78,13 @@
       body {
         padding-top: 80px;
       }
+      .admin-panel-box {
+        background: #fdfefe;
+        border: 2px dashed #f0ad4e;
+        padding: 20px;
+        border-radius: 6px;
+        margin-bottom: 25px;
+      }
     </style>
   </head>
   <body class="login-page-body">
@@ -112,13 +119,15 @@
               </ul>
             </li>
 
-            <!-- Dynamisch Account Menu -->
+            <!-- Standaard Account Menu -->
             <li class="dropdown" id="account-menu-item">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"
                 >Account <span class="caret"></span
               ></a>
               <ul class="dropdown-menu" id="account-dropdown-list">
-                <!-- Wordt automatisch ingevuld door Supabase sessie status -->
+                <li><a href="account.html">My Registration</a></li>
+                <li><a href="t&c.html">Terms-and-Conditions</a></li>
+                <li><a href="#" id="nav-logout-action">Log Out</a></li>
               </ul>
             </li>
           </ul>
@@ -132,6 +141,45 @@
         <div class="row">
           <div class="col-md-8 col-md-offset-2">
             <div class="modern-card">
+              
+              <!-- ADMIN PANEEL -->
+              <div id="admin-panel-container" style="display: none;" class="admin-panel-box">
+                <h4 style="margin-top: 0; color: #f0ad4e; font-weight: bold;">
+                  <i class="fa fa-shield"></i> Admin Management Tools
+                </h4>
+                <p class="text-muted" style="font-size: 13px;">
+                  As an administrator, you can view the overview or grant admin rights to another user's email address below.
+                </p>
+
+                <div style="margin-bottom: 15px;">
+                  <a href="../team/overzicht.html" class="btn btn-warning btn-block" style="font-weight: bold; padding: 10px;">
+                    <i class="fa fa-users"></i> Go to Full Admin Overview
+                  </a>
+                </div>
+
+                <hr style="border-top: 1px solid #faebcc;" />
+
+                <form id="add-admin-form" style="margin-top: 15px;">
+                  <div class="form-group" style="margin-bottom: 10px;">
+                    <label style="font-size: 13px; color: #444;">Make a new user Admin (by Email)</label>
+                    <div class="input-group">
+                      <input 
+                        type="email" 
+                        id="new-admin-email" 
+                        class="form-control" 
+                        placeholder="colleague@example.com" 
+                        required 
+                      />
+                      <span class="input-group-btn">
+                        <button type="submit" class="btn btn-success" id="add-admin-btn">
+                          <i class="fa fa-user-plus"></i> Add Admin
+                        </button>
+                      </span>
+                    </div>
+                  </div>
+                </form>
+              </div>
+
               <!-- Uitlog knop -->
               <div class="text-right" style="margin-bottom: 20px">
                 <button id="logout-btn" class="btn btn-danger btn-sm">
@@ -205,11 +253,19 @@
                   </tr>
                 </table>
 
-                <!-- DETAILS (Vervangen van Account Details) -->
+                <!-- DETAILS -->
                 <div class="section-title">
                   <span>Details</span>
                 </div>
                 <table class="table table-custom">
+                  <tr>
+                    <td class="label-cell">First Name</td>
+                    <td id="val-first-name">-</td>
+                  </tr>
+                  <tr>
+                    <td class="label-cell">Last Name</td>
+                    <td id="val-last-name">-</td>
+                  </tr>
                   <tr>
                     <td class="label-cell">Tournament</td>
                     <td id="val-sport">-</td>
@@ -234,12 +290,31 @@
                   id="payment-header"
                   style="margin-bottom: 20px; font-weight: bold"
                 >
-                  Payment options
+                  Payment status & options
                 </h3>
+
+                <!-- Overzicht van reeds betaalde items -->
+                <div class="panel panel-default" style="margin-bottom: 25px;">
+                  <div class="panel-heading" style="font-weight: bold; background-color: #f5f5f5;">
+                    <i class="fa fa-list-alt"></i> Your Payment Overview
+                  </div>
+                  <div class="panel-body" style="padding: 0;">
+                    <table class="table table-custom" style="margin-top: 0;">
+                      <tr>
+                        <td class="label-cell">Tournament Registration</td>
+                        <td id="val-tournament-payment"><span class="label label-default">Loading...</span></td>
+                      </tr>
+                      <tr>
+                        <td class="label-cell">Party Tickets (Woodpop)</td>
+                        <td id="val-party-tickets-count">-</td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
 
                 <p>
                   <strong
-                    >The participation fees still available for you:</strong
+                    >Purchase additional participation fees / party tickets:</strong
                   >
                 </p>
 
@@ -266,7 +341,7 @@
                     <button
                       type="button"
                       class="btn btn-primary"
-                      onclick="alert('Betaling gestart (Demo)')"
+                      id="pay-party-btn"
                     >
                       Pay
                     </button>
@@ -344,9 +419,6 @@
           const abgSupabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
           document.addEventListener("DOMContentLoaded", async function () {
-              const dropdownList = document.getElementById("account-dropdown-list");
-
-              // 1. Controleer actieve Supabase sessie
               const { data: { session }, error: sessionError } = await abgSupabase.auth.getSession();
 
               if (!session || sessionError) {
@@ -356,14 +428,6 @@
 
               const user = session.user;
 
-              // Vul het navigatiemenu in
-              dropdownList.innerHTML = `
-                  <li><a href="account.html">My Registration</a></li>
-                  <li><a href="t&c.html">Terms-and-Conditions</a></li>
-                  <li><a href="#" id="nav-logout-action">Log Out</a></li>
-              `;
-
-              // Uitloggen functionaliteit
               async function doLogout(e) {
                   e.preventDefault();
                   await abgSupabase.auth.signOut();
@@ -373,7 +437,45 @@
               document.getElementById("logout-btn").addEventListener("click", doLogout);
               document.getElementById("nav-logout-action").addEventListener("click", doLogout);
 
-              // 2. Haal de registratiegegevens op uit de database voor deze user
+              const { data: adminData } = await abgSupabase
+                  .from("admins")
+                  .select("*")
+                  .eq("email", user.email)
+                  .maybeSingle();
+
+              if (adminData) {
+                  document.getElementById("admin-panel-container").style.display = "block";
+              }
+
+              const addAdminForm = document.getElementById("add-admin-form");
+              if (addAdminForm) {
+                  addAdminForm.addEventListener("submit", async function(e) {
+                      e.preventDefault();
+                      const newEmailInput = document.getElementById("new-admin-email");
+                      const emailToAdd = newEmailInput.value.trim().toLowerCase();
+                      const submitBtn = document.getElementById("add-admin-btn");
+
+                      if (!emailToAdd) return;
+
+                      submitBtn.disabled = true;
+                      submitBtn.innerText = "Adding...";
+
+                      const { error: insertError } = await abgSupabase
+                          .from("admins")
+                          .insert([{ email: emailToAdd }]);
+
+                      submitBtn.disabled = false;
+                      submitBtn.innerHTML = '<i class="fa fa-user-plus"></i> Add Admin';
+
+                      if (insertError) {
+                          alert("Failed to add admin: " + insertError.message);
+                      } else {
+                          alert(`Success! '${emailToAdd}' has been granted administrator privileges.`);
+                          newEmailInput.value = "";
+                      }
+                  });
+              }
+
               const { data: regData, error: regError } = await abgSupabase
                   .from("details")
                   .select("*")
@@ -385,40 +487,83 @@
               }
 
               if (regData) {
-                  // Wel geregistreerd: Toon de gegevenssectie
                   document.getElementById("has-registration-section").style.display = "block";
                   document.getElementById("no-registration-section").style.display = "none";
 
-                  // Velden vullen met echte data
+                  // Velden vullen inclusief First Name en Last Name
                   document.getElementById("sport-section-title").innerText = (regData.sport || "Tournament") + " Info";
                   document.getElementById("val-club").innerText = regData.club || "-";
                   document.getElementById("val-team-level").innerText = regData.team_level || "-";
                   document.getElementById("val-own-level").innerText = regData.own_level || "-";
                   document.getElementById("val-partner-email").innerText = regData.partner_email || "-";
                   
-                  // JSONB kolommen veilig uitlezen
                   document.getElementById("val-food").innerText = regData["food-restictions"]?.value || "- none -";
                   document.getElementById("val-allergies").innerText = regData.allergies?.value || "- none -";
 
                   document.getElementById("val-meet-greet").innerText = regData.meet_and_greet ? "Yes" : "No";
+                  document.getElementById("val-first-name").innerText = regData.firstName || "-";
+                  document.getElementById("val-last-name").innerText = regData.lastName || "-";
                   document.getElementById("val-sport").innerText = regData.sport || "-";
                   document.getElementById("val-email").innerText = user.email || "-";
                   document.getElementById("val-country").innerText = regData.country || "-";
                   document.getElementById("val-gender").innerText = regData.gender || "-";
 
+                  const tournamentPaidEl = document.getElementById("val-tournament-payment");
+                  if (tournamentPaidEl) {
+                      if (regData.tournament_paid === true) {
+                          tournamentPaidEl.innerHTML = '<span class="text-success"><i class="fa fa-check-circle"></i> <strong>Paid</strong></span>';
+                      } else {
+                          tournamentPaidEl.innerHTML = '<span class="text-danger"><i class="fa fa-times-circle"></i> <strong>Unpaid</strong></span>';
+                      }
+                  }
+
+                  const partyTicketsCountEl = document.getElementById("val-party-tickets-count");
+                  if (partyTicketsCountEl) {
+                      const ticketsCount = regData.number_ticket_woodpop || 0;
+                      partyTicketsCountEl.innerHTML = `<strong>${ticketsCount}</strong> ticket(s)`;
+                  }
+
               } else {
-                  // Nog niet geregistreerd: Toon de waarschuwing & knop
                   document.getElementById("has-registration-section").style.display = "none";
                   document.getElementById("no-registration-section").style.display = "block";
               }
 
-              // Dynamische prijsrekening voor party tickets
               const partySelect = document.getElementById("party-tickets-select");
               if(partySelect) {
                   partySelect.addEventListener("change", function() {
                       const count = parseInt(this.value);
                       const total = count * 12;
                       document.getElementById("total-party-price").innerText = "EUR " + total;
+                  });
+              }
+
+              const payButton = document.getElementById("pay-party-btn");
+              if (payButton) {
+                  payButton.addEventListener("click", async function() {
+                      if (!regData) return;
+
+                      const selectedCount = parseInt(partySelect.value) || 0;
+                      const currentCount = regData.number_ticket_woodpop || 0;
+                      const newTotal = currentCount + selectedCount;
+
+                      payButton.disabled = true;
+                      payButton.innerText = "Processing...";
+
+                      const { error: updateError } = await abgSupabase
+                          .from("details")
+                          .update({ number_ticket_woodpop: newTotal })
+                          .eq("user_id", user.id);
+
+                      payButton.disabled = false;
+                      payButton.innerText = "Pay";
+
+                      if (updateError) {
+                          alert("Error updating tickets: " + updateError.message);
+                      } else {
+                          regData.number_ticket_woodpop = newTotal;
+                          document.getElementById("val-party-tickets-count").innerHTML = `<strong>${newTotal}</strong> ticket(s)`;
+                          alert(`Payment successful! Successfully added ${selectedCount} ticket(s). Total is now ${newTotal}.`);
+                      }
                   });
               }
           });
